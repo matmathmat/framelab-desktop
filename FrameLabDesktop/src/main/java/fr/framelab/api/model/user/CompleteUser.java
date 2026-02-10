@@ -4,10 +4,19 @@ public class CompleteUser {
     protected int id;
     protected String firstName;
     protected String lastName;
-    protected boolean isAdmin;
+    protected int isAdmin;
     protected String email;
+    protected String token;
 
-    public CompleteUser(int id, String firstName, String lastName, boolean isAdmin, String email) {
+    public int getIsAdmin() {
+        return isAdmin;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public CompleteUser(int id, String firstName, String lastName, int isAdmin, String email) {
         if (id < 0) {
             throw new IllegalArgumentException("Negative id is not allowed");
         }
@@ -40,6 +49,40 @@ public class CompleteUser {
         this.email = email;
     }
 
+    public CompleteUser(int id, String firstName, String lastName, int isAdmin, String email, String token) {
+        if (id < 0) {
+            throw new IllegalArgumentException("Negative id is not allowed");
+        }
+
+        if (firstName == null) {
+            throw new IllegalArgumentException("Null firstName is not allowed");
+        }
+        if (firstName.isBlank()) {
+            throw new IllegalArgumentException("Empty firstName is not allowed");
+        }
+
+        if (lastName == null) {
+            throw new IllegalArgumentException("Null lastName is not allowed");
+        }
+        if (lastName.isBlank()) {
+            throw new IllegalArgumentException("Empty lastName is not allowed");
+        }
+
+        if (email == null) {
+            throw new IllegalArgumentException("Null email is not allowed");
+        }
+        if (email.isBlank()) {
+            throw new IllegalArgumentException("Empty email is not allowed");
+        }
+
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isAdmin = isAdmin;
+        this.email = email;
+        this.token = token;
+    }
+
     public int getId() {
         return this.id;
     }
@@ -52,7 +95,7 @@ public class CompleteUser {
         return this.lastName;
     }
 
-    public boolean isAdmin() {
+    public int isAdmin() {
         return this.isAdmin;
     }
 

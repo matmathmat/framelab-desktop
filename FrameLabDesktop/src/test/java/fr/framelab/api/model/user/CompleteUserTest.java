@@ -10,7 +10,7 @@ class CompleteUserTest {
     private final int USER_ID = 1;
     private final String FIRST_NAME = "Alice";
     private final String LAST_NAME = "Dupont";
-    private final boolean IS_ADMIN = false;
+    private final int IS_ADMIN = 1;
     private final String EMAIL = "alice.dupont@email.com";
 
     /**
@@ -27,7 +27,7 @@ class CompleteUserTest {
         int userId = -1;
         String firstName = "Alice";
         String lastName = "Dupont";
-        boolean isAdmin = false;
+        int isAdmin = 0;
         String email = "alice.dupont@email.com";
 
         // ACT - Exécuter l'action à tester
@@ -50,7 +50,7 @@ class CompleteUserTest {
         int userId = 1;
         String firstName = null;
         String lastName = "Dupont";
-        boolean isAdmin = false;
+        int isAdmin = 0;
         String email = "alice.dupont@email.com";
 
         // ACT - Exécuter l'action à tester
@@ -73,7 +73,7 @@ class CompleteUserTest {
         int userId = 1;
         String firstName = " ";
         String lastName = "Dupont";
-        boolean isAdmin = false;
+        int isAdmin = 0;
         String email = "alice.dupont@email.com";
 
         // ACT - Exécuter l'action à tester
@@ -96,7 +96,7 @@ class CompleteUserTest {
         int userId = 1;
         String firstName = "Alice";
         String lastName = null;
-        boolean isAdmin = false;
+        int isAdmin = 0;
         String email = "alice.dupont@email.com";
 
         // ACT - Exécuter l'action à tester
@@ -119,7 +119,7 @@ class CompleteUserTest {
         int userId = 1;
         String firstName = "Alice";
         String lastName = " ";
-        boolean isAdmin = false;
+        int isAdmin = 0;
         String email = "alice.dupont@email.com";
 
         // ACT - Exécuter l'action à tester
@@ -142,7 +142,7 @@ class CompleteUserTest {
         int userId = 1;
         String firstName = "Alice";
         String lastName = "Dupont";
-        boolean isAdmin = false;
+        int isAdmin = 0;
         String email = null;
 
         // ACT - Exécuter l'action à tester
@@ -165,7 +165,7 @@ class CompleteUserTest {
         int userId = 1;
         String firstName = "Alice";
         String lastName = "Dupont";
-        boolean isAdmin = false;
+        int isAdmin = 0;
         String email = " ";
 
         // ACT - Exécuter l'action à tester

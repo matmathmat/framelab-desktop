@@ -53,6 +53,13 @@
             <version>4.5.13</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Pour parser les requêtes http -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.13.2</version>
+        </dependency>
     </dependencies>
 
     <!-- Plugins : outils pour compiler et tester -->

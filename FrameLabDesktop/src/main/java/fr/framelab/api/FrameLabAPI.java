@@ -4,8 +4,11 @@ package fr.framelab.api;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import fr.framelab.api.exceptions.HttpClientErrorException;
+import fr.framelab.api.exceptions.HttpServerErrorException;
 import fr.framelab.api.model.requests.AuthRequest;
 import fr.framelab.api.model.responses.APIResponse;
+import fr.framelab.api.model.responses.ErrorResponse;
 import fr.framelab.api.model.user.CompleteUser;
 
 import java.io.IOException;
@@ -76,11 +79,17 @@ public class FrameLabAPI {
 
             // On retourne vrai car on a obtenu le token
             return true;
-        } else if (response.statusCode() == 201) {
-            throw Exception
-        }
+        } else {
+            // Si la requête n'a pas réussis
 
-        // Sinon on n'est pas connecté
-        return false;
+            // On deserialize la réponse
+            ErrorResponse errorResponse = gson.fromJson(response.body(), ErrorResponse.class);
+
+            if (response.statusCode() > 399 && response.statusCode() < 500) {
+                throw new HttpClientErrorException(errorResponse.getMessage());
+            } else {
+                throw new HttpServerErrorException(errorResponse.getMessage());
+            }
+        }
     }
 }

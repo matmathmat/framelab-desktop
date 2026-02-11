@@ -2,10 +2,18 @@ package fr.framelab.api.model.responses;
 
 public class ErrorResponse {
     protected boolean success;
-    protected String token;
+    protected String message;
 
-    public ErrorResponse(boolean success, String token) {
+    public ErrorResponse(boolean success, String message) {
         this.success = success;
-        this.token = token;
+        this.message = message;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

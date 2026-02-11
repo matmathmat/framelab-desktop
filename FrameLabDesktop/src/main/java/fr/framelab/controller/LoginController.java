@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 
 public class LoginController {
-    private FrameLabAPI frameLabAPI;
+    private MainController mainController;
 
     @FXML
     private TextField emailTextField;
@@ -19,12 +19,18 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
     @FXML
     private void handleLogin() {
-        System.out.println(this.emailTextField);
-
         try {
-            frameLabAPI.login(this.emailTextField.getText(), this.passwordTextField.getText());
+            boolean success = this.mainController.frameLabAPI.login(this.emailTextField.getText(), this.passwordTextField.getText());
+
+            if (success) {
+                this.mainController.showHome();
+            }
         }
         catch(Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -32,11 +38,5 @@ public class LoginController {
             alert.setHeaderText(e.getMessage());
             alert.showAndWait();
         }
-
-        System.out.println("Button cliqué");
-    }
-
-    public void setService(FrameLabAPI frameLabAPI) {
-        this.frameLabAPI = frameLabAPI;
     }
 }

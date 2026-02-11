@@ -15,7 +15,7 @@ public class FrameLabDesktop extends Application {
     public void start(Stage primaryStage) throws Exception {
         this.frameLabAPI = new FrameLabAPI("localhost:3000", false);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/main-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/main.fxml"));
         BorderPane root = loader.load();
 
         MainController mainController = loader.getController();

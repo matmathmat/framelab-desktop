@@ -156,9 +156,11 @@
                         </Label>
                     </top>
                     <center>
-                        <ScrollPane fx:id="leftScrollPane" fitToWidth="true" fitToHeight="true">
+                        <ScrollPane fx:id="leftScrollPane" fitToWidth="true" fitToHeight="true" style="-fx-background-color: #e0e0e0;">
                             <content>
-                                <ImageView fx:id="baseImage" pickOnBounds="true" preserveRatio="true" />
+                                <StackPane alignment="CENTER" style="-fx-background-color: #e0e0e0;">
+                                    <ImageView fx:id="baseImage" pickOnBounds="true" preserveRatio="true" />
+                                </StackPane>
                             </content>
                         </ScrollPane>
                     </center>
@@ -174,9 +176,11 @@
                         </Label>
                     </top>
                     <center>
-                        <ScrollPane fx:id="rightScrollPane" fitToWidth="true" fitToHeight="true">
+                        <ScrollPane fx:id="rightScrollPane" fitToWidth="true" fitToHeight="true" style="-fx-background-color: #e0e0e0;">
                             <content>
-                                <ImageView fx:id="editedImage" pickOnBounds="true" preserveRatio="true" />
+                                <StackPane alignment="CENTER" style="-fx-background-color: #e0e0e0;">
+                                    <ImageView fx:id="editedImage" pickOnBounds="true" preserveRatio="true" />
+                                </StackPane>
                             </content>
                         </ScrollPane>
                     </center>

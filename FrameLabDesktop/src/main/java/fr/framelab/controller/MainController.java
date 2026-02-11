@@ -67,4 +67,18 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+    public void challengeHandle() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/challenge.fxml"));
+            Parent view = loader.load();
+
+            ChallengeController controller = loader.getController();
+            controller.setMainController(this);
+
+            contentPane.getChildren().setAll(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

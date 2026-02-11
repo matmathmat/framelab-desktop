@@ -1,93 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.Group?>
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.MainController">
     <top>
-        <HBox fx:id="topBar"
-              alignment="CENTER"
-              prefHeight="60"
-              style="-fx-background-color: #222222;">
+        <HBox fx:id="topBar" alignment="CENTER" prefHeight="60" style="-fx-background-color: #222222;">
 
-            <Label text="FrameLab"
-                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="FrameLab" />
         </HBox>
     </top>
 
     <left>
-        <VBox fx:id="leftBar"
-              alignment="CENTER"
-              spacing="20"
-              prefWidth="60"
-              style="-fx-background-color: #222222;">
+        <VBox fx:id="leftBar" alignment="CENTER" prefWidth="60" spacing="20" style="-fx-background-color: #222222;">
 
-            <Button style="fx-font-size: 18px;">
+            <Button onAction="#showHome" style="fx-font-size: 18px;">
                     <graphic>
                         <Group>
-                            <SVGPath content="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"
-                                     stroke="white"
-                                     strokeWidth="2"
-                                     fill="transparent"/>
-                            <SVGPath content="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-                                     stroke="white"
-                                     strokeWidth="2"
-                                     fill="transparent"/>
+                            <SVGPath content="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" fill="transparent" stroke="white" strokeWidth="2" />
+                            <SVGPath content="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" fill="transparent" stroke="white" strokeWidth="2" />
                         </Group>
                     </graphic>
             </Button>
-            <Button style="fx-font-size: 18px;">
+            <Button onAction="#challengeHandle" style="fx-font-size: 18px;">
                 <graphic>
                     <Group>
-                        <SVGPath content="M12 2 A10 10 0 1 0 12 22 A10 10 0 1 0 12 2"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
-                        <SVGPath content="m14.31 8 5.74 9.94"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
-                        <SVGPath content="M9.69 8h11.48"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
-                        <SVGPath content="m7.38 12 5.74-9.94"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
-                        <SVGPath content="M9.69 16 3.95 6.06"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
-                        <SVGPath content="M14.31 16H2.83"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
-                        <SVGPath content="m16.62 12-5.74 9.94"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
+                        <SVGPath content="M12 2 A10 10 0 1 0 12 22 A10 10 0 1 0 12 2" fill="transparent" stroke="white" strokeWidth="2" />
+                        <SVGPath content="m14.31 8 5.74 9.94" fill="transparent" stroke="white" strokeWidth="2" />
+                        <SVGPath content="M9.69 8h11.48" fill="transparent" stroke="white" strokeWidth="2" />
+                        <SVGPath content="m7.38 12 5.74-9.94" fill="transparent" stroke="white" strokeWidth="2" />
+                        <SVGPath content="M9.69 16 3.95 6.06" fill="transparent" stroke="white" strokeWidth="2" />
+                        <SVGPath content="M14.31 16H2.83" fill="transparent" stroke="white" strokeWidth="2" />
+                        <SVGPath content="m16.62 12-5.74 9.94" fill="transparent" stroke="white" strokeWidth="2" />
                     </Group>
                 </graphic>
             </Button>
             <Button style="fx-font-size: 18px;">
                 <graphic>
                     <Group>
-                        <SVGPath content="m16 17 5-5-5-5"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
-                        <SVGPath content="M21 12H9"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
-                        <SVGPath content="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
-                                 stroke="white"
-                                 strokeWidth="2"
-                                 fill="transparent"/>
+                        <SVGPath content="m16 17 5-5-5-5" fill="transparent" stroke="white" strokeWidth="2" />
+                        <SVGPath content="M21 12H9" fill="transparent" stroke="white" strokeWidth="2" />
+                        <SVGPath content="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" fill="transparent" stroke="white" strokeWidth="2" />
                     </Group>
                 </graphic>
             </Button>
@@ -95,6 +50,6 @@
     </left>
 
     <center>
-      <StackPane fx:id="contentPane"/>
+      <StackPane fx:id="contentPane" />
    </center>
 </BorderPane>

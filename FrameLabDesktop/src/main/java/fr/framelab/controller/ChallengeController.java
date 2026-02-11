@@ -49,4 +49,9 @@ public class ChallengeController {
         this.mainController = mainController;
         loadActiveChallenge();
     }
+
+    @FXML
+    private void handleParticipate() {
+
+    }
 }

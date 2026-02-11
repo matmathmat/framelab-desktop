@@ -132,13 +132,14 @@
                 <Button text="Ajouter un calque image" maxWidth="Infinity"/>
                 <Button text="Fusionner les calques visibles" maxWidth="Infinity"/>
             </VBox>
-            
+
         </VBox>
     </right>
 
     <center>
         <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <items>
+                <!--Image de référence -->
                 <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <center>
                         <ScrollPane fx:id="leftScrollPane" fitToWidth="true" fitToHeight="true">
@@ -148,6 +149,8 @@
                         </ScrollPane>
                     </center>
                 </BorderPane>
+
+                <!-- Image en cours de modification -->
                 <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="198.0" prefWidth="241.0">
                     <center>
                         <ScrollPane fx:id="rightScrollPane" fitToWidth="true" fitToHeight="true">
@@ -157,6 +160,7 @@
                         </ScrollPane>
                     </center>
                 </BorderPane>
+
             </items>
         </SplitPane>
     </center>

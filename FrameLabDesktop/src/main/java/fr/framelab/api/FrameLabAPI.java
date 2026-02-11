@@ -89,5 +89,40 @@ public class FrameLabAPI {
         }
     }
 
-    //public
+    public Challenge getActiveChallenge() throws IOException, InterruptedException {
+        // Initialiser gson
+        Gson gson = new Gson();
+
+        // Créer la requête
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(CreateURL("api/challenges/current")))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + this.token)
+                .build();
+
+        // Envoyer la requête
+        HttpResponse<String> response = this.client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            // Si la requête a réussis
+
+            // On deserialize la réponse
+            Type apiResponseType = new TypeToken<APIResponse<Challenge>>(){}.getType();
+            APIResponse<Challenge> apiResponse = gson.fromJson(response.body(), apiResponseType);
+
+            // On retourne le challenge
+            return apiResponse.getResult();
+        } else {
+            // Si la requête n'a pas réussis
+
+            // On deserialize la réponse
+            ErrorResponse errorResponse = gson.fromJson(response.body(), ErrorResponse.class);
+
+            if (response.statusCode() > 399 && response.statusCode() < 500) {
+                throw new HttpClientErrorException(errorResponse.getMessage());
+            } else {
+                throw new HttpServerErrorException(errorResponse.getMessage());
+            }
+        }
+    }
 }

@@ -71,7 +71,27 @@
     </left>
 
     <bottom>
-        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+        <HBox prefHeight="50.0" spacing="10.0" alignment="CENTER" style="-fx-background-color: #f0f0f0;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+
+            <!-- Gauche -->
+            <Button text="Réinitialiser"/>
+
+            <!-- Séparateur -->
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- Centre -->
+            <Button text="Masquer Image de référence"/>
+
+            <!-- Séparateur -->
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- Droite -->
+            <Button text="Zoomer"/>
+            <Button text="Dézoomer"/>
+        </HBox>
     </bottom>
 
     <right>

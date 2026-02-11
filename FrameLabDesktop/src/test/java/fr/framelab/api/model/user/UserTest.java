@@ -183,6 +183,29 @@ class UserTest {
     }
 
     @Test
+    void shouldRejectInvalidEmail() {
+        // ARRANGE - Préparer les données
+        int userId = 1;
+        String firstName = "Alice";
+        String lastName = "Dupont";
+        int isAdmin = 0;
+        String email = "alice.dupontemail.com";
+
+        // ACT - Exécuter l'action à tester
+        Exception thrownException = null;
+        try {
+            User user = new User(userId, firstName, lastName, isAdmin, email);
+        } catch (Exception e) {
+            thrownException = e;
+        }
+
+        // ASSERT - Vérifier le résultat
+        assertNotNull(thrownException);
+        assertInstanceOf(IllegalArgumentException.class, thrownException);
+        assertEquals("Invalid email format", thrownException.getMessage());
+    }
+
+    @Test
     void shouldRejectNullToken() {
         // ARRANGE - Préparer les données
         int userId = 1;

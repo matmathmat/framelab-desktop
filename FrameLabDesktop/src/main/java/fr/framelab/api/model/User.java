@@ -1,4 +1,4 @@
-package fr.framelab.api.model.user;
+package fr.framelab.api.model;
 
 public class User {
     protected int id;

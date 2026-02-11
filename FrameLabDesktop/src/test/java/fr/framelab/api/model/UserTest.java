@@ -1,4 +1,4 @@
-package fr.framelab.api.model.user;
+package fr.framelab.api.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class UserTest {
     private final String EMAIL = "alice.dupont@email.com";
 
     /**
-     * Prépare un basic user valide avant chaque test
+     * Prépare un user valide avant chaque test
      */
     @BeforeEach
     void setUp() {

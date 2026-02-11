@@ -1,4 +1,4 @@
-package fr.framelab.api.model.requests;
+package fr.framelab.api.model;
 
 public class AuthRequest {
     protected String email;

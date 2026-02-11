@@ -5,10 +5,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import fr.framelab.api.exceptions.HttpClientErrorException;
 import fr.framelab.api.exceptions.HttpServerErrorException;
-import fr.framelab.api.model.requests.AuthRequest;
-import fr.framelab.api.model.responses.APIResponse;
-import fr.framelab.api.model.responses.ErrorResponse;
-import fr.framelab.api.model.user.User;
+import fr.framelab.api.model.AuthRequest;
+import fr.framelab.api.model.APIResponse;
+import fr.framelab.api.model.ErrorResponse;
+import fr.framelab.api.model.User;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -91,4 +91,6 @@ public class FrameLabAPI {
             }
         }
     }
+
+    //public
 }

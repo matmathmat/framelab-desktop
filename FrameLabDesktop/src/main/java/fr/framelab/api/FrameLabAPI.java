@@ -2,14 +2,13 @@ package fr.framelab.api;
 
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import fr.framelab.api.exceptions.HttpClientErrorException;
 import fr.framelab.api.exceptions.HttpServerErrorException;
 import fr.framelab.api.model.requests.AuthRequest;
 import fr.framelab.api.model.responses.APIResponse;
 import fr.framelab.api.model.responses.ErrorResponse;
-import fr.framelab.api.model.user.CompleteUser;
+import fr.framelab.api.model.user.User;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -71,8 +70,8 @@ public class FrameLabAPI {
             // Si la requête a réussis
 
             // On deserialize la réponse
-            Type apiResponseType = new TypeToken<APIResponse<CompleteUser>>(){}.getType();
-            APIResponse<CompleteUser> apiResponse = gson.fromJson(response.body(), apiResponseType);
+            Type apiResponseType = new TypeToken<APIResponse<User>>(){}.getType();
+            APIResponse<User> apiResponse = gson.fromJson(response.body(), apiResponseType);
 
             // Stocker le token récupéré
             this.token = apiResponse.getResult().getToken();

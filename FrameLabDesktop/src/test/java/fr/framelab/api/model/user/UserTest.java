@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CompleteUserTest {
-    private CompleteUser basicUser;
+class UserTest {
+    private User user;
     private final int USER_ID = 1;
     private final String FIRST_NAME = "Alice";
     private final String LAST_NAME = "Dupont";
@@ -18,7 +18,7 @@ class CompleteUserTest {
      */
     @BeforeEach
     void setUp() {
-        basicUser = new CompleteUser(USER_ID, FIRST_NAME, LAST_NAME, IS_ADMIN, EMAIL);
+        user = new User(USER_ID, FIRST_NAME, LAST_NAME, IS_ADMIN, EMAIL);
     }
 
     @Test
@@ -33,7 +33,7 @@ class CompleteUserTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            CompleteUser basicUser = new CompleteUser(userId, firstName, lastName, isAdmin, email);
+            User user = new User(userId, firstName, lastName, isAdmin, email);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -56,7 +56,7 @@ class CompleteUserTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            CompleteUser basicUser = new CompleteUser(userId, firstName, lastName, isAdmin, email);
+            User user = new User(userId, firstName, lastName, isAdmin, email);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -79,7 +79,7 @@ class CompleteUserTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            CompleteUser basicUser = new CompleteUser(userId, firstName, lastName, isAdmin, email);
+            User user = new User(userId, firstName, lastName, isAdmin, email);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -102,7 +102,7 @@ class CompleteUserTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            CompleteUser basicUser = new CompleteUser(userId, firstName, lastName, isAdmin, email);
+            User user = new User(userId, firstName, lastName, isAdmin, email);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -125,7 +125,7 @@ class CompleteUserTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            CompleteUser basicUser = new CompleteUser(userId, firstName, lastName, isAdmin, email);
+            User user = new User(userId, firstName, lastName, isAdmin, email);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -148,7 +148,7 @@ class CompleteUserTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            CompleteUser basicUser = new CompleteUser(userId, firstName, lastName, isAdmin, email);
+            User user = new User(userId, firstName, lastName, isAdmin, email);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -171,7 +171,7 @@ class CompleteUserTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            CompleteUser basicUser = new CompleteUser(userId, firstName, lastName, isAdmin, email);
+            User user = new User(userId, firstName, lastName, isAdmin, email);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -180,5 +180,53 @@ class CompleteUserTest {
         assertNotNull(thrownException);
         assertInstanceOf(IllegalArgumentException.class, thrownException);
         assertEquals("Empty email is not allowed", thrownException.getMessage());
+    }
+
+    @Test
+    void shouldRejectNullToken() {
+        // ARRANGE - Préparer les données
+        int userId = 1;
+        String firstName = "Alice";
+        String lastName = "Dupont";
+        int isAdmin = 0;
+        String email = "alice.dupont@email.com";
+        String token = null;
+
+        // ACT - Exécuter l'action à tester
+        Exception thrownException = null;
+        try {
+            User user = new User(userId, firstName, lastName, isAdmin, email, token);
+        } catch (Exception e) {
+            thrownException = e;
+        }
+
+        // ASSERT - Vérifier le résultat
+        assertNotNull(thrownException);
+        assertInstanceOf(IllegalArgumentException.class, thrownException);
+        assertEquals("Null token is not allowed", thrownException.getMessage());
+    }
+
+    @Test
+    void shouldRejectEmptyToken() {
+        // ARRANGE - Préparer les données
+        int userId = 1;
+        String firstName = "Alice";
+        String lastName = "Dupont";
+        int isAdmin = 0;
+        String email = "alice.dupont@email.com";
+        String token = " ";
+
+        // ACT - Exécuter l'action à tester
+        Exception thrownException = null;
+        try {
+            User user = new User(userId, firstName, lastName, isAdmin, email, token);
+        } catch (Exception e) {
+            thrownException = e;
+        }
+
+        // ASSERT - Vérifier le résultat
+        assertNotNull(thrownException);
+        assertInstanceOf(IllegalArgumentException.class, thrownException);
+        assertEquals("Empty token is not allowed", thrownException.getMessage());
     }
 }

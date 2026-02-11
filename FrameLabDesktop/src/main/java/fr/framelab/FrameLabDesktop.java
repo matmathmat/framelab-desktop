@@ -19,7 +19,7 @@ public class FrameLabDesktop extends Application {
         BorderPane root = loader.load();
 
         MainController mainController = loader.getController();
-        //mainController.setServices(flashCardService, deckService);
+        mainController.setServices(frameLabAPI);
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

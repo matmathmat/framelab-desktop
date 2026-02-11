@@ -1,14 +1,13 @@
 package fr.framelab.controller;
 
+import fr.framelab.api.FrameLabAPI;
+import javafx.fxml.FXML;
+
 public class MainController {
-//    @FXML
-//    private FlashCardListController flashCardListController;
-//
-//    @FXML
-//    private DeckListController deckListController;
-//
-//    public void setServices(FlashCardService flashCardService, DeckService deckService) {
-//        this.flashCardListController.setService(flashCardService);
-//        this.deckListController.setServices(deckService, flashCardService);
-//    }
+    @FXML
+    private LoginController loginController;
+
+    public void setServices(FrameLabAPI frameLabAPI) {
+        this.loginController.setService(frameLabAPI);
+    }
 }

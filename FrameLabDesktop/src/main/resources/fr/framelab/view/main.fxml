@@ -33,4 +33,13 @@
       <StackPane fx:id="contentPane"/>
    </center>
 
+    <right>
+        <VBox fx:id="rightBar"
+              alignment="CENTER"
+              spacing="20"
+              prefWidth="400"
+              style="-fx-background-color: #222222;">
+        </VBox>
+    </right>
+
 </BorderPane>

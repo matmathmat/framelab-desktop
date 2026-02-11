@@ -4,6 +4,30 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.MainController">
+    <top>
+        <HBox fx:id="topBar"
+              alignment="CENTER"
+              prefHeight="60"
+              style="-fx-background-color: #222222;">
+
+            <Label text="FrameLab"
+                   style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox fx:id="leftBar"
+              alignment="CENTER"
+              spacing="20"
+              prefWidth="60"
+              style="-fx-background-color: #222222;">
+
+            <Button text="a" style="fx-font-size: 18px;"/>
+            <Button text="b" style="fx-font-size: 18px;"/>
+            <Button text="c" style="fx-font-size: 18px;"/>
+            <Button text="d" style="fx-font-size: 18px;"/>
+        </VBox>
+    </left>
 
     <center>
       <StackPane fx:id="contentPane"/>

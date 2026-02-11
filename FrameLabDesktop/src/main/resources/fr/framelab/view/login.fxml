@@ -3,12 +3,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.LoginController">
-   <children>
-      <TextField fx:id="emailTextField" layoutX="226.0" layoutY="142.0" />
-      <Label layoutX="226.0" layoutY="117.0" text="Email" />
-      <TextField fx:id="passwordTextField" layoutX="226.0" layoutY="200.0" />
-      <Label layoutX="227.0" layoutY="183.0" text="Mot de passe" />
-      <Button fx:id="loginButton" layoutX="257.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleLogin" text="Se connecter" />
-   </children>
-</AnchorPane>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.LoginController">
+   <center>
+       <VBox alignment="CENTER" maxWidth="200">
+           <Label text="Email" />
+           <TextField fx:id="emailTextField"/>
+
+           <Label text="Mot de passe" />
+           <TextField fx:id="passwordTextField" />
+
+           <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" text="Se connecter" />
+       </VBox>
+   </center>
+</BorderPane>

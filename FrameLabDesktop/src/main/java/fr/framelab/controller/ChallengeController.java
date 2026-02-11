@@ -29,12 +29,14 @@ public class ChallengeController {
 
     private Challenge activeChallenge;
 
+    private Image baseImage;
+
     private void loadActiveChallenge() {
         try {
             activeChallenge = this.mainController.frameLabAPI.getActiveChallenge();
 
-            Image image = new Image(activeChallenge.getPhotoUrl(), true);
-            challengeImage.setImage(image);
+            baseImage = new Image(activeChallenge.getPhotoUrl(), true);
+            challengeImage.setImage(baseImage);
 
             titleThemeLabel.setText(activeChallenge.getTitleTheme());
             descriptionThemeLabel.setText(activeChallenge.getDescriptionTheme());
@@ -52,6 +54,6 @@ public class ChallengeController {
 
     @FXML
     private void handleParticipate() {
-
+        this.mainController.showEditor(baseImage);
     }
 }

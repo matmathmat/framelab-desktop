@@ -29,8 +29,8 @@ public class MainController {
 
     public void initialize() {
         // Rend visible uniquement si l'home est visible
-        topBar.visibleProperty().bind(homeVisible);
-        leftBar.visibleProperty().bind(homeVisible);
+        this.topBar.visibleProperty().bind(homeVisible);
+        this.leftBar.visibleProperty().bind(homeVisible);
 
         showLogin();
     }
@@ -47,7 +47,7 @@ public class MainController {
             LoginController controller = loader.getController();
             controller.setMainController(this);
 
-            contentPane.getChildren().setAll(view);
+            this.contentPane.getChildren().setAll(view);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class MainController {
 
     public void showHome() {
         try {
-            homeVisible.set(true);
+            this.homeVisible.set(true);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/home.fxml"));
             Parent view = loader.load();
@@ -63,7 +63,7 @@ public class MainController {
             HomeController controller = loader.getController();
             controller.setMainController(this);
 
-            contentPane.getChildren().setAll(view);
+            this.contentPane.getChildren().setAll(view);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,13 +77,24 @@ public class MainController {
             ChallengeController controller = loader.getController();
             controller.setMainController(this);
 
-            contentPane.getChildren().setAll(view);
+            this.contentPane.getChildren().setAll(view);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void showEditor(Image baseImage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor.fxml"));
+            Parent view = loader.load();
 
+            EditorController controller = loader.getController();
+            controller.setMainController(this);
+            controller.setBaseImage(baseImage);
+
+            this.contentPane.getChildren().setAll(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

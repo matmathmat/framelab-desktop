@@ -1,6 +1,6 @@
 package fr.framelab.api;
 
-import fr.framelab.api.exceptions.HttpClientErrorException;
+import fr.framelab.api.exceptions.HttpUnauthorizedException;
 import fr.framelab.api.model.Challenge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +54,7 @@ class FrameLabAPITest {
 
         // ASSERT - Vérifier le résultat
         assertNotNull(thrownException);
-        assertInstanceOf(HttpClientErrorException.class, thrownException);
+        assertInstanceOf(HttpUnauthorizedException.class, thrownException);
         assertEquals("Email ou mot de passe incorrect", thrownException.getMessage());
     }
 
@@ -85,7 +85,7 @@ class FrameLabAPITest {
 
         // ASSERT - Vérifier le résultat
         assertNotNull(thrownException);
-        assertInstanceOf(HttpClientErrorException.class, thrownException);
+        assertInstanceOf(HttpUnauthorizedException.class, thrownException);
         assertEquals("Token manquant, invalide ou expiré", thrownException.getMessage());
     }
 }

@@ -3,8 +3,7 @@ package fr.framelab.api;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import fr.framelab.api.exceptions.HttpClientErrorException;
-import fr.framelab.api.exceptions.HttpServerErrorException;
+import fr.framelab.api.exceptions.*;
 import fr.framelab.api.model.*;
 
 import java.io.IOException;
@@ -45,13 +44,32 @@ public class FrameLabAPI {
         return this.CreateURL() + "/" + endpoint;
     }
 
-    public boolean login(String email, String password) throws IOException, InterruptedException {
-        // Initialiser gson
-        Gson gson = new Gson();
+    private void ManageFailedResponse(HttpResponse<String> response) {
+        // On deserialize la réponse
+        ErrorResponse errorResponse = new Gson().fromJson(response.body(), ErrorResponse.class);
 
+        switch(response.statusCode()) {
+            case 400:
+                throw new HttpBadRequestException(errorResponse.getMessage());
+            case 401:
+                throw new HttpUnauthorizedException(errorResponse.getMessage());
+            case 402:
+                throw new HttpPaymentRequiredException(errorResponse.getMessage());
+            case 403:
+                throw new HttpForbiddenException(errorResponse.getMessage());
+            case 404:
+                throw new HttpNotFoundException(errorResponse.getMessage());
+            case 500:
+                throw new HttpInternalServerErrorException(errorResponse.getMessage());
+            default:
+                throw new HttpUnclassifiedException(errorResponse.getMessage());
+        }
+    }
+
+    public boolean login(String email, String password) throws IOException, InterruptedException {
         // Créer le corps de la requête
         AuthRequest requestAuthRequest = new AuthRequest(email, password);
-        String requestBody = gson.toJson(requestAuthRequest);
+        String requestBody = new Gson().toJson(requestAuthRequest);
 
         // Créer la requête
         HttpRequest request = HttpRequest.newBuilder()
@@ -68,7 +86,7 @@ public class FrameLabAPI {
 
             // On deserialize la réponse
             Type apiResponseType = new TypeToken<APIResponse<User>>(){}.getType();
-            APIResponse<User> apiResponse = gson.fromJson(response.body(), apiResponseType);
+            APIResponse<User> apiResponse = new Gson().fromJson(response.body(), apiResponseType);
 
             // Stocker le token récupéré
             this.token = apiResponse.getResult().getToken();
@@ -76,16 +94,9 @@ public class FrameLabAPI {
             // On retourne vrai car on a obtenu le token
             return true;
         } else {
-            // Si la requête n'a pas réussis
-
-            // On deserialize la réponse
-            ErrorResponse errorResponse = gson.fromJson(response.body(), ErrorResponse.class);
-
-            if (response.statusCode() > 399 && response.statusCode() < 500) {
-                throw new HttpClientErrorException(errorResponse.getMessage());
-            } else {
-                throw new HttpServerErrorException(errorResponse.getMessage());
-            }
+            // Si la requête n'a pas réussis, on laisse notre fonction lever la bonne erreur
+            ManageFailedResponse(response);
+            return false;
         }
     }
 
@@ -113,16 +124,9 @@ public class FrameLabAPI {
             // On retourne le challenge
             return apiResponse.getResult();
         } else {
-            // Si la requête n'a pas réussis
-
-            // On deserialize la réponse
-            ErrorResponse errorResponse = gson.fromJson(response.body(), ErrorResponse.class);
-
-            if (response.statusCode() > 399 && response.statusCode() < 500) {
-                throw new HttpClientErrorException(errorResponse.getMessage());
-            } else {
-                throw new HttpServerErrorException(errorResponse.getMessage());
-            }
+            // Si la requête n'a pas réussis, on laisse notre fonction lever la bonne erreur
+            ManageFailedResponse(response);
+            return null;
         }
     }
 }

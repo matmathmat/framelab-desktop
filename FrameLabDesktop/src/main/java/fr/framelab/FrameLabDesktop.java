@@ -24,6 +24,7 @@ public class FrameLabDesktop extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setTitle("FrameLabDesktop");
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

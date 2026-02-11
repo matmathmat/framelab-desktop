@@ -5,10 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import fr.framelab.api.exceptions.HttpClientErrorException;
 import fr.framelab.api.exceptions.HttpServerErrorException;
-import fr.framelab.api.model.AuthRequest;
-import fr.framelab.api.model.APIResponse;
-import fr.framelab.api.model.ErrorResponse;
-import fr.framelab.api.model.User;
+import fr.framelab.api.model.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -33,7 +30,7 @@ public class FrameLabAPI {
 
         this.domaineName = domaineName;
         this.useHTTPS = useHTTPS;
-        client = HttpClient.newHttpClient();
+        this.client = HttpClient.newHttpClient();
     }
 
     private String CreateURL() {
@@ -64,7 +61,7 @@ public class FrameLabAPI {
                 .build();
 
         // Envoyer la requête
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = this.client.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 200) {
             // Si la requête a réussis

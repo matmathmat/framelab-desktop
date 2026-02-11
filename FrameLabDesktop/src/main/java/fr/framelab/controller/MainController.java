@@ -22,9 +22,6 @@ public class MainController {
     @FXML
     private VBox leftBar;
 
-    @FXML
-    private VBox rightBar;
-
     private final BooleanProperty homeVisible = new SimpleBooleanProperty(false);
 
     public FrameLabAPI frameLabAPI;
@@ -33,7 +30,6 @@ public class MainController {
         // Rend visible uniquement si l'home est visible
         topBar.visibleProperty().bind(homeVisible);
         leftBar.visibleProperty().bind(homeVisible);
-        rightBar.visibleProperty().bind(homeVisible);
 
         showLogin();
     }

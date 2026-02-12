@@ -3,15 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.LoginController">
    <center>
        <VBox alignment="CENTER" maxWidth="200">
            <Label text="Email" />
-           <TextField fx:id="emailTextField"/>
+           <TextField fx:id="emailTextField" text="hawana@gmail.com" />
 
            <Label text="Mot de passe" />
-           <TextField fx:id="passwordTextField" />
+           <TextField fx:id="passwordTextField" text="password123" />
 
            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" text="Se connecter" />
        </VBox>

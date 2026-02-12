@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LuminosityController {
+public class BrightnessController {
 
     @FXML
     private Slider slider;
@@ -27,7 +27,7 @@ public class LuminosityController {
 
     public void show() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor/enhancement/luminosity.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor/enhancement/brightness.fxml"));
             BorderPane root = loader.load();
 
             // Créer la fenêtre
@@ -36,7 +36,7 @@ public class LuminosityController {
             this.stage.setScene(new Scene(root, 300, 150));
 
             // lier le stage et le controller
-            LuminosityController controller = loader.getController();
+            BrightnessController controller = loader.getController();
             controller.setStage(this.stage);
 
             // Afficher la fenêtre

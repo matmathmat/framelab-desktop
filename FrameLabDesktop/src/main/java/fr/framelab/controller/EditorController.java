@@ -1,6 +1,7 @@
 package fr.framelab.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,15 @@ public class EditorController {
 
     @FXML
     private ScrollPane rightScrollPane;
+
+    @FXML
+    private ComboBox<String> enhancementComboBox;
+
+    @FXML
+    private ComboBox<String> filterComboBox;
+
+    @FXML
+    private ComboBox<String> transformComboBox;
 
     private MainController mainController;
 

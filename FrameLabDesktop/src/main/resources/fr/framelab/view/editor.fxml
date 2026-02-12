@@ -17,30 +17,9 @@
             </padding>
 
             <!-- Gauche -->
-            <ComboBox fx:id="enhancementComboBox" promptText="Amélioration">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Luminosité" />
-                        <String fx:value="Contraste" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
-            <ComboBox fx:id="filterComboBox" promptText="Filtre">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Noir et blanc" />
-                        <String fx:value="Negatif" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
-            <ComboBox fx:id="transformComboBox" promptText="Transformation">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Rotation" />
-                        <String fx:value="Negatif" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
+            <ComboBox fx:id="enhancementComboBox" promptText="Amélioration" />
+            <ComboBox fx:id="filterComboBox" promptText="Filtre" />
+            <ComboBox fx:id="transformComboBox" promptText="Transformation" />
 
             <!-- Separateur -->
             <Region HBox.hgrow="ALWAYS" />

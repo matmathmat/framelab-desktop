@@ -1,4 +1,4 @@
-package fr.framelab.model;
+package fr.framelab.modules;
 
 public class EditorModule {
 

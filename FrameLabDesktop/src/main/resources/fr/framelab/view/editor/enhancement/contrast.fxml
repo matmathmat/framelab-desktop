@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.editor.enhancement.ContrastController">
+
+    <!-- Top -->
+    <top>
+        <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Contraste" BorderPane.alignment="CENTER" />
+    </top>
+
+    <!-- Centre -->
+    <center>
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 12;">
+            <Slider fx:id="slider" max="100" min="-100" value="0" />
+            <Label fx:id="valueLabel" text="${slider.value}" />
+        </VBox>
+    </center>
+
+    <!-- Bas -->
+    <bottom>
+        <Button fx:id="applyButton" onAction="#handleApply" text="Appliquer" BorderPane.alignment="CENTER" />
+    </bottom>
+</BorderPane>

@@ -2,9 +2,11 @@ package fr.framelab.controller;
 
 import fr.framelab.modules.EditorModule;
 import fr.framelab.modules.EnhancementModules;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -63,5 +65,15 @@ public class EditorController {
         if (module != null)  {
             module.getOnTrigger().run();
         }
+
+        // Quand javafx voudra bien traiter notre demande
+        Platform.runLater(() -> {
+            // On désélectionne l'item sélectionné
+            enhancementComboBox.getSelectionModel().clearSelection();
+
+            // On force l'affichage de la combobox par défaut pour réafficher le text prompt
+            enhancementComboBox.setSkin(new ComboBoxListViewSkin<>(enhancementComboBox));
+
+        });
     }
 }

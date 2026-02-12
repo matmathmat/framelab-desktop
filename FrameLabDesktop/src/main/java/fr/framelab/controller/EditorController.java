@@ -39,7 +39,6 @@ public class EditorController {
         // Charger les modules dans les combo boxes
         enhancementComboBox.setItems(EnhancementModules.getModules());
 
-
         // Lier la taille de l'ImageView à celle du ScrollPane
         baseImage.fitWidthProperty().bind(leftScrollPane.widthProperty());
         baseImage.fitHeightProperty().bind(leftScrollPane.heightProperty());

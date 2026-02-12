@@ -4,7 +4,7 @@ import fr.framelab.controller.editor.enhancement.ContrastController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import fr.framelab.controller.editor.enhancement.LuminosityController;
+import fr.framelab.controller.editor.enhancement.BrightnessController;
 
 public class EnhancementModules {
     public static ObservableList<EditorModule> getModules() {
@@ -13,7 +13,7 @@ public class EnhancementModules {
                 new EditorModule(
                         "Luminosité",
                         "Ajuster la luminosité de l'image",
-                        new LuminosityController()::show
+                        new BrightnessController()::show
                 ),
                 new EditorModule(
                         "Contraste",

@@ -16,7 +16,7 @@
 
             <!-- Gauche -->
             <ComboBox fx:id="enhancementComboBox" onAction="#handleEnhancement" promptText="Amélioration" />
-            <ComboBox fx:id="filterComboBox" promptText="Filtre" />
+            <ComboBox fx:id="filterComboBox" onAction="#handleFilter" promptText="Filtre" />
             <ComboBox fx:id="transformComboBox" promptText="Transformation" />
 
             <!-- Separateur -->

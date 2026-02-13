@@ -3,6 +3,7 @@ package fr.framelab.controller;
 import fr.framelab.models.ImageLayer;
 import fr.framelab.modules.EditorModule;
 import fr.framelab.modules.EnhancementModules;
+import fr.framelab.modules.FilterModules;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -47,6 +48,7 @@ public class EditorController {
     public void initialize() {
         // Charger les modules dans les combo boxes
         enhancementComboBox.setItems(EnhancementModules.getModules(this));
+        filterComboBox.setItems(FilterModules.getModules(this));
 
         // Lier la taille de l'ImageView à celle du ScrollPane
         baseImage.fitWidthProperty().bind(leftScrollPane.widthProperty());
@@ -107,17 +109,32 @@ public class EditorController {
         return editedImage;
     }
 
-    @FXML
-    private void handleEnhancement() {
-        EditorModule module = enhancementComboBox.getValue();
+    private void comboboxSelectedIndexChange(ComboBox<EditorModule> comboBox) {
+        // on obtient la valeur sélectionnée par la combobox
+        EditorModule module = comboBox.getValue();
 
+        // Si le module n'est pas nul on lance l'action
         if (module != null)  {
             module.getOnTrigger().run();
         }
 
+        // Quand javafx voudra bien traiter notre demande
         Platform.runLater(() -> {
-            enhancementComboBox.getSelectionModel().clearSelection();
-            enhancementComboBox.setSkin(new ComboBoxListViewSkin<>(enhancementComboBox));
+            // On désélectionne l'item sélectionné
+            comboBox.getSelectionModel().clearSelection();
+
+            // On force l'affichage de la combobox par défaut pour réafficher le text prompt
+            comboBox.setSkin(new ComboBoxListViewSkin<>(comboBox));
         });
+    }
+
+    @FXML
+    private void handleEnhancement() {
+        comboboxSelectedIndexChange(this.enhancementComboBox);
+    }
+
+    @FXML
+    private void handleFilter() {
+        comboboxSelectedIndexChange(this.filterComboBox);
     }
 }

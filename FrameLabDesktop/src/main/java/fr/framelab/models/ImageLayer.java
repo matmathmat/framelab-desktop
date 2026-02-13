@@ -172,7 +172,7 @@ public class ImageLayer {
 
         return merged;
     }
-    
+
     public int getZIndex() {
         return zIndex;
     }

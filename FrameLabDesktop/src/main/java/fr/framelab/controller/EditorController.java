@@ -4,6 +4,7 @@ import fr.framelab.models.ImageLayer;
 import fr.framelab.modules.EditorModule;
 import fr.framelab.modules.EnhancementModules;
 import fr.framelab.modules.FilterModules;
+import fr.framelab.modules.TransformationModules;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -49,6 +50,7 @@ public class EditorController {
         // Charger les modules dans les combo boxes
         enhancementComboBox.setItems(EnhancementModules.getModules(this));
         filterComboBox.setItems(FilterModules.getModules(this));
+        transformComboBox.setItems(TransformationModules.getModules(this));
 
         // Lier la taille de l'ImageView à celle du ScrollPane
         baseImage.fitWidthProperty().bind(leftScrollPane.widthProperty());
@@ -136,5 +138,10 @@ public class EditorController {
     @FXML
     private void handleFilter() {
         comboboxSelectedIndexChange(this.filterComboBox);
+    }
+
+    @FXML
+    private void handleTransformation() {
+        comboboxSelectedIndexChange(this.transformComboBox);
     }
 }

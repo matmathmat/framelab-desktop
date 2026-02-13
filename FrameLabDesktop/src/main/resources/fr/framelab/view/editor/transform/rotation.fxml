@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.editor.enhancement.RotationController">
+
+    <!-- Top -->
+    <top>
+        <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Rotation libre" BorderPane.alignment="CENTER" />
+    </top>
+
+    <!-- Centre -->
+    <center>
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 12;">
+            <Slider fx:id="slider" max="180" min="-180" value="0" />
+            <Label fx:id="valueLabel" text="${slider.value}" />
+        </VBox>
+    </center>
+
+    <!-- Bas -->
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+            <Button onAction="#handleApply" text="Appliquer" />
+            <Button onAction="#handleCancel" text="Annuler" />
+        </HBox>
+    </bottom>
+</BorderPane>

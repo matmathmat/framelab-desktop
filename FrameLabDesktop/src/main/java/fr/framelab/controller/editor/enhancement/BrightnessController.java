@@ -3,6 +3,7 @@ package fr.framelab.controller.editor.enhancement;
 import fr.framelab.controller.EditorController;
 import fr.framelab.models.ImageLayer;
 import fr.framelab.modules.image.BrightnessOperation;
+import fr.framelab.utils.image.ImageUtil;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -87,7 +88,7 @@ public class BrightnessController {
         // Créer une copie de l'image actuelle pour l'aperçu
         ImageLayer activeLayer = editorController.getActiveLayer();
         if (activeLayer != null) {
-            this.previewImage = copyImage(activeLayer.getEditedImage());
+            this.previewImage = ImageUtil.copyImage(activeLayer.getEditedImage());
         }
     }
 
@@ -102,7 +103,7 @@ public class BrightnessController {
         }
 
         // Réinitialiser l'image d'aperçu avec l'image originale du calque
-        this.previewImage = copyImage(activeLayer.getEditedImage());
+        this.previewImage = ImageUtil.copyImage(activeLayer.getEditedImage());
 
         // Appliquer temporairement l'opération de luminosité
         BrightnessOperation tempOperation = new BrightnessOperation(brightnessValue);
@@ -144,24 +145,6 @@ public class BrightnessController {
     private void handleCancel() {
         this.resetImage();
         this.stage.close();
-    }
-
-    private WritableImage copyImage(WritableImage image) {
-        if (image == null) {
-            return null;
-        }
-
-        int width = (int) image.getWidth();
-        int height = (int) image.getHeight();
-
-        WritableImage copy = new WritableImage(width, height);
-        copy.getPixelWriter().setPixels(
-                0, 0, width, height,
-                image.getPixelReader(),
-                0, 0
-        );
-
-        return copy;
     }
 
     public void setStage(Stage stage) {

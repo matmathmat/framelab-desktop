@@ -1,6 +1,7 @@
 package fr.framelab.models;
 
 import fr.framelab.modules.image.ImageOperation;
+import fr.framelab.utils.image.ImageUtil;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -30,8 +31,8 @@ public class ImageLayer {
 
     public ImageLayer(WritableImage baseImage) {
         this();
-        this.baseImage = copyImage(baseImage);
-        this.editedImage = copyImage(baseImage);
+        this.baseImage = ImageUtil.copyImage(baseImage);
+        this.editedImage = ImageUtil.copyImage(baseImage);
     }
 
     public ImageLayer(int width, int height) {
@@ -46,7 +47,8 @@ public class ImageLayer {
                 pw.setColor(x, y, Color.TRANSPARENT);
             }
         }
-        this.editedImage = copyImage(this.baseImage);
+
+        this.editedImage = ImageUtil.copyImage(this.baseImage);
     }
 
     public void addImageOperation(ImageOperation imageOperation) {
@@ -62,7 +64,7 @@ public class ImageLayer {
         // On vérifie si on dépasse la limite de 30 opérations
         if (this.operations.size() > MAX_OPERATIONS) {
             // BaseImage devient editedImage actuelle
-            this.baseImage = copyImage(this.editedImage);
+            this.baseImage = ImageUtil.copyImage(this.editedImage);
 
             // On réinitialise les opérations
             this.operations = new ArrayList<>();
@@ -71,7 +73,7 @@ public class ImageLayer {
     }
 
     private void resetEditedImage() {
-        this.editedImage = copyImage(this.baseImage);
+        this.editedImage = ImageUtil.copyImage(this.baseImage);
     }
 
     public void renderImage(int operationIndex) {
@@ -108,69 +110,14 @@ public class ImageLayer {
 
     public void merge(ImageLayer imageLayer) {
         // Fusionner les deux editedImage
-        this.editedImage = mergeImages(this.editedImage, imageLayer.getEditedImage());
+        this.editedImage = ImageUtil.mergeImages(this.editedImage, imageLayer.getEditedImage());
 
         // Mettre à jour baseImage avec le résultat de la fusion
-        this.baseImage = copyImage(this.editedImage);
+        this.baseImage = ImageUtil.copyImage(this.editedImage);
 
         // Réinitialiser les opérations
         this.operations = new ArrayList<>();
         this.operationIndex = 0;
-    }
-
-    private WritableImage copyImage(WritableImage image) {
-        if (image == null) {
-            return null;
-        }
-
-        // Obtenir les dimensions de l'image
-        int width = (int) image.getWidth();
-        int height = (int) image.getHeight();
-
-        WritableImage copy = new WritableImage(width, height);
-        PixelReader pixelReader = image.getPixelReader();
-        PixelWriter pixelWriter = copy.getPixelWriter();
-
-        // On va copier chaque pixel
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                pixelWriter.setArgb(x, y, pixelReader.getArgb(x, y));
-            }
-        }
-
-        return copy;
-    }
-
-    private WritableImage mergeImages(WritableImage bottom, WritableImage top) {
-        if (bottom == null) return copyImage(top);
-        if (top == null) return copyImage(bottom);
-
-        // Obtenir les dimensions de l'image
-        int width = (int) bottom.getWidth();
-        int height = (int) bottom.getHeight();
-        WritableImage merged = new WritableImage(width, height);
-
-        PixelReader bottomReader = bottom.getPixelReader();
-        PixelReader topReader = top.getPixelReader();
-        PixelWriter mergedWriter = merged.getPixelWriter();
-
-        // On va fusionner chaque pixel
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                Color bottomColor = bottomReader.getColor(x, y);
-                Color topColor = topReader.getColor(x, y);
-
-                double alpha = topColor.getOpacity();
-                double red = topColor.getRed() * alpha + bottomColor.getRed() * (1 - alpha);
-                double green = topColor.getGreen() * alpha + bottomColor.getGreen() * (1 - alpha);
-                double blue = topColor.getBlue() * alpha + bottomColor.getBlue() * (1 - alpha);
-                double opacity = alpha + bottomColor.getOpacity() * (1 - alpha);
-
-                mergedWriter.setColor(x, y, new Color(red, green, blue, opacity));
-            }
-        }
-
-        return merged;
     }
 
     public int getZIndex() {

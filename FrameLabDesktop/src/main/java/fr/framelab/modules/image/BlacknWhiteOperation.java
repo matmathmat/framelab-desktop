@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 public class BlacknWhiteOperation implements ImageOperation {
     public BlacknWhiteOperation() {
-        
+
     }
 
     public void handle(WritableImage image) {
@@ -23,13 +23,11 @@ public class BlacknWhiteOperation implements ImageOperation {
 
                 // Si on a obtenu un pixel
                 if (sourceColor != null) {
-                    // On obtient le canal de la couleur et on lui applique une formule pondérée (l'oeil perçoit le vert plus intensément)
-                    double r = Math.clamp(sourceColor.getRed() * 0.299, 0, 1);
-                    double g = Math.clamp(sourceColor.getGreen() * 0.587, 0, 1);
-                    double b = Math.clamp(sourceColor.getBlue() * 0.114, 0, 1);
+                    // Formule pondérée (l'oeil perçoit le vert plus intensément)
+                    double lum = Math.clamp(0.299 * sourceColor.getRed() + 0.587 * sourceColor.getGreen() + 0.114 * sourceColor.getBlue(), 0, 1);
 
                     // On écrit le nouveau pixel avec notre niveau de gris
-                    writer.setColor(x, y, new Color(r, g, b, sourceColor.getOpacity()));
+                    writer.setColor(x, y, new Color(lum, lum, lum, sourceColor.getOpacity()));
                 }
             }
         }

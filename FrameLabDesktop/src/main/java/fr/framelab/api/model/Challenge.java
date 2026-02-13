@@ -1,6 +1,6 @@
 package fr.framelab.api.model;
 
-import fr.framelab.validation.DateValidator;
+import fr.framelab.utils.validation.DateValidator;
 
 public class Challenge {
     protected int id;

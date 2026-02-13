@@ -1,4 +1,4 @@
-package fr.framelab.validation;
+package fr.framelab.utils.validation;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

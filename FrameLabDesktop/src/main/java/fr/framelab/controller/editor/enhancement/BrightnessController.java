@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,23 +35,33 @@ public class BrightnessController {
     private EditorController editorController;
     private WritableImage previewImage;
 
+    private boolean applyChange;
+
     public void show(EditorController editorController) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor/enhancement/brightness.fxml"));
             BorderPane root = loader.load();
 
-            // Créer la fenêtre
-            this.stage = new Stage();
-            this.stage.setTitle("Contraste");
-            this.stage.setScene(new Scene(root, 300, 150));
-
             // lier le stage et le controller
             BrightnessController controller = loader.getController();
-            controller.setStage(this.stage);
+
+            // Créer la fenêtre
+            Stage stage = new Stage();
+            stage.setTitle("Contraste");
+            stage.setScene(new Scene(root, 300, 150));
+
+            // Paramétrer le mode modal pour la fenêtre
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            // Rend la modification de la fenêtre impossible
+            stage.resizableProperty().setValue(Boolean.FALSE);
+
+            // On passe le stage après l'avoir créé
+            controller.setStage(stage);
             controller.setEditorController(editorController);
 
             // Afficher la fenêtre
-            this.stage.show();
+            stage.showAndWait();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,9 +112,19 @@ public class BrightnessController {
         editorController.getEditedImageView().setImage(this.previewImage);
     }
 
+    private void resetImage() {
+        // Restaurer l'image originale sans appliquer les changements
+        if (editorController != null) {
+            editorController.updateEditedImage();
+        }
+    }
+
     @FXML
     private void handleApply() {
         if (editorController != null) {
+            // On confirme qu'on veut appliquer le changemet
+            this.applyChange = true;
+
             // Créer l'opération finale avec la valeur du slider
             double brightnessValue = slider.getValue();
             BrightnessOperation operation = new BrightnessOperation(brightnessValue);
@@ -121,11 +142,7 @@ public class BrightnessController {
 
     @FXML
     private void handleCancel() {
-        // Restaurer l'image originale sans appliquer les changements
-        if (editorController != null) {
-            editorController.updateEditedImage();
-        }
-
+        this.resetImage();
         this.stage.close();
     }
 
@@ -149,5 +166,12 @@ public class BrightnessController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+
+        // Créer un évenèment onclose pour le stage
+        this.stage.setOnCloseRequest(event -> {
+            if (!this.applyChange) {
+                resetImage();
+            }
+        });
     }
 }

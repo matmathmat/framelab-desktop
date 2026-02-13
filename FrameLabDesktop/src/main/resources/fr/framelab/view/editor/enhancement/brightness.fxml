@@ -20,6 +20,9 @@
 
     <!-- Bas -->
     <bottom>
-        <Button fx:id="applyButton" onAction="#handleApply" text="Appliquer" BorderPane.alignment="CENTER" />
+        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
+            <Button onAction="#handleApply" text="Appliquer" />
+            <Button onAction="#handleCancel" text="Annuler" />
+        </HBox>
     </bottom>
 </BorderPane>

@@ -1,5 +1,6 @@
-package fr.framelab.api.model;
+package fr.framelab.api.api.models;
 
+import fr.framelab.api.models.Challenge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

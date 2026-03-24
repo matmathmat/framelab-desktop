@@ -1,4 +1,4 @@
-package fr.framelab.api.model;
+package fr.framelab.api.models;
 
 public class APIResponse<T> {
     protected boolean success;

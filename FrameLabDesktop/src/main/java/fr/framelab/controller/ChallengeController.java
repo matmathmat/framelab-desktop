@@ -1,13 +1,10 @@
 package fr.framelab.controller;
 
-import fr.framelab.api.model.Challenge;
+import fr.framelab.api.models.Challenge;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-
-import java.io.IOException;
 
 public class ChallengeController {
     @FXML

@@ -4,7 +4,7 @@ package fr.framelab.api;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import fr.framelab.api.exceptions.*;
-import fr.framelab.api.model.*;
+import fr.framelab.api.models.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

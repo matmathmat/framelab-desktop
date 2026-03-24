@@ -112,6 +112,8 @@ public class EditorController {
     }
 
     private void comboboxSelectedIndexChange(ComboBox<EditorModule> comboBox) {
+        if (comboBox == null) return;
+
         // on obtient la valeur sélectionnée par la combobox
         EditorModule module = comboBox.getValue();
 
@@ -121,13 +123,12 @@ public class EditorController {
         }
 
         // Quand javafx voudra bien traiter notre demande
-        Platform.runLater(() -> {
-            // On désélectionne l'item sélectionné
-            comboBox.getSelectionModel().clearSelection();
-
-            // On force l'affichage de la combobox par défaut pour réafficher le text prompt
-            comboBox.setSkin(new ComboBoxListViewSkin<>(comboBox));
-        });
+//        Platform.runLater(() -> {
+//            // On désélectionne l'item sélectionné
+//            comboBox.getSelectionModel().clearSelection();
+//            // On force l'affichage de la combobox par défaut pour réafficher le text prompt
+//            comboBox.setSkin(new ComboBoxListViewSkin<>(comboBox));
+//        });
     }
 
     @FXML

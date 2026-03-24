@@ -1,4 +1,4 @@
-package fr.framelab.api.model;
+package fr.framelab.api.models;
 
 import fr.framelab.utils.validation.DateValidator;
 

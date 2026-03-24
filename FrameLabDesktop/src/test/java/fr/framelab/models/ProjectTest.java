@@ -1,4 +1,4 @@
-package fr.framelab.api.models;
+package fr.framelab.models;
 
 import fr.framelab.models.Project;
 import org.junit.jupiter.api.BeforeEach;

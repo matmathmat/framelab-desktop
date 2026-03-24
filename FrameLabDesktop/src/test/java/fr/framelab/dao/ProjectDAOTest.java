@@ -1,5 +1,7 @@
 package fr.framelab.dao;
 
+import fr.framelab.api.models.Challenge;
+import fr.framelab.api.models.User;
 import fr.framelab.models.Project;
 import org.junit.jupiter.api.*;
 
@@ -11,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectDAOTest {
     private ProjectDAO projectDAO;
+    private UserDAO userDAO;
+    private ChallengeDAO challengeDAO;
     private Connection testConnection;
 
     private static final String TITLE = "Mon premier projet";
@@ -28,23 +32,32 @@ class ProjectDAOTest {
             stmt.execute("PRAGMA foreign_keys = ON");
         }
 
-        // Créer les tables parentes pour respecter les contraintes de clés étrangères
-        try (Statement stmt = this.testConnection.createStatement()) {
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS users (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL
-                )
-            """);
-            stmt.execute("""
-                CREATE TABLE IF NOT EXISTS challenges (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT NOT NULL
-                )
-            """);
-            stmt.execute("INSERT INTO users (name) VALUES ('Test User')");
-            stmt.execute("INSERT INTO challenges (name) VALUES ('Test Challenge')");
-        }
+        // Créer les tables parentes via leurs DAO respectifs
+        this.userDAO = new UserDAO(this.testConnection);
+        this.challengeDAO = new ChallengeDAO(this.testConnection);
+
+        // Insérer un utilisateur test pour satisfaire les clés étrangères
+        User testUser = new User(
+                1,
+                "Alice",
+                "Dupont",
+                0,
+                "alice.dupont@email.com",
+                "token"
+        );
+        this.userDAO.save(testUser);
+
+        // Insérer un challenge test pour satisfaire les clés étrangères
+        Challenge testChallenge = new Challenge(
+                1,
+                "Challenge hebdomadaire du samedi",
+                "Ceci est le challenge hebdomadaire du samedi. Le dieu soleil Helios attend vos offrandes pour cette semaine.",
+                "https://i.imgur.com/v6xDssA.jpeg",
+                "2025-11-29 12:00:00",
+                "2026-02-28 12:00:00",
+                0
+        );
+        this.challengeDAO.save(testChallenge);
 
         this.projectDAO = new ProjectDAO(this.testConnection);
     }
@@ -252,12 +265,18 @@ class ProjectDAOTest {
     }
 
     @Test
-    void shouldNotDeleteProjectsFromOtherUsers() throws SQLException {
+    void shouldNotDeleteProjectsFromOtherUsers() {
         // ARRANGE - Préparer les données
-        try (Statement stmt = this.testConnection.createStatement()) {
-            stmt.execute("INSERT INTO users (name) VALUES ('Other User')");
-        }
-        int otherUserId = 2;
+        User otherUser = new User(
+                2,
+                "Bob",
+                "Martin",
+                0,
+                "bob.martin@email.com",
+                "token"
+        );
+        this.userDAO.save(otherUser);
+        int otherUserId = otherUser.getId();
 
         Project project1 = new Project("Projet user 1", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
         Project project2 = new Project("Projet user 2", otherUserId, CHALLENGE_ID, CREATED_AT, EDITED_AT);

@@ -38,7 +38,7 @@ class UserDAOTest {
     }
 
     @Test
-    void shouldSaveUserAndAssignId() {
+    void shouldSaveUser() {
         // ARRANGE - Préparer les données
         User user = new User(0, FIRST_NAME, LAST_NAME, IS_ADMIN, EMAIL, TOKEN);
 
@@ -46,7 +46,7 @@ class UserDAOTest {
         this.userDAO.save(user);
 
         // ASSERT - Vérifier le résultat
-        assertNotEquals(0, user.getId());
+        assertEquals(0, user.getId());
 
         try (Statement stmt = this.testConnection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM users WHERE id = " + user.getId())) {
@@ -65,8 +65,8 @@ class UserDAOTest {
     @Test
     void shouldAssignDifferentIdsToMultipleUsers() {
         // ARRANGE - Préparer les données
-        User user1 = new User(0, "Jean", "Jean", 0, "jean.jean@email.com", "token");
-        User user2 = new User(0, "Pascalou", "Pascalou", 0, "pascalou-pascalou@email.com", "token");
+        User user1 = new User(1, "Jean", "Jean", 0, "jean.jean@email.com", "token");
+        User user2 = new User(2, "Pascalou", "Pascalou", 0, "pascalou-pascalou@email.com", "token");
 
         // ACT - Exécuter l'action à tester
         this.userDAO.save(user1);
@@ -123,8 +123,8 @@ class UserDAOTest {
     @Test
     void shouldFindAllUsers() {
         // ARRANGE - Préparer les données
-        this.userDAO.save(new User(0, "Bob", "Martin", 0, "bob.martin@test.fr", "token"));
-        this.userDAO.save(new User(0, "Charlie", "Dubois", 1, "charlie.admin@test.fr", "token"));
+        this.userDAO.save(new User(1, "Bob", "Martin", 0, "bob.martin@test.fr", "token"));
+        this.userDAO.save(new User(2, "Charlie", "Dubois", 1, "charlie.admin@test.fr", "token"));
 
         // ACT - Exécuter l'action à tester
         ArrayList<User> users = this.userDAO.findAll();

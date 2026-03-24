@@ -76,12 +76,4 @@ public class Challenge {
     public boolean getIsArchived() {
         return (this.isArchived != 0);
     }
-
-    public void setId(int id) {
-        if (this.id > 0) {
-            throw new UnsupportedOperationException("ID cannot be modified once set");
-        }
-
-        this.id = id;
-    }
 }

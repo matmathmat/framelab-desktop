@@ -15,7 +15,7 @@ public class ChallengeDAO {
     private void initializeTable() {
         String sql = """
             CREATE TABLE IF NOT EXISTS challenges (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY,
                 title_theme TEXT NOT NULL,
                 description_theme TEXT NOT NULL,
                 photo_url TEXT NOT NULL,
@@ -33,23 +33,17 @@ public class ChallengeDAO {
     }
 
     public void save(Challenge challenge) {
-        String sql = "INSERT INTO challenges (title_theme, description_theme, photo_url, start_date, end_date, is_archived) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO challenges (id, title_theme, description_theme, photo_url, start_date, end_date, is_archived) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, challenge.getTitleTheme());
-            pstmt.setString(2, challenge.getDescriptionTheme());
-            pstmt.setString(3, challenge.getPhotoUrl());
-            pstmt.setString(4, challenge.getStartDate());
-            pstmt.setString(5, challenge.getEndDate());
-            pstmt.setInt(6, challenge.getIsArchived() ? 1 : 0);
+            pstmt.setInt(1, challenge.getId());
+            pstmt.setString(2, challenge.getTitleTheme());
+            pstmt.setString(3, challenge.getDescriptionTheme());
+            pstmt.setString(4, challenge.getPhotoUrl());
+            pstmt.setString(5, challenge.getStartDate());
+            pstmt.setString(6, challenge.getEndDate());
+            pstmt.setInt(7, challenge.getIsArchived() ? 1 : 0);
             pstmt.executeUpdate();
-
-            try (ResultSet keys = pstmt.getGeneratedKeys()) {
-                if (keys.next()) {
-                    challenge.setId(keys.getInt(1));
-                }
-            }
-
         } catch (SQLException e) {
             throw new RuntimeException("Failed to save challenge: " + e.getMessage(), e);
         }

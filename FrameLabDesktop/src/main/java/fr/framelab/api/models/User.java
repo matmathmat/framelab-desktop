@@ -98,14 +98,6 @@ public class User {
         return token;
     }
 
-    public void setId(int id) {
-        if (this.id > 0) {
-            throw new UnsupportedOperationException("ID cannot be modified once set");
-        }
-
-        this.id = id;
-    }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }

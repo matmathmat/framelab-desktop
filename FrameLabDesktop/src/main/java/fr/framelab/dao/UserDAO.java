@@ -15,7 +15,7 @@ public class UserDAO {
     private void initializeTable() {
         String sql = """
             CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY,
                 first_name TEXT NOT NULL,
                 last_name TEXT NOT NULL,
                 is_admin INTEGER NOT NULL DEFAULT 0,
@@ -32,22 +32,16 @@ public class UserDAO {
     }
 
     public void save(User user) {
-        String sql = "INSERT INTO users (first_name, last_name, is_admin, email, token) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (id, first_name, last_name, is_admin, email, token) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, user.getFirstName());
-            pstmt.setString(2, user.getLastName());
-            pstmt.setInt(3, user.getIsAdmin() ? 1 : 0);
-            pstmt.setString(4, user.getEmail());
-            pstmt.setString(5, user.getToken());
+            pstmt.setInt(1, user.getId());
+            pstmt.setString(2, user.getFirstName());
+            pstmt.setString(3, user.getLastName());
+            pstmt.setInt(4, user.getIsAdmin() ? 1 : 0);
+            pstmt.setString(5, user.getEmail());
+            pstmt.setString(6, user.getToken());
             pstmt.executeUpdate();
-
-            try (ResultSet keys = pstmt.getGeneratedKeys()) {
-                if (keys.next()) {
-                    user.setId(keys.getInt(1));
-                }
-            }
-
         } catch (SQLException e) {
             throw new RuntimeException("Failed to save user: " + e.getMessage(), e);
         }

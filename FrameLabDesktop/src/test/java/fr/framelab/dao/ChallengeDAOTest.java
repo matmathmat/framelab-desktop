@@ -40,13 +40,14 @@ class ChallengeDAOTest {
     @Test
     void shouldSaveChallenge() {
         // ARRANGE - Préparer les données
-        Challenge challenge = new Challenge(0, TITLE, DESC, PHOTO, START, END, 0);
+        Challenge challenge = new Challenge(1, TITLE, DESC, PHOTO, START, END, 0);
 
         // ACT - Exécuter l'action à tester
         this.challengeDAO.save(challenge);
 
         // ASSERT - Vérifier le résultat
-        assertNotEquals(0, challenge.getId());
+        assertEquals(1, challenge.getId());
+
         try (Statement stmt = this.testConnection.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM challenges WHERE id = " + challenge.getId())) {
 
@@ -76,15 +77,15 @@ class ChallengeDAOTest {
     @Test
     void shouldFindAllChallenges() {
         // ARRANGE - Préparer les données
-        this.challengeDAO.save(new Challenge(0, "Eco-Coding 2026", "Optimisation d'algorithmes.", "https://framelab/images/challenge1.png", START, END, 0));
-        this.challengeDAO.save(new Challenge(0, "Sécurité Cyber", "Trouvez les failles.", "https://framelab/images/challenge2.png", START, END, 0));
+        this.challengeDAO.save(new Challenge(1, "Rêve de bleu", "Modifiez l'image source pour qu'elle évoque un rêve bleu.", "https://framelab/images/challenge1.png", START, END, 0));
+        this.challengeDAO.save(new Challenge(2, "Géométrie parallèle", "Modifiez l'image source pour qu'elle évoque une géométrie parallèle.", "https://framelab/images/challenge2.png", START, END, 0));
 
         // ACT - Exécuter l'action à tester
         ArrayList<Challenge> challenges = this.challengeDAO.findAll();
 
         // ASSERT - Vérifier le résultat
         assertEquals(2, challenges.size());
-        assertEquals("Eco-Coding 2026", challenges.get(0).getTitleTheme());
+        assertEquals("Rêve de bleu", challenges.get(0).getTitleTheme());
         assertEquals("https://framelab/images/challenge2.png", challenges.get(1).getPhotoUrl());
     }
 

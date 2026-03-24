@@ -80,7 +80,6 @@ public class Project {
 
 
     public void setId(int id) {
-        // le DAO Utilise setId, si on ne fait pas ça, impossible de l'utiliser
         if (this.id > 0) {
             throw new UnsupportedOperationException("ID cannot be modified once set");
         }

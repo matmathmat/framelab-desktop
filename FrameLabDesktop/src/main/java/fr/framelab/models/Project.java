@@ -78,7 +78,6 @@ public class Project {
 
     // Setters
 
-
     public void setId(int id) {
         if (this.id > 0) {
             throw new UnsupportedOperationException("ID cannot be modified once set");

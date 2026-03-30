@@ -1,4 +1,4 @@
-package fr.framelab.api;
+package fr.framelab.services;
 
 
 import com.google.gson.Gson;

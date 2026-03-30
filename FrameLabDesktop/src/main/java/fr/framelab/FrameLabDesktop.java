@@ -1,6 +1,6 @@
 package fr.framelab;
 
-import fr.framelab.api.FrameLabAPI;
+import fr.framelab.services.FrameLabAPI;
 import fr.framelab.controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

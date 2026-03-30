@@ -1,6 +1,6 @@
 package fr.framelab.controller;
 
-import fr.framelab.api.FrameLabAPI;
+import fr.framelab.services.FrameLabAPI;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;

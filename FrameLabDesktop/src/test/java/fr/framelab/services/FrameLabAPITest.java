@@ -1,4 +1,4 @@
-package fr.framelab.api;
+package fr.framelab.services;
 
 import fr.framelab.exceptions.http.HttpUnauthorizedException;
 import fr.framelab.models.Challenge;

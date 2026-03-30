@@ -1,6 +1,5 @@
 package fr.framelab.controller;
 
-import fr.framelab.api.FrameLabAPI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 

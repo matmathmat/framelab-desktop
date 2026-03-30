@@ -170,7 +170,7 @@ class ProjectDAOTest {
     }
 
     @Test
-    void shouldFindProjectsByChallengeId() {
+    void shouldFindProjectsByChallengeIdAndUserId() {
         // ARRANGE - Préparer les données
         Project project1 = new Project("Premier projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
         Project project2 = new Project("Deuxième projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
@@ -178,7 +178,7 @@ class ProjectDAOTest {
         this.projectDAO.save(project2);
 
         // ACT - Exécuter l'action à tester
-        ArrayList<Project> projects = this.projectDAO.findByChallengeId(CHALLENGE_ID);
+        ArrayList<Project> projects = this.projectDAO.findByChallengeIdAndUserId(CHALLENGE_ID, USER_ID);
 
         // ASSERT - Vérifier le résultat
         assertEquals(2, projects.size());
@@ -190,7 +190,7 @@ class ProjectDAOTest {
         int nonExistentChallengeId = 9999;
 
         // ACT - Exécuter l'action à tester
-        ArrayList<Project> projects = this.projectDAO.findByChallengeId(nonExistentChallengeId);
+        ArrayList<Project> projects = this.projectDAO.findByChallengeIdAndUserId(nonExistentChallengeId, USER_ID);
 
         // ASSERT - Vérifier le résultat
         assertNotNull(projects);
@@ -246,49 +246,5 @@ class ProjectDAOTest {
         // ASSERT - Vérifier le résultat
         Project deleted = this.projectDAO.findById(savedId);
         assertNull(deleted);
-    }
-
-    @Test
-    void shouldDeleteAllProjectsByUserId() {
-        // ARRANGE - Préparer les données
-        Project project1 = new Project("Premier projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
-        Project project2 = new Project("Deuxième projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
-        this.projectDAO.save(project1);
-        this.projectDAO.save(project2);
-
-        // ACT - Exécuter l'action à tester
-        this.projectDAO.deleteByUserId(USER_ID);
-
-        // ASSERT - Vérifier le résultat
-        ArrayList<Project> projects = this.projectDAO.findByUserId(USER_ID);
-        assertTrue(projects.isEmpty());
-    }
-
-    @Test
-    void shouldNotDeleteProjectsFromOtherUsers() {
-        // ARRANGE - Préparer les données
-        User otherUser = new User(
-                2,
-                "Bob",
-                "Martin",
-                0,
-                "bob.martin@email.com",
-                "token"
-        );
-        this.userDAO.save(otherUser);
-        int otherUserId = otherUser.getId();
-
-        Project project1 = new Project("Projet user 1", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
-        Project project2 = new Project("Projet user 2", otherUserId, CHALLENGE_ID, CREATED_AT, EDITED_AT);
-        this.projectDAO.save(project1);
-        this.projectDAO.save(project2);
-
-        // ACT - Exécuter l'action à tester
-        this.projectDAO.deleteByUserId(USER_ID);
-
-        // ASSERT - Vérifier le résultat
-        ArrayList<Project> remainingProjects = this.projectDAO.findByUserId(otherUserId);
-        assertEquals(1, remainingProjects.size());
-        assertEquals("Projet user 2", remainingProjects.getFirst().getTitle());
     }
 }

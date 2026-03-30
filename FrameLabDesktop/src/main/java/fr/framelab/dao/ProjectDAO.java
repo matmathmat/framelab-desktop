@@ -1,8 +1,11 @@
 package fr.framelab.dao;
 
 import fr.framelab.models.Project;
+import fr.framelab.utils.validation.DateValidator;
+
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ProjectDAO {
@@ -41,8 +44,8 @@ public class ProjectDAO {
             pstmt.setString(1, project.getTitle());
             pstmt.setInt(2, project.getUserId());
             pstmt.setInt(3, project.getChallengeId());
-            pstmt.setString(4, project.getCreatedAt().toString());
-            pstmt.setString(5, project.getEditedAt().toString());
+            pstmt.setString(4, project.getCreatedAt().format(DateValidator.FORMATTER));
+            pstmt.setString(5, project.getEditedAt().format(DateValidator.FORMATTER));
             pstmt.executeUpdate();
 
             try (ResultSet keys = pstmt.getGeneratedKeys()) {
@@ -61,7 +64,7 @@ public class ProjectDAO {
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setString(1, project.getTitle());
-            pstmt.setString(2, project.getEditedAt().toString());
+            pstmt.setString(2, LocalDateTime.now().format(DateValidator.FORMATTER));
             pstmt.setInt(3, project.getId());
             pstmt.executeUpdate();
 
@@ -108,19 +111,20 @@ public class ProjectDAO {
         return projects;
     }
 
-    public ArrayList<Project> findByChallengeId(int challengeId) {
+    public ArrayList<Project> findByChallengeIdAndUserId(int challengeId, int userId) {
         ArrayList<Project> projects = new ArrayList<>();
 
-        String sql = "SELECT id, title, user_id, challenge_id, created_at, edited_at FROM projects WHERE challenge_id = ?";
+        String sql = "SELECT id, title, user_id, challenge_id, created_at, edited_at FROM projects WHERE challenge_id = ? and user_id = ?";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, challengeId);
+            pstmt.setInt(2, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 projects.add(mapRowToProject(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to retrieve projects for challenge " + challengeId + ": " + e.getMessage(), e);
+            throw new RuntimeException("Failed to retrieve projects for challenge: " + challengeId + " / and user: " + userId + " -> " + e.getMessage(), e);
         }
 
         return projects;
@@ -137,24 +141,13 @@ public class ProjectDAO {
         }
     }
 
-    public void deleteByUserId(int userId) {
-        String sql = "DELETE FROM projects WHERE user_id = ?";
-
-        try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to delete projects for user " + userId + ": " + e.getMessage(), e);
-        }
-    }
-
     private Project mapRowToProject(ResultSet rs) throws SQLException {
         Project project = new Project(
                 rs.getString("title"),
                 rs.getInt("user_id"),
                 rs.getInt("challenge_id"),
-                LocalDateTime.parse(rs.getString("created_at")),
-                LocalDateTime.parse(rs.getString("edited_at"))
+                LocalDateTime.parse(rs.getString("created_at"), DateValidator.FORMATTER),
+                LocalDateTime.parse(rs.getString("edited_at"), DateValidator.FORMATTER)
         );
 
         project.setId(rs.getInt("id"));

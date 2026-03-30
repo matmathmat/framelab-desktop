@@ -153,6 +153,7 @@ public class FrameLabService {
             Type apiResponseType = new TypeToken<APIResponseDTO<User>>(){}.getType();
             APIResponseDTO<User> apiResponseDTO = new Gson().fromJson(response.body(), apiResponseType);
             this.currentUser = apiResponseDTO.getResult();
+            this.currentUser.setToken(this.token);
             return this.currentUser;
         } else {
             ManageFailedResponse(response);

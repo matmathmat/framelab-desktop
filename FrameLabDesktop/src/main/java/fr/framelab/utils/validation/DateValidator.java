@@ -7,7 +7,7 @@ import java.time.format.ResolverStyle;
 import java.util.Arrays;
 
 public class DateValidator {
-    private static final DateTimeFormatter FORMATTER =
+    public static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")
                     .withResolverStyle(ResolverStyle.STRICT);
 

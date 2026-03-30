@@ -13,19 +13,25 @@ public class UserDAO {
     }
 
     private void initializeTable() {
-        String sql = """
+        String createSql = """
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
                 first_name TEXT NOT NULL,
                 last_name TEXT NOT NULL,
                 is_admin INTEGER NOT NULL DEFAULT 0,
-                email TEXT UNIQUE,
-                token TEXT
+                email TEXT UNIQUE NOT NULL,
+                token TEXT NOT NULL
             )
         """;
 
-        try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
-            pstmt.execute();
+        String guestSql = """
+            INSERT OR IGNORE INTO users (id, first_name, last_name, is_admin, email, token)
+            VALUES (0, 'Guest', 'Guest', 0, 'guest@guest.com', 'guestToken')
+        """;
+
+        try (Statement stmt = this.connection.createStatement()) {
+            stmt.execute(createSql);
+            stmt.execute(guestSql);
         } catch (SQLException e) {
             throw new RuntimeException("Failed to create users table: " + e.getMessage(), e);
         }

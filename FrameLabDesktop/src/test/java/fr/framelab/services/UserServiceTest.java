@@ -1,6 +1,6 @@
 package fr.framelab.services;
 
-import fr.framelab.api.models.User;
+import fr.framelab.models.User;
 import fr.framelab.dao.UserDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

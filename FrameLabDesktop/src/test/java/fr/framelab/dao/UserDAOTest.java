@@ -1,6 +1,6 @@
 package fr.framelab.dao;
 
-import fr.framelab.api.models.User;
+import fr.framelab.models.User;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;

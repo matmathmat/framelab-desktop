@@ -4,10 +4,11 @@ package fr.framelab.api;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import fr.framelab.api.exceptions.*;
-import fr.framelab.api.models.*;
 import fr.framelab.dto.APIResponseDTO;
 import fr.framelab.dto.AuthRequestDTO;
 import fr.framelab.dto.ErrorResponseDTO;
+import fr.framelab.models.Challenge;
+import fr.framelab.models.User;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

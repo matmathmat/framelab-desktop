@@ -1,6 +1,6 @@
 package fr.framelab.services;
 
-import fr.framelab.api.models.Challenge;
+import fr.framelab.models.Challenge;
 import fr.framelab.dao.ChallengeDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

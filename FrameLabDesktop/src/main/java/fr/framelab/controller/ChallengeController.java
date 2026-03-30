@@ -1,6 +1,6 @@
 package fr.framelab.controller;
 
-import fr.framelab.api.models.Challenge;
+import fr.framelab.models.Challenge;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

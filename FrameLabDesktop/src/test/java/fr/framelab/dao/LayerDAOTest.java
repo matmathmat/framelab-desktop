@@ -1,7 +1,7 @@
 package fr.framelab.dao;
 
-import fr.framelab.api.models.Challenge;
-import fr.framelab.api.models.User;
+import fr.framelab.models.Challenge;
+import fr.framelab.models.User;
 import fr.framelab.models.Layer;
 import fr.framelab.models.Project;
 import org.junit.jupiter.api.*;

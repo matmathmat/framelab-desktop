@@ -1,9 +1,7 @@
 package fr.framelab.services;
 
-import fr.framelab.api.models.Challenge;
-import fr.framelab.api.models.User;
+import fr.framelab.models.Challenge;
 import fr.framelab.dao.ChallengeDAO;
-import fr.framelab.dao.UserDAO;
 
 public class ChallengeService {
     private final ChallengeDAO challengeDAO;

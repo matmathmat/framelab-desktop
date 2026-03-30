@@ -1,6 +1,6 @@
 package fr.framelab.services;
 
-import fr.framelab.api.models.User;
+import fr.framelab.models.User;
 import fr.framelab.dao.UserDAO;
 
 public class UserService {

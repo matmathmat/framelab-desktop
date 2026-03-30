@@ -1,6 +1,6 @@
 package fr.framelab.dao;
 
-import fr.framelab.api.models.Challenge;
+import fr.framelab.models.Challenge;
 import java.sql.*;
 import java.util.ArrayList;
 

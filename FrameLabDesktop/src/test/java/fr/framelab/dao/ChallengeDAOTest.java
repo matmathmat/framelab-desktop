@@ -1,6 +1,6 @@
 package fr.framelab.dao;
 
-import fr.framelab.api.models.Challenge;
+import fr.framelab.models.Challenge;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;

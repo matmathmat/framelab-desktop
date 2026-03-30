@@ -48,13 +48,14 @@ public class UserDAO {
     }
 
     public void update(User user) {
-        String sql = "UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?";
+        String sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, token = ? WHERE id = ?";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setString(1, user.getFirstName());
             pstmt.setString(2, user.getLastName());
             pstmt.setString(3, user.getEmail());
-            pstmt.setInt(4, user.getId());
+            pstmt.setString(4, user.getToken());
+            pstmt.setInt(5, user.getId());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {

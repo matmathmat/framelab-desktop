@@ -49,6 +49,8 @@ public class Challenge {
         this.isArchived = isArchived;
     }
 
+    // Getters
+
     public int getId() {
         return this.id;
     }
@@ -75,5 +77,31 @@ public class Challenge {
 
     public boolean getIsArchived() {
         return (this.isArchived != 0);
+    }
+
+    // Setters
+
+    public void setTitleTheme(String titleTheme) {
+        this.titleTheme = titleTheme;
+    }
+
+    public void setDescriptionTheme(String descriptionTheme) {
+        this.descriptionTheme = descriptionTheme;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setIsArchived(int isArchived) {
+        this.isArchived = isArchived;
     }
 }

@@ -22,6 +22,7 @@ public class FrameLabService {
     protected boolean useHTTPS;
     protected String token;
     protected HttpClient client;
+    public User currentUser;
 
     public FrameLabService(String domaineName, boolean useHTTPS) {
         if (domaineName == null) {
@@ -34,6 +35,10 @@ public class FrameLabService {
         this.domaineName = domaineName;
         this.useHTTPS = useHTTPS;
         this.client = HttpClient.newHttpClient();
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     private String CreateURL() {
@@ -129,6 +134,27 @@ public class FrameLabService {
             return apiResponseDTO.getResult();
         } else {
             // Si la requête n'a pas réussis, on laisse notre fonction lever la bonne erreur
+            ManageFailedResponse(response);
+            return null;
+        }
+    }
+
+    public User getMe() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(CreateURL("api/auth/me")))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + this.token)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = this.client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            Type apiResponseType = new TypeToken<APIResponseDTO<User>>(){}.getType();
+            APIResponseDTO<User> apiResponseDTO = new Gson().fromJson(response.body(), apiResponseType);
+            this.currentUser = apiResponseDTO.getResult();
+            return this.currentUser;
+        } else {
             ManageFailedResponse(response);
             return null;
         }

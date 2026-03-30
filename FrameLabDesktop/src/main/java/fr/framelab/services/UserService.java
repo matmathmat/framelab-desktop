@@ -12,7 +12,7 @@ public class UserService {
     }
 
     public User getUser(int userId) {
-        
+
         return this.userDAO.findById(userId);
     }
 

@@ -38,8 +38,6 @@ public class DatabaseManagerTest {
         // ARRANGE - Préparer les données
         this.databaseManager = new DatabaseManager();
 
-        // ACT - (services déjà instanciés dans le constructeur)
-
         // ASSERT - Vérifier le résultat
         assertNotNull(this.databaseManager.userService);
         assertNotNull(this.databaseManager.challengeService);

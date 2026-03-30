@@ -25,7 +25,7 @@ public class LoginController {
     @FXML
     private void handleLogin() {
         try {
-            boolean success = this.mainController.frameLabAPI.login(this.emailTextField.getText(), this.passwordTextField.getText());
+            boolean success = this.mainController.frameLabService.login(this.emailTextField.getText(), this.passwordTextField.getText());
 
             if (success) {
                 this.mainController.showHome();

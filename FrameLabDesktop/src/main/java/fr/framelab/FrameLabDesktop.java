@@ -1,6 +1,6 @@
 package fr.framelab;
 
-import fr.framelab.services.FrameLabAPI;
+import fr.framelab.services.FrameLabService;
 import fr.framelab.controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,17 +9,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class FrameLabDesktop extends Application {
-    private FrameLabAPI frameLabAPI;
+    private FrameLabService frameLabService;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.frameLabAPI = new FrameLabAPI("localhost:3000", false);
+        this.frameLabService = new FrameLabService("localhost:3000", false);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/main.fxml"));
         BorderPane root = loader.load();
 
         MainController mainController = loader.getController();
-        mainController.setServices(frameLabAPI);
+        mainController.setServices(frameLabService);
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

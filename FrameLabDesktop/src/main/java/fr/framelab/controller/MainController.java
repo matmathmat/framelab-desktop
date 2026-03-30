@@ -1,6 +1,6 @@
 package fr.framelab.controller;
 
-import fr.framelab.services.FrameLabAPI;
+import fr.framelab.services.FrameLabService;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
@@ -25,7 +25,7 @@ public class MainController {
 
     private final BooleanProperty homeVisible = new SimpleBooleanProperty(false);
 
-    public FrameLabAPI frameLabAPI;
+    public FrameLabService frameLabService;
 
     public void initialize() {
         // Rend visible uniquement si l'home est visible
@@ -35,8 +35,8 @@ public class MainController {
         showLogin();
     }
 
-    public void setServices(FrameLabAPI frameLabAPI) {
-        this.frameLabAPI = frameLabAPI;
+    public void setServices(FrameLabService frameLabService) {
+        this.frameLabService = frameLabService;
     }
 
     public void showLogin() {

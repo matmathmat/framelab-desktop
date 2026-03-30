@@ -9,8 +9,8 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FrameLabAPITest {
-    private FrameLabAPI frameLabAPI;
+class FrameLabServiceTest {
+    private FrameLabService frameLabService;
     private final String DOMAINE_NAME = "localhost:3000";
     private final boolean IS_HTTPS = false;
 
@@ -22,7 +22,7 @@ class FrameLabAPITest {
      */
     @BeforeEach
     void setUp() {
-        this.frameLabAPI = new FrameLabAPI(DOMAINE_NAME, IS_HTTPS);
+        this.frameLabService = new FrameLabService(DOMAINE_NAME, IS_HTTPS);
     }
 
     @Test
@@ -31,7 +31,7 @@ class FrameLabAPITest {
         boolean logged = false;
 
         // ACT - Exécuter l'action à tester
-        logged = this.frameLabAPI.login(VALID_EMAIL, VALID_PASSWORD);
+        logged = this.frameLabService.login(VALID_EMAIL, VALID_PASSWORD);
 
         // ASSERT - Vérifier le résultat
         assertTrue(logged);
@@ -47,7 +47,7 @@ class FrameLabAPITest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            logged = this.frameLabAPI.login(email, password);
+            logged = this.frameLabService.login(email, password);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -61,11 +61,11 @@ class FrameLabAPITest {
     @Test
     void shouldGetActiveChallenge() throws IOException, InterruptedException {
         // ARRANGE - Préparer les données
-        this.frameLabAPI.login(VALID_EMAIL, VALID_PASSWORD);
+        this.frameLabService.login(VALID_EMAIL, VALID_PASSWORD);
         Challenge activeChallenge = null;
 
         // ACT - Exécuter l'action à tester
-        activeChallenge = this.frameLabAPI.getActiveChallenge();
+        activeChallenge = this.frameLabService.getActiveChallenge();
 
         // ASSERT - Vérifier le résultat
         assertNotNull(activeChallenge);
@@ -78,7 +78,7 @@ class FrameLabAPITest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            activeChallenge = this.frameLabAPI.getActiveChallenge();
+            activeChallenge = this.frameLabService.getActiveChallenge();
         } catch (Exception e) {
             thrownException = e;
         }

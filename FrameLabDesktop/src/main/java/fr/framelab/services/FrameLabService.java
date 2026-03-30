@@ -17,13 +17,13 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class FrameLabAPI {
+public class FrameLabService {
     protected String domaineName;
     protected boolean useHTTPS;
     protected String token;
     protected HttpClient client;
 
-    public FrameLabAPI(String domaineName, boolean useHTTPS) {
+    public FrameLabService(String domaineName, boolean useHTTPS) {
         if (domaineName == null) {
             throw new IllegalArgumentException("Null domaineName is not allowed");
         }

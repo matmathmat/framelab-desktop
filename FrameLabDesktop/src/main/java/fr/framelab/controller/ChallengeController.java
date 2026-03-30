@@ -30,7 +30,7 @@ public class ChallengeController {
 
     private void loadActiveChallenge() {
         try {
-            activeChallenge = this.mainController.frameLabAPI.getActiveChallenge();
+            activeChallenge = this.mainController.frameLabService.getActiveChallenge();
 
             baseImage = new Image(activeChallenge.getPhotoUrl(), true);
             challengeImage.setImage(baseImage);

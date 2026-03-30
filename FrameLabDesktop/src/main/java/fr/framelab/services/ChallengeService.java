@@ -32,7 +32,7 @@ public class ChallengeService {
         }
     }
 
-    public void deleteUser(int id) {
+    public void deleteChallenge(int id) {
         this.challengeDAO.deleteById(id);
     }
 }

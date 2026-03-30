@@ -45,7 +45,7 @@ public class ChallengeServiceTest {
     }
 
     @Test
-    void shouldSaveAndRetrieveUser() {
+    void shouldSaveAndRetrievChallenge() {
         // ARRANGE - Préparer les données
         Challenge challenge = new Challenge(CHALLENGE_ID, TITLE_THEME, DESCRIPTION_THEME, PHOTO_URL, START_DATE, END_DATE, IS_ARCHIVED);
 
@@ -58,7 +58,7 @@ public class ChallengeServiceTest {
     }
 
     @Test
-    void shouldUpdateExistingUser() {
+    void shouldUpdateExistingChallenge() {
         // ARRANGE - Préparer les données
         Challenge challenge = new Challenge(CHALLENGE_ID, TITLE_THEME, DESCRIPTION_THEME, PHOTO_URL, START_DATE, END_DATE, IS_ARCHIVED);
         this.challengeService.saveChallenge(challenge);
@@ -74,13 +74,13 @@ public class ChallengeServiceTest {
     }
 
     @Test
-    void shouldDeleteUser() {
+    void shouldDeleteChallenge() {
         // ARRANGE - Préparer les données
         Challenge challenge = new Challenge(CHALLENGE_ID, TITLE_THEME, DESCRIPTION_THEME, PHOTO_URL, START_DATE, END_DATE, IS_ARCHIVED);
         this.challengeService.saveChallenge(challenge);
 
         // ACT - Exécuter l'action à tester
-        this.challengeService.deleteUser(challenge.getId());
+        this.challengeService.deleteChallenge(challenge.getId());
 
         // ASSERT - Vérifier le résultat
         Challenge retrieveChallenge = this.challengeService.getChallenge(challenge.getId());
@@ -88,7 +88,7 @@ public class ChallengeServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenSavingNullUser() {
+    void shouldThrowExceptionWhenSavingNullChallenge() {
         // ARRANGE - Préparer les données
         Challenge challenge = null;
 

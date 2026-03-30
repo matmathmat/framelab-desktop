@@ -1,4 +1,4 @@
-package fr.framelab.api.exceptions;
+package fr.framelab.exceptions.http;
 
 public class HttpUnclassifiedException extends RuntimeException {
     public HttpUnclassifiedException(String message) {

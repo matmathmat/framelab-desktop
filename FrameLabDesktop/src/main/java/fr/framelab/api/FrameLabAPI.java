@@ -3,10 +3,10 @@ package fr.framelab.api;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import fr.framelab.api.exceptions.*;
 import fr.framelab.dto.APIResponseDTO;
 import fr.framelab.dto.AuthRequestDTO;
 import fr.framelab.dto.ErrorResponseDTO;
+import fr.framelab.exceptions.http.*;
 import fr.framelab.models.Challenge;
 import fr.framelab.models.User;
 

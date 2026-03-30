@@ -1,4 +1,4 @@
-package fr.framelab.api.exceptions;
+package fr.framelab.exceptions.http;
 
 public class HttpForbiddenException extends RuntimeException {
     public HttpForbiddenException(String message) {

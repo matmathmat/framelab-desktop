@@ -1,4 +1,4 @@
-package fr.framelab.api.exceptions;
+package fr.framelab.exceptions.http;
 
 public class HttpNotFoundException extends RuntimeException {
     public HttpNotFoundException(String message) {

@@ -1,6 +1,6 @@
 package fr.framelab.api;
 
-import fr.framelab.api.exceptions.HttpUnauthorizedException;
+import fr.framelab.exceptions.http.HttpUnauthorizedException;
 import fr.framelab.models.Challenge;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

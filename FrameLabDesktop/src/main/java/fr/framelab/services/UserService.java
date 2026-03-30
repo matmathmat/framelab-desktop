@@ -7,11 +7,17 @@ public class UserService {
     private final UserDAO userDAO;
 
     public UserService(UserDAO userDAO) {
+
         this.userDAO = userDAO;
     }
 
     public User getUser(int userId) {
+        
         return this.userDAO.findById(userId);
+    }
+
+    public User getLoggedInUser() {
+        return this.userDAO.findLoggedInUser();
     }
 
     public void saveUser(User user) {

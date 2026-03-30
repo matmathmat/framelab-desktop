@@ -105,6 +105,21 @@ public class UserDAO {
         return null;
     }
 
+    public User findLoggedInUser() {
+        String sql = "SELECT id, first_name, last_name, is_admin, email, token FROM users WHERE id != 0 AND token != 'guest' LIMIT 1";
+
+        try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return mapRowToUser(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to find logged in user: " + e.getMessage(), e);
+        }
+
+        return null;
+    }
+
     public ArrayList<User> findAll() {
         ArrayList<User> users = new ArrayList<>();
         String sql = "SELECT id, first_name, last_name, is_admin, email, token FROM users";

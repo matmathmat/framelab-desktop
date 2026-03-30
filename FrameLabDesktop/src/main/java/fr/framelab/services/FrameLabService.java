@@ -141,7 +141,7 @@ public class FrameLabService {
 
     public User getMe() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(CreateURL("api/auth/me")))
+                .uri(URI.create(CreateURL("api/users/me")))
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + this.token)
                 .GET()

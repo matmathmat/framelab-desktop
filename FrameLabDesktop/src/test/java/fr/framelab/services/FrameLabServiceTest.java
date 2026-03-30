@@ -2,6 +2,7 @@ package fr.framelab.services;
 
 import fr.framelab.exceptions.http.HttpUnauthorizedException;
 import fr.framelab.models.Challenge;
+import fr.framelab.models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +36,19 @@ class FrameLabServiceTest {
 
         // ASSERT - Vérifier le résultat
         assertTrue(logged);
+    }
+
+    @Test
+    void shouldDisplayLoggedUser() throws IOException, InterruptedException {
+        // ARRANGE - Préparer les données
+        boolean logged = false;
+
+        // ACT - Exécuter l'action à tester
+        logged = this.frameLabService.login(VALID_EMAIL, VALID_PASSWORD);
+        User me = this.frameLabService.getMe();
+
+        // ASSERT - Vérifier le résultat
+        assertNotNull(me);
     }
 
     @Test

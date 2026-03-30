@@ -1,5 +1,6 @@
 package fr.framelab.controller;
 
+import fr.framelab.models.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 
@@ -18,6 +19,9 @@ public class LoginController {
     @FXML
     private Button loginButton;
 
+    @FXML
+    public Button guestButton;
+
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
@@ -25,17 +29,28 @@ public class LoginController {
     @FXML
     private void handleLogin() {
         try {
-            boolean success = this.mainController.frameLabService.login(this.emailTextField.getText(), this.passwordTextField.getText());
+            boolean success = this.mainController.frameLabService.login(
+                    this.emailTextField.getText(),
+                    this.passwordTextField.getText()
+            );
 
             if (success) {
+                User me = this.mainController.frameLabService.getMe();
+                this.mainController.databaseManager.userService.saveUser(me);
                 this.mainController.showHome();
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(e.getClass().getSimpleName());
             alert.setHeaderText(e.getMessage());
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void handleGuest() {
+        User guest = this.mainController.databaseManager.userService.getUser(0);
+        this.mainController.frameLabService.currentUser = guest;
+        this.mainController.showHome();
     }
 }

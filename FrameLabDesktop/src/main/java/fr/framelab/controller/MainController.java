@@ -1,5 +1,7 @@
 package fr.framelab.controller;
 
+import fr.framelab.DatabaseManager;
+import fr.framelab.models.User;
 import fr.framelab.services.FrameLabService;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -12,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainController {
     @FXML
@@ -26,17 +29,33 @@ public class MainController {
     private final BooleanProperty homeVisible = new SimpleBooleanProperty(false);
 
     public FrameLabService frameLabService;
+    public DatabaseManager databaseManager;
 
     public void initialize() {
         // Rend visible uniquement si l'home est visible
         this.topBar.visibleProperty().bind(homeVisible);
         this.leftBar.visibleProperty().bind(homeVisible);
-
-        showLogin();
     }
 
-    public void setServices(FrameLabService frameLabService) {
+    public void setServices(FrameLabService frameLabService, DatabaseManager databaseManager) {
         this.frameLabService = frameLabService;
+        this.databaseManager = databaseManager;
+
+        User loggedInUser = this.databaseManager.userService.getLoggedInUser();
+
+        if (loggedInUser != null) {
+            try {
+                this.frameLabService.setToken(loggedInUser.getToken());
+                User me = this.frameLabService.getMe();
+                this.frameLabService.currentUser = me;
+                showHome();
+                return;
+            } catch (Exception e) {
+                this.databaseManager.userService.deleteUser(loggedInUser.getId());
+            }
+        }
+
+        showLogin();
     }
 
     public void showLogin() {
@@ -62,6 +81,13 @@ public class MainController {
 
             HomeController controller = loader.getController();
             controller.setMainController(this);
+
+            if (this.frameLabService.currentUser != null) {
+                controller.setGreeting(
+                        this.frameLabService.currentUser.getFirstName(),
+                        this.frameLabService.currentUser.getLastName()
+                );
+            }
 
             this.contentPane.getChildren().setAll(view);
         } catch (IOException e) {

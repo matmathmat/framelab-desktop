@@ -3,6 +3,7 @@ package fr.framelab.dao;
 import fr.framelab.models.Challenge;
 import fr.framelab.models.User;
 import fr.framelab.models.Project;
+import fr.framelab.utils.validation.DateValidator;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
@@ -20,8 +21,6 @@ class ProjectDAOTest {
     private static final String TITLE = "Mon premier projet";
     private static final int USER_ID = 1;
     private static final int CHALLENGE_ID = 1;
-    private static final LocalDateTime CREATED_AT = LocalDateTime.of(2026, 1, 1, 0, 0, 0);
-    private static final LocalDateTime EDITED_AT = LocalDateTime.of(2026, 1, 1, 12, 0, 0);
 
     @BeforeEach
     void setUp() throws SQLException {
@@ -72,7 +71,7 @@ class ProjectDAOTest {
     @Test
     void shouldSaveProjectAndAssignId() {
         // ARRANGE - Préparer les données
-        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
+        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID);
 
         // ACT - Exécuter l'action à tester
         this.projectDAO.save(project);
@@ -87,8 +86,8 @@ class ProjectDAOTest {
             assertEquals(TITLE, rs.getString("title"));
             assertEquals(USER_ID, rs.getInt("user_id"));
             assertEquals(CHALLENGE_ID, rs.getInt("challenge_id"));
-            assertEquals(CREATED_AT.toString(), rs.getString("created_at"));
-            assertEquals(EDITED_AT.toString(), rs.getString("edited_at"));
+            assertNotNull(rs.getString("created_at"));
+            assertNotNull(rs.getString("edited_at"));
         } catch (SQLException e) {
             fail("Erreur SQL : " + e.getMessage());
         }
@@ -97,8 +96,8 @@ class ProjectDAOTest {
     @Test
     void shouldAssignDifferentIdsToMultipleProjects() {
         // ARRANGE - Préparer les données
-        Project project1 = new Project("Premier projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
-        Project project2 = new Project("Deuxième projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
+        Project project1 = new Project("Premier projet", USER_ID, CHALLENGE_ID);
+        Project project2 = new Project("Deuxième projet", USER_ID, CHALLENGE_ID);
 
         // ACT - Exécuter l'action à tester
         this.projectDAO.save(project1);
@@ -111,7 +110,7 @@ class ProjectDAOTest {
     @Test
     void shouldFindProjectById() {
         // ARRANGE - Préparer les données
-        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
+        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID);
         this.projectDAO.save(project);
 
         // ACT - Exécuter l'action à tester
@@ -123,8 +122,8 @@ class ProjectDAOTest {
         assertEquals(TITLE, found.getTitle());
         assertEquals(USER_ID, found.getUserId());
         assertEquals(CHALLENGE_ID, found.getChallengeId());
-        assertEquals(CREATED_AT, found.getCreatedAt());
-        assertEquals(EDITED_AT, found.getEditedAt());
+        assertNotNull(found.getCreatedAt());
+        assertNotNull(found.getEditedAt());
     }
 
     @Test
@@ -142,8 +141,8 @@ class ProjectDAOTest {
     @Test
     void shouldFindProjectsByUserId() {
         // ARRANGE - Préparer les données
-        Project project1 = new Project("Premier projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
-        Project project2 = new Project("Deuxième projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
+        Project project1 = new Project("Premier projet", USER_ID, CHALLENGE_ID);
+        Project project2 = new Project("Deuxième projet", USER_ID, CHALLENGE_ID);
         this.projectDAO.save(project1);
         this.projectDAO.save(project2);
 
@@ -172,8 +171,8 @@ class ProjectDAOTest {
     @Test
     void shouldFindProjectsByChallengeIdAndUserId() {
         // ARRANGE - Préparer les données
-        Project project1 = new Project("Premier projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
-        Project project2 = new Project("Deuxième projet", USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
+        Project project1 = new Project("Premier projet", USER_ID, CHALLENGE_ID);
+        Project project2 = new Project("Deuxième projet", USER_ID, CHALLENGE_ID);
         this.projectDAO.save(project1);
         this.projectDAO.save(project2);
 
@@ -198,13 +197,11 @@ class ProjectDAOTest {
     }
 
     @Test
-    void shouldUpdateProjectTitleAndEditedAt() {
+    void shouldUpdateProjectTitle() {
         // ARRANGE - Préparer les données
-        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
+        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID);
         this.projectDAO.save(project);
         project.setTitle("Titre modifié");
-        LocalDateTime newEditedAt = LocalDateTime.of(2026, 6, 1, 8, 0, 0);
-        project.setEditedAt(newEditedAt);
 
         // ACT - Exécuter l'action à tester
         this.projectDAO.update(project);
@@ -213,16 +210,15 @@ class ProjectDAOTest {
         Project updated = this.projectDAO.findById(project.getId());
         assertNotNull(updated);
         assertEquals("Titre modifié", updated.getTitle());
-        assertEquals(newEditedAt, updated.getEditedAt());
     }
 
     @Test
     void shouldNotUpdateCreatedAt() {
         // ARRANGE - Préparer les données
-        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
+        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID);
         this.projectDAO.save(project);
+        LocalDateTime createdAtBeforeUpdate = project.getCreatedAt();
         project.setTitle("Titre modifié");
-        project.setEditedAt(LocalDateTime.of(2026, 6, 1, 8, 0, 0));
 
         // ACT - Exécuter l'action à tester
         this.projectDAO.update(project);
@@ -230,13 +226,13 @@ class ProjectDAOTest {
         // ASSERT - Vérifier le résultat
         Project updated = this.projectDAO.findById(project.getId());
         assertNotNull(updated);
-        assertEquals(CREATED_AT, updated.getCreatedAt());
+        assertEquals(createdAtBeforeUpdate, updated.getCreatedAt());
     }
 
     @Test
     void shouldDeleteProjectById() {
         // ARRANGE - Préparer les données
-        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID, CREATED_AT, EDITED_AT);
+        Project project = new Project(TITLE, USER_ID, CHALLENGE_ID);
         this.projectDAO.save(project);
         int savedId = project.getId();
 

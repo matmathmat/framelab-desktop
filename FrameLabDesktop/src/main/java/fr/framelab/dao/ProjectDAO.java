@@ -6,6 +6,7 @@ import fr.framelab.utils.validation.DateValidator;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class ProjectDAO {
@@ -40,17 +41,21 @@ public class ProjectDAO {
     public void save(Project project) {
         String sql = "INSERT INTO projects (title, user_id, challenge_id, created_at, edited_at) VALUES (?, ?, ?, ?, ?)";
 
+        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, project.getTitle());
             pstmt.setInt(2, project.getUserId());
             pstmt.setInt(3, project.getChallengeId());
-            pstmt.setString(4, project.getCreatedAt().format(DateValidator.FORMATTER));
-            pstmt.setString(5, project.getEditedAt().format(DateValidator.FORMATTER));
+            pstmt.setString(4, now.format(DateValidator.FORMATTER));
+            pstmt.setString(5, now.format(DateValidator.FORMATTER));
             pstmt.executeUpdate();
 
             try (ResultSet keys = pstmt.getGeneratedKeys()) {
                 if (keys.next()) {
                     project.setId(keys.getInt(1));
+                    project.setCreatedAt(now);
+                    project.setEditedAt(now);
                 }
             }
 
@@ -62,9 +67,11 @@ public class ProjectDAO {
     public void update(Project project) {
         String sql = "UPDATE projects SET title = ?, edited_at = ? WHERE id = ?";
 
+        LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setString(1, project.getTitle());
-            pstmt.setString(2, LocalDateTime.now().format(DateValidator.FORMATTER));
+            pstmt.setString(2, now.format(DateValidator.FORMATTER));
             pstmt.setInt(3, project.getId());
             pstmt.executeUpdate();
 

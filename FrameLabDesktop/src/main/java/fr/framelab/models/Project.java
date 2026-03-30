@@ -12,7 +12,7 @@ public class Project {
 
     // Constructors
 
-    public Project(String title, int userId, int challengeId, LocalDateTime createdAt, LocalDateTime editedAt) {
+    public Project(String title, int userId, int challengeId) {
         // On vérifie que le titre respecte notre règle métier
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException("Title cannot be null or empty");
@@ -34,6 +34,15 @@ public class Project {
             throw new IllegalArgumentException("The challenge ID cannot be less than 0");
         }
 
+        this.title = title;
+        this.userId = userId;
+        this.challengeId = challengeId;
+        this.id = -1;
+    }
+
+    public Project(String title, int userId, int challengeId, LocalDateTime createdAt, LocalDateTime editedAt) {
+        this(title, userId, challengeId);
+
         if (createdAt == null) {
             throw new IllegalArgumentException("The created at date time cannot be null");
         }
@@ -42,17 +51,14 @@ public class Project {
             throw new IllegalArgumentException("The edited at date time cannot be null");
         }
 
-        this.title = title;
-        this.userId = userId;
-        this.challengeId = challengeId;
         this.createdAt = createdAt;
         this.editedAt = editedAt;
-        this.id = -1;
     }
 
     // Getters
 
     public int getId() {
+
         return this.id;
     }
 
@@ -61,18 +67,22 @@ public class Project {
     }
 
     public int getUserId() {
+
         return this.userId;
     }
 
     public int getChallengeId() {
+
         return this.challengeId;
     }
 
     public LocalDateTime getCreatedAt() {
+
         return this.createdAt;
     }
 
     public LocalDateTime getEditedAt() {
+
         return this.editedAt;
     }
 
@@ -87,7 +97,12 @@ public class Project {
     }
 
     public void setTitle(String title) {
+
         this.title = title;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public void setEditedAt(LocalDateTime editedAt) {

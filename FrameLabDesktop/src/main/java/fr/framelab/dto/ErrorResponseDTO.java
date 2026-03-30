@@ -1,10 +1,10 @@
-package fr.framelab.api.models;
+package fr.framelab.dto;
 
-public class ErrorResponse {
+public class ErrorResponseDTO {
     protected boolean success;
     protected String message;
 
-    public ErrorResponse(boolean success, String message) {
+    public ErrorResponseDTO(boolean success, String message) {
         this.success = success;
         this.message = message;
     }

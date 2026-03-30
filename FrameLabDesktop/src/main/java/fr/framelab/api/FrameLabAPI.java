@@ -5,6 +5,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import fr.framelab.api.exceptions.*;
 import fr.framelab.api.models.*;
+import fr.framelab.dto.APIResponseDTO;
+import fr.framelab.dto.AuthRequestDTO;
+import fr.framelab.dto.ErrorResponseDTO;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -46,30 +49,30 @@ public class FrameLabAPI {
 
     private void ManageFailedResponse(HttpResponse<String> response) {
         // On deserialize la réponse
-        ErrorResponse errorResponse = new Gson().fromJson(response.body(), ErrorResponse.class);
+        ErrorResponseDTO errorResponseDTO = new Gson().fromJson(response.body(), ErrorResponseDTO.class);
 
         switch(response.statusCode()) {
             case 400:
-                throw new HttpBadRequestException(errorResponse.getMessage());
+                throw new HttpBadRequestException(errorResponseDTO.getMessage());
             case 401:
-                throw new HttpUnauthorizedException(errorResponse.getMessage());
+                throw new HttpUnauthorizedException(errorResponseDTO.getMessage());
             case 402:
-                throw new HttpPaymentRequiredException(errorResponse.getMessage());
+                throw new HttpPaymentRequiredException(errorResponseDTO.getMessage());
             case 403:
-                throw new HttpForbiddenException(errorResponse.getMessage());
+                throw new HttpForbiddenException(errorResponseDTO.getMessage());
             case 404:
-                throw new HttpNotFoundException(errorResponse.getMessage());
+                throw new HttpNotFoundException(errorResponseDTO.getMessage());
             case 500:
-                throw new HttpInternalServerErrorException(errorResponse.getMessage());
+                throw new HttpInternalServerErrorException(errorResponseDTO.getMessage());
             default:
-                throw new HttpUnclassifiedException(errorResponse.getMessage());
+                throw new HttpUnclassifiedException(errorResponseDTO.getMessage());
         }
     }
 
     public boolean login(String email, String password) throws IOException, InterruptedException {
         // Créer le corps de la requête
-        AuthRequest requestAuthRequest = new AuthRequest(email, password);
-        String requestBody = new Gson().toJson(requestAuthRequest);
+        AuthRequestDTO requestAuthRequestDTO = new AuthRequestDTO(email, password);
+        String requestBody = new Gson().toJson(requestAuthRequestDTO);
 
         // Créer la requête
         HttpRequest request = HttpRequest.newBuilder()
@@ -85,11 +88,11 @@ public class FrameLabAPI {
             // Si la requête a réussis
 
             // On deserialize la réponse
-            Type apiResponseType = new TypeToken<APIResponse<User>>(){}.getType();
-            APIResponse<User> apiResponse = new Gson().fromJson(response.body(), apiResponseType);
+            Type apiResponseType = new TypeToken<APIResponseDTO<User>>(){}.getType();
+            APIResponseDTO<User> apiResponseDTO = new Gson().fromJson(response.body(), apiResponseType);
 
             // Stocker le token récupéré
-            this.token = apiResponse.getResult().getToken();
+            this.token = apiResponseDTO.getResult().getToken();
 
             // On retourne vrai car on a obtenu le token
             return true;
@@ -118,11 +121,11 @@ public class FrameLabAPI {
             // Si la requête a réussis
 
             // On deserialize la réponse
-            Type apiResponseType = new TypeToken<APIResponse<Challenge>>(){}.getType();
-            APIResponse<Challenge> apiResponse = gson.fromJson(response.body(), apiResponseType);
+            Type apiResponseType = new TypeToken<APIResponseDTO<Challenge>>(){}.getType();
+            APIResponseDTO<Challenge> apiResponseDTO = gson.fromJson(response.body(), apiResponseType);
 
             // On retourne le challenge
-            return apiResponse.getResult();
+            return apiResponseDTO.getResult();
         } else {
             // Si la requête n'a pas réussis, on laisse notre fonction lever la bonne erreur
             ManageFailedResponse(response);

@@ -1,10 +1,10 @@
-package fr.framelab.api.models;
+package fr.framelab.dto;
 
-public class APIResponse<T> {
+public class APIResponseDTO<T> {
     protected boolean success;
     protected T result;
 
-    public APIResponse(boolean success, T result) {
+    public APIResponseDTO(boolean success, T result) {
         this.success = success;
         this.result = result;
     }

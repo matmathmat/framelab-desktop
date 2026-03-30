@@ -1,10 +1,10 @@
-package fr.framelab.api.models;
+package fr.framelab.dto;
 
-public class AuthRequest {
+public class AuthRequestDTO {
     protected String email;
     protected String password;
 
-    public AuthRequest(String email, String password) {
+    public AuthRequestDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }

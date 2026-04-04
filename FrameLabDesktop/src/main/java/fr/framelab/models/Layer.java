@@ -4,10 +4,11 @@ public class Layer {
     protected int id;
     protected int projectId;
     protected int index;
+    protected int layerType;
 
     // Constructors
 
-    public Layer(int projectId, int index) {
+    public Layer(int projectId, int index, int layerType) {
         // On vérifie que l'id du projet est supérieur à -1
         if (projectId < 0) {
             throw new IllegalArgumentException("The project ID cannot be less than 0");
@@ -21,6 +22,12 @@ public class Layer {
         this.projectId = projectId;
         this.index = index;
         this.id = -1;
+
+        if (layerType < 1) {
+            this.layerType = 0;
+        } else {
+            this.layerType = 1;
+        }
     }
 
     // Getters
@@ -35,6 +42,10 @@ public class Layer {
 
     public int getIndex() {
         return this.index;
+    }
+
+    public int getLayerType()   {
+        return this.layerType;
     }
 
     // Setters

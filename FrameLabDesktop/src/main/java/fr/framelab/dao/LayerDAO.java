@@ -18,6 +18,7 @@ public class LayerDAO {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 project_id INTEGER NOT NULL,
                 layer_index INTEGER NOT NULL,
+                layer_type INTEGER NOT NULL DEFAULT 0,
                 FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
                 UNIQUE(project_id, layer_index)
             )
@@ -31,11 +32,12 @@ public class LayerDAO {
     }
 
     public void save(Layer layer) {
-        String sql = "INSERT INTO layers (project_id, layer_index) VALUES (?, ?)";
+        String sql = "INSERT INTO layers (project_id, layer_index, layer_type) VALUES (?, ?, ?)";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, layer.getProjectId());
             pstmt.setInt(2, layer.getIndex());
+            pstmt.setInt(3, layer.getLayerType());
             pstmt.executeUpdate();
 
             try (ResultSet keys = pstmt.getGeneratedKeys()) {
@@ -50,11 +52,12 @@ public class LayerDAO {
     }
 
     public void update(Layer layer) {
-        String sql = "UPDATE layers SET layer_index = ? WHERE id = ?";
+        String sql = "UPDATE layers SET layer_index = ?, layer_type = ? WHERE id = ?";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, layer.getIndex());
             pstmt.setInt(2, layer.getId());
+            pstmt.setInt(3, layer.getId());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -63,7 +66,7 @@ public class LayerDAO {
     }
 
     public Layer findById(int id) {
-        String sql = "SELECT id, project_id, layer_index FROM layers WHERE id = ?";
+        String sql = "SELECT id, project_id, layer_index, layer_type FROM layers WHERE id = ?";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -83,7 +86,7 @@ public class LayerDAO {
     public ArrayList<Layer> findByProjectId(int projectId) {
         ArrayList<Layer> layers = new ArrayList<>();
 
-        String sql = "SELECT id, project_id, layer_index FROM layers WHERE project_id = ? ORDER BY layer_index ASC";
+        String sql = "SELECT id, project_id, layer_index, layer_type FROM layers WHERE project_id = ? ORDER BY layer_index ASC";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, projectId);
@@ -125,7 +128,8 @@ public class LayerDAO {
     private Layer mapRowToLayer(ResultSet rs) throws SQLException {
         Layer layer = new Layer(
                 rs.getInt("project_id"),
-                rs.getInt("layer_index")
+                rs.getInt("layer_index"),
+                rs.getInt("layer_type")
         );
 
         layer.setId(rs.getInt("id"));

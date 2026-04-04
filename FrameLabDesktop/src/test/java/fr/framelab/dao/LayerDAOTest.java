@@ -21,6 +21,7 @@ class LayerDAOTest {
 
     private int testProjectId;
     private final int LAYER_INDEX = 0;
+    private final int LAYER_TYPE = 0;
 
     @BeforeEach
     void setUp() throws SQLException {
@@ -61,7 +62,7 @@ class LayerDAOTest {
     @Test
     void shouldSaveLayerAndAssignId() {
         // ARRANGE - Préparer les données
-        Layer layer = new Layer(testProjectId, LAYER_INDEX);
+        Layer layer = new Layer(testProjectId, LAYER_INDEX, LAYER_TYPE);
 
         // ACT - Exécuter l'action à tester
         this.layerDAO.save(layer);
@@ -83,7 +84,7 @@ class LayerDAOTest {
     @Test
     void shouldFindLayerById() {
         // ARRANGE - Préparer les données
-        Layer layer = new Layer(testProjectId, LAYER_INDEX);
+        Layer layer = new Layer(testProjectId, LAYER_INDEX, LAYER_TYPE);
         this.layerDAO.save(layer);
 
         // ACT - Exécuter l'action à tester
@@ -99,8 +100,8 @@ class LayerDAOTest {
     @Test
     void shouldFindLayersByProjectId() {
         // ARRANGE - Préparer les données
-        this.layerDAO.save(new Layer(testProjectId, 0));
-        this.layerDAO.save(new Layer(testProjectId, 1));
+        this.layerDAO.save(new Layer(testProjectId, 0, LAYER_TYPE));
+        this.layerDAO.save(new Layer(testProjectId, 1, LAYER_TYPE));
 
         // ACT - Exécuter l'action à tester
         ArrayList<Layer> layers = this.layerDAO.findByProjectId(testProjectId);
@@ -114,7 +115,7 @@ class LayerDAOTest {
     @Test
     void shouldUpdateLayerIndex() {
         // ARRANGE - Préparer les données
-        Layer layer = new Layer(testProjectId, 0);
+        Layer layer = new Layer(testProjectId, 0, LAYER_TYPE);
         this.layerDAO.save(layer);
         layer.setIndex(5);
 
@@ -130,7 +131,7 @@ class LayerDAOTest {
     @Test
     void shouldDeleteLayerById() {
         // ARRANGE - Préparer les données
-        Layer layer = new Layer(testProjectId, 0);
+        Layer layer = new Layer(testProjectId, 0, LAYER_TYPE);
         this.layerDAO.save(layer);
         int savedId = layer.getId();
 
@@ -145,8 +146,8 @@ class LayerDAOTest {
     @Test
     void shouldDeleteLayersByProjectId() {
         // ARRANGE - Préparer les données
-        this.layerDAO.save(new Layer(testProjectId, 0));
-        this.layerDAO.save(new Layer(testProjectId, 1));
+        this.layerDAO.save(new Layer(testProjectId, 0, LAYER_TYPE));
+        this.layerDAO.save(new Layer(testProjectId, 1, LAYER_TYPE));
 
         // ACT - Exécuter l'action à tester
         this.layerDAO.deleteByProjectId(testProjectId);
@@ -159,10 +160,10 @@ class LayerDAOTest {
     @Test
     void shouldThrowExceptionWhenSavingDuplicateIndexForSameProject() {
         // ARRANGE - Préparer les données
-        Layer layer1 = new Layer(testProjectId, 0);
+        Layer layer1 = new Layer(testProjectId, 0, LAYER_TYPE);
         this.layerDAO.save(layer1);
 
-        Layer layer2 = new Layer(testProjectId, 0);
+        Layer layer2 = new Layer(testProjectId, 0,LAYER_TYPE);
 
         // ACT & ASSERT
         assertThrows(RuntimeException.class, () -> this.layerDAO.save(layer2));
@@ -174,8 +175,8 @@ class LayerDAOTest {
         Project project2 = new Project("Autre Projet", 1, 1, LocalDateTime.now(), LocalDateTime.now());
         this.projectDAO.save(project2);
 
-        Layer layer1 = new Layer(testProjectId, 10);
-        Layer layer2 = new Layer(project2.getId(), 10);
+        Layer layer1 = new Layer(testProjectId, 10, LAYER_TYPE);
+        Layer layer2 = new Layer(project2.getId(), 10, LAYER_TYPE);
 
         // ACT & ASSERT
         assertDoesNotThrow(() -> {

@@ -9,10 +9,11 @@ public class LayerTest {
     private Layer layer;
     private final int PROJECT_ID = 1;
     private final int INDEX = 0;
+    private final int LAYER_TYPE = 0;
 
     @BeforeEach
     void setUp() {
-        layer = new Layer(PROJECT_ID, INDEX);
+        layer = new Layer(PROJECT_ID, INDEX, LAYER_TYPE);
     }
 
     @Test
@@ -44,7 +45,7 @@ public class LayerTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            new Layer(projectId, INDEX);
+            new Layer(projectId, INDEX, LAYER_TYPE);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -61,7 +62,7 @@ public class LayerTest {
         int projectId = 10;
 
         // ACT - Exécuter l'action à tester
-        Layer newLayer = new Layer(projectId, INDEX);
+        Layer newLayer = new Layer(projectId, INDEX, LAYER_TYPE);
 
         // ASSERT - Vérifier le résultat
         assertEquals(projectId, newLayer.getProjectId());
@@ -73,7 +74,7 @@ public class LayerTest {
         int projectId = 0;
 
         // ACT - Exécuter l'action à tester
-        Layer newLayer = new Layer(projectId, INDEX);
+        Layer newLayer = new Layer(projectId, INDEX, LAYER_TYPE);
 
         // ASSERT - Vérifier le résultat
         assertEquals(projectId, newLayer.getProjectId());
@@ -87,7 +88,7 @@ public class LayerTest {
         // ACT - Exécuter l'action à tester
         Exception thrownException = null;
         try {
-            new Layer(PROJECT_ID, index);
+            new Layer(PROJECT_ID, index, LAYER_TYPE);
         } catch (Exception e) {
             thrownException = e;
         }
@@ -104,7 +105,7 @@ public class LayerTest {
         int index = 5;
 
         // ACT - Exécuter l'action à tester
-        Layer newLayer = new Layer(PROJECT_ID, index);
+        Layer newLayer = new Layer(PROJECT_ID, index, LAYER_TYPE);
 
         // ASSERT - Vérifier le résultat
         assertEquals(index, newLayer.getIndex());
@@ -116,7 +117,7 @@ public class LayerTest {
         int index = 0;
 
         // ACT - Exécuter l'action à tester
-        Layer newLayer = new Layer(PROJECT_ID, index);
+        Layer newLayer = new Layer(PROJECT_ID, index, LAYER_TYPE);
 
         // ASSERT - Vérifier le résultat
         assertEquals(index, newLayer.getIndex());

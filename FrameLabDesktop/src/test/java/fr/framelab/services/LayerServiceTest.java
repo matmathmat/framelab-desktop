@@ -37,6 +37,7 @@ public class LayerServiceTest {
 
     private final int LAYER_INDEX = 0;
     private final int NEW_LAYER_INDEX = 1;
+    private final int LAYER_TYPE = 0;
 
     private Project testProject;
 
@@ -101,7 +102,7 @@ public class LayerServiceTest {
     @Test
     void shouldSaveAndRetrieveLayer() {
         // ARRANGE - Préparer les données
-        Layer layer = new Layer(this.testProject.getId(), LAYER_INDEX);
+        Layer layer = new Layer(this.testProject.getId(), LAYER_INDEX, LAYER_TYPE);
 
         // ACT - Exécuter l'action à tester
         this.layerService.saveLayer(layer);
@@ -114,7 +115,7 @@ public class LayerServiceTest {
     @Test
     void shouldUpdateExistingLayer() {
         // ARRANGE - Préparer les données
-        Layer layer = new Layer(this.testProject.getId(), LAYER_INDEX);
+        Layer layer = new Layer(this.testProject.getId(), LAYER_INDEX, LAYER_TYPE);
         this.layerService.saveLayer(layer);
         int originalId = layer.getId();
         layer.setIndex(NEW_LAYER_INDEX);
@@ -130,8 +131,8 @@ public class LayerServiceTest {
     @Test
     void shouldReturnAllLayersForProject() {
         // ARRANGE - Préparer les données
-        Layer layer1 = new Layer(this.testProject.getId(), LAYER_INDEX);
-        Layer layer2 = new Layer(this.testProject.getId(), NEW_LAYER_INDEX);
+        Layer layer1 = new Layer(this.testProject.getId(), LAYER_INDEX, LAYER_TYPE);
+        Layer layer2 = new Layer(this.testProject.getId(), NEW_LAYER_INDEX, LAYER_TYPE);
         this.layerService.saveLayer(layer1);
         this.layerService.saveLayer(layer2);
 
@@ -158,7 +159,7 @@ public class LayerServiceTest {
     @Test
     void shouldDeleteLayer() {
         // ARRANGE - Préparer les données
-        Layer layer = new Layer(this.testProject.getId(), LAYER_INDEX);
+        Layer layer = new Layer(this.testProject.getId(), LAYER_INDEX, LAYER_TYPE);
         this.layerService.saveLayer(layer);
 
         // ACT - Exécuter l'action à tester
@@ -172,8 +173,8 @@ public class LayerServiceTest {
     @Test
     void shouldDeleteAllLayersForProject() {
         // ARRANGE - Préparer les données
-        Layer layer1 = new Layer(this.testProject.getId(), LAYER_INDEX);
-        Layer layer2 = new Layer(this.testProject.getId(), NEW_LAYER_INDEX);
+        Layer layer1 = new Layer(this.testProject.getId(), LAYER_INDEX, LAYER_TYPE);
+        Layer layer2 = new Layer(this.testProject.getId(), NEW_LAYER_INDEX, LAYER_TYPE);
         this.layerService.saveLayer(layer1);
         this.layerService.saveLayer(layer2);
 

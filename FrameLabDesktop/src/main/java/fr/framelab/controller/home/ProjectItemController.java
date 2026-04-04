@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 
 public class ProjectItemController {
     @FXML
@@ -22,6 +23,14 @@ public class ProjectItemController {
     @FXML
     private Button deleteBtn;
 
+    @FXML
+    private Label createdLabel;
+
+    @FXML
+    private Label editedLabel;
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
     private Project project;
     private MainController mainController;
     private Runnable onDeleted; // callback pour rafraîchir le panneau parent
@@ -32,6 +41,8 @@ public class ProjectItemController {
         this.onDeleted = onDeleted;
 
         titleLabel.setText(project.getTitle());
+        createdLabel.setText("Créé le : " + project.getCreatedAt().format(FORMATTER));
+        editedLabel.setText("Modifié le : " + project.getEditedAt().format(FORMATTER));
     }
 
     @FXML

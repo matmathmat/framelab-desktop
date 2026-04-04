@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 public class ChallengeService {
     private final ChallengeDAO challengeDAO;
@@ -22,6 +23,10 @@ public class ChallengeService {
     public Challenge getChallenge(int challengeId) {
 
         return this.challengeDAO.findById(challengeId);
+    }
+
+    public List<Challenge> getAllChallenges() {
+        return this.challengeDAO.findAll();
     }
 
     public Challenge getActiveChallenge() {

@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 public class ProjectPanelController {
@@ -41,12 +42,15 @@ public class ProjectPanelController {
                     .getUserProjectsByChallenge(challenge.getId(), userId);
 
             if (projects == null || projects.isEmpty()) continue;
+
+            projects.sort(Comparator.comparing(Project::getEditedAt).reversed());
+            
             hasAnyProject = true;
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/home/challenge_pane.fxml"));
                 TitledPane pane = loader.load();
-                
+
                 ChallengePaneController paneController = loader.getController();
                 paneController.setup(challenge, projects, mainController, this::load);
 

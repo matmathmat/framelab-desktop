@@ -106,8 +106,15 @@ public class EditorController {
         this.layers.addAll(loadedLayers);
         this.activeLayerIndex = 0;
 
-        Image base = layers.get(0).getBaseImage();
-        this.baseImage.setImage(base);
+        // On charge l'image du challenge qui sert de référence
+        String challengePath = fr.framelab.services.ChallengeService.getLocalImagePath(project.getChallengeId());
+        File challengeFile = new File(challengePath);
+        if (challengeFile.exists()) {
+            this.baseImage.setImage(new Image(challengeFile.toURI().toString()));
+        } else {
+            // Si l'image challenge n'existe plus on prend le premier layer
+            this.baseImage.setImage(layers.get(0).getBaseImage());
+        }
 
         refreshLayersUI();
         refreshEditedImage();

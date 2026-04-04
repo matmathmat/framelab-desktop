@@ -37,6 +37,9 @@ public class Challenge {
             throw new IllegalArgumentException("Empty photoUrl is not allowed");
         }
 
+        startDate = DateValidator.normalize(startDate);
+        endDate   = DateValidator.normalize(endDate);
+
         DateValidator.validate(startDate);
         DateValidator.validate(endDate);
 

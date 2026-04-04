@@ -11,6 +11,14 @@ public class DateValidator {
             DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss")
                     .withResolverStyle(ResolverStyle.STRICT);
 
+    /** Si la date n'a pas d'heure, on ajoute " 00:00:00" */
+    public static String normalize(String dateStr) {
+        if (dateStr != null && dateStr.matches("\\d{4}-\\d{2}-\\d{2}")) {
+            return dateStr + " 00:00:00";
+        }
+        return dateStr;
+    }
+
     public static void validate(String dateStr) {
         if (dateStr == null) {
             throw new IllegalArgumentException("Null date is not allowed");

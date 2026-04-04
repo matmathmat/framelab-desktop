@@ -66,6 +66,15 @@
             <artifactId>gson</artifactId>
             <version>2.13.2</version>
         </dependency>
+
+        <!-- Pour sauvegarder writableImage en fichier -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId>
+            <version>11-ea+24</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
     <!-- Plugins : outils pour compiler et tester -->

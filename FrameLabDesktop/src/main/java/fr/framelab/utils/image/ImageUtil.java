@@ -1,9 +1,20 @@
 package fr.framelab.utils.image;
 
+import fr.framelab.models.ImageLayer;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 public class ImageUtil {
     public static WritableImage copyImage(WritableImage image) {
@@ -59,5 +70,53 @@ public class ImageUtil {
         }
 
         return merged;
+    }
+
+    public static WritableImage toWritable(Image image) {
+        int width = (int) image.getWidth();
+        int height = (int) image.getHeight();
+
+        WritableImage writableImage = new WritableImage(width, height);
+        writableImage.getPixelWriter().setPixels(
+                0,
+                0,
+                width,
+                height,
+                image.getPixelReader(),
+                0,
+                0
+        );
+
+        return writableImage;
+    }
+
+    public static void saveToDisk(Image image, String filePath) {
+        try {
+            File file = new File(filePath);
+            BufferedImage buf = SwingFXUtils.fromFXImage(image, null);
+            ImageIO.write(buf, "png", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Image render(List<ImageLayer> layers) {
+        if (layers.isEmpty()) return null;
+
+        int w = (int) layers.get(0).getBaseImage().getWidth();
+        int h = (int) layers.get(0).getBaseImage().getHeight();
+
+        Canvas canvas = new Canvas(w, h);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+
+        for (ImageLayer layer : layers) {
+            if (layer.isVisible()) {
+                gc.drawImage(layer.getEditedImage(), 0, 0);
+            }
+        }
+
+        WritableImage result = new WritableImage(w, h);
+        canvas.snapshot(null, result);
+        return result;
     }
 }

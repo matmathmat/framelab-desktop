@@ -1,6 +1,7 @@
 package fr.framelab.controller;
 
 import fr.framelab.DatabaseManager;
+import fr.framelab.models.Project;
 import fr.framelab.models.User;
 import fr.framelab.services.FrameLabService;
 import javafx.beans.property.BooleanProperty;
@@ -109,14 +110,29 @@ public class MainController {
         }
     }
 
-    public void showEditor(Image baseImage) {
+    public void showEditor(Project project, Image challengeImage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor.fxml"));
             Parent view = loader.load();
 
             EditorController controller = loader.getController();
             controller.setMainController(this);
-            controller.setBaseImage(baseImage);
+            controller.setNewProject(project, challengeImage);
+
+            this.contentPane.getChildren().setAll(view);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openExistingProject(Project project) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor.fxml"));
+            Parent view = loader.load();
+
+            EditorController controller = loader.getController();
+            controller.setMainController(this);
+            controller.setExistingProject(project);
 
             this.contentPane.getChildren().setAll(view);
         } catch (IOException e) {

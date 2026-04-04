@@ -1,6 +1,9 @@
 package fr.framelab.models;
 
 public class Layer {
+    public static final int TYPE_IMAGE = 0;
+    public static final int TYPE_TRANSPARENT = 1;
+
     protected int id;
     protected int projectId;
     protected int index;

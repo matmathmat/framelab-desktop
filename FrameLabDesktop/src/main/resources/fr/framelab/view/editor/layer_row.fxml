@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox fx:id="root" alignment="CENTER_LEFT" spacing="6"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fr.framelab.controller.editor.LayerRowController">
+
+    <padding>
+        <Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
+    </padding>
+
+    <CheckBox fx:id="visibleCheckBox" />
+    <Label fx:id="layerNameLabel" HBox.hgrow="ALWAYS" />
+    <Button fx:id="upButton"   text="↑" onAction="#handleUp" />
+    <Button fx:id="downButton" text="↓" onAction="#handleDown" />
+    <Button fx:id="deleteButton" text="✕" onAction="#handleDelete" />
+</HBox>

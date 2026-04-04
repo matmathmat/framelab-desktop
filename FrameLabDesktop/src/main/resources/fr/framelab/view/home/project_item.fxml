@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox alignment="CENTER_LEFT"
+      spacing="8"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fr.framelab.controller.home.ProjectItemController">
+
+    <padding>
+        <javafx.geometry.Insets bottom="4.0" left="8.0" right="8.0" top="4.0" />
+    </padding>
+
+    <Label fx:id="titleLabel" HBox.hgrow="ALWAYS" style="-fx-text-fill: black;" />
+    <Button fx:id="openBtn"   text="Ouvrir"     onAction="#handleOpen" />
+    <Button fx:id="deleteBtn" text="Supprimer"  onAction="#handleDelete" style="-fx-text-fill: red;" />
+
+</HBox>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER"
+      spacing="0"
+      prefWidth="400"
+      style="-fx-background-color: #222222;"
+      xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fr.framelab.controller.home.ProjectPanelController">
+
+    <Label text="Mes projets"
+           style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;">
+        <padding>
+            <javafx.geometry.Insets bottom="8.0" left="12.0" right="12.0" top="12.0" />
+        </padding>
+    </Label>
+
+    <Separator />
+
+    <Accordion fx:id="accordion" VBox.vgrow="ALWAYS" />
+
+    <Label fx:id="emptyLabel"
+           text="Aucun projet pour l'instant.&#10;Participez à un challenge !"
+           wrapText="true"
+           style="-fx-text-fill: #aaaaaa; -fx-text-alignment: center;"
+           visible="false" managed="false">
+        <padding>
+            <javafx.geometry.Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        </padding>
+    </Label>
+
+</VBox>

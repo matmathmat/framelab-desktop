@@ -123,6 +123,12 @@ public class ImageLayer {
         }
     }
 
+    public void jumpToOperation(int index) {
+        if (index < 0 || index > this.operations.size()) return;
+        this.operationIndex = index;
+        renderImage(index);
+    }
+
     public void revertImageOperation() {
         if (this.operationIndex == 0) {
             return;
@@ -141,9 +147,13 @@ public class ImageLayer {
         renderImage(this.operationIndex);
     }
 
+    public void restoreFromSnapshot(WritableImage snapshot) {
+        this.editedImage = ImageUtil.copyImage(snapshot);
+    }
+
     public void merge(ImageLayer imageLayer) {
         // Fusionner les deux editedImage
-        this.editedImage = ImageUtil.mergeImages(this.editedImage, imageLayer.getEditedImage());
+        this.editedImage = ImageUtil.mergeImages(this.editedImage, imageLayer.getEditedImage(), imageLayer.getOpacity());
 
         // Mettre à jour baseImage avec le résultat de la fusion
         this.baseImage = ImageUtil.copyImage(this.editedImage);
@@ -155,23 +165,9 @@ public class ImageLayer {
     }
 
     public void reset() {
-        if (isDrawable) {
-            //Si c'est un calque transparent, on repart de zéro
-            int w = (int) baseImage.getWidth();
-            int h = (int) baseImage.getHeight();
-
-            this.baseImage = new WritableImage(w, h);
-            PixelWriter pw = this.baseImage.getPixelWriter();
-
-            for (int x = 0; x < w; x++) {
-                for (int y = 0; y < h; y++) pw.setColor(x, y, Color.TRANSPARENT);
-            }
-        }
-
-        // Si c'est un calque image, baseImage est déjà l'originale
-        this.editedImage = ImageUtil.copyImage(this.baseImage);
-        this.operations.clear();
-        this.snapshots.clear();
+        resetEditedImage();
+        this.operations = new ArrayList<>();
+        this.snapshots = new ArrayList<>();
         this.operationIndex = 0;
     }
 
@@ -230,6 +226,6 @@ public class ImageLayer {
     }
 
     public void setOpacity(double opacity) {
-        this.opacity = opacity;
+        this.opacity = Math.max(0.0, Math.min(1.0, opacity));
     }
 }

@@ -40,35 +40,42 @@ public class ImageUtil {
         return copy;
     }
 
-    public static WritableImage mergeImages(WritableImage bottom, WritableImage top) {
+    public static WritableImage mergeImages(WritableImage bottom, WritableImage top, double topLayerOpacity) {
         if (bottom == null) return copyImage(top);
-        if (top == null) return copyImage(bottom);
+        if (top    == null) return copyImage(bottom);
 
         // Obtenir les dimensions de l'image
-        int width = (int) bottom.getWidth();
+        int width  = (int) bottom.getWidth();
         int height = (int) bottom.getHeight();
+
         WritableImage merged = new WritableImage(width, height);
 
         PixelReader bottomReader = bottom.getPixelReader();
-        PixelReader topReader = top.getPixelReader();
+        PixelReader topReader    = top.getPixelReader();
         PixelWriter mergedWriter = merged.getPixelWriter();
 
         // On va fusionner chaque pixel
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Color bottomColor = bottomReader.getColor(x, y);
-                Color topColor = topReader.getColor(x, y);
+                Color topColor    = topReader.getColor(x, y);
 
-                double alpha = topColor.getOpacity();
-                double red = topColor.getRed() * alpha + bottomColor.getRed() * (1 - alpha);
+                // L'opacité effective du pixel = opacité pixel × opacité calque
+                double alpha = topColor.getOpacity() * topLayerOpacity;
+
+                double red   = topColor.getRed()   * alpha + bottomColor.getRed()   * (1 - alpha);
                 double green = topColor.getGreen() * alpha + bottomColor.getGreen() * (1 - alpha);
-                double blue = topColor.getBlue() * alpha + bottomColor.getBlue() * (1 - alpha);
+                double blue  = topColor.getBlue()  * alpha + bottomColor.getBlue()  * (1 - alpha);
                 double opacity = alpha + bottomColor.getOpacity() * (1 - alpha);
 
-                mergedWriter.setColor(x, y, new Color(red, green, blue, opacity));
+                mergedWriter.setColor(x, y, new Color(
+                        Math.min(1, red),
+                        Math.min(1, green),
+                        Math.min(1, blue),
+                        Math.min(1, opacity)
+                ));
             }
         }
-
         return merged;
     }
 
@@ -111,9 +118,12 @@ public class ImageUtil {
 
         for (ImageLayer layer : layers) {
             if (layer.isVisible()) {
+                gc.setGlobalAlpha(layer.getOpacity());
                 gc.drawImage(layer.getEditedImage(), 0, 0);
             }
         }
+
+        gc.setGlobalAlpha(1.0);
 
         WritableImage result = new WritableImage(w, h);
         canvas.snapshot(null, result);

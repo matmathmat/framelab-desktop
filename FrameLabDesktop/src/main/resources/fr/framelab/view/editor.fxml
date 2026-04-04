@@ -7,17 +7,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.EditorController">
+<BorderPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fr.framelab.controller.EditorController">
+
     <top>
         <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
+            <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
 
             <!-- Gauche -->
             <ComboBox fx:id="enhancementComboBox" onAction="#handleEnhancement" promptText="Amélioration" />
-            <ComboBox fx:id="filterComboBox" onAction="#handleFilter" promptText="Filtre" />
-            <ComboBox fx:id="transformComboBox" onAction="#handleTransformation" promptText="Transformation" />
+            <ComboBox fx:id="filterComboBox"      onAction="#handleFilter"      promptText="Filtre" />
+            <ComboBox fx:id="transformComboBox"   onAction="#handleTransformation" promptText="Transformation" />
 
             <!-- Separateur -->
             <Region HBox.hgrow="ALWAYS" />
@@ -29,27 +31,29 @@
     </top>
 
     <left>
-        <VBox alignment="CENTER" prefWidth="60.0" spacing="15.0" style="-fx-background-color: #f8f8f8;" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-            </padding>
-            <BorderPane.margin>
-                <Insets right="10.0" />
-            </BorderPane.margin>
+        <VBox alignment="CENTER" prefWidth="60.0" spacing="15.0"
+              style="-fx-background-color: #f8f8f8;" BorderPane.alignment="CENTER">
+            <padding><Insets bottom="20.0" left="10.0" right="10.0" top="20.0" /></padding>
+            <BorderPane.margin><Insets right="10.0" /></BorderPane.margin>
 
             <!-- Crayon -->
-            <Button prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 5;">
+            <Button fx:id="pencilButton" prefHeight="60.0" prefWidth="60.0"
+                    style="-fx-background-radius: 5;" onAction="#handlePencil">
                 <graphic>
-                    <SVGPath content="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" fill="transparent" stroke="black" strokeWidth="2" />
+                    <SVGPath content="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                             fill="transparent" stroke="black" strokeWidth="2" />
                 </graphic>
             </Button>
 
             <!-- Gomme -->
-            <Button prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 5;">
+            <Button fx:id="eraserButton" prefHeight="60.0" prefWidth="60.0"
+                    style="-fx-background-radius: 5;" onAction="#handleEraser">
                 <graphic>
                     <Group>
-                        <SVGPath content="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21" fill="transparent" stroke="black" strokeWidth="2" />
-                        <SVGPath content="m5.082 11.09 8.828 8.828" fill="transparent" stroke="black" strokeWidth="2" />
+                        <SVGPath content="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"
+                                 fill="transparent" stroke="black" strokeWidth="2" />
+                        <SVGPath content="m5.082 11.09 8.828 8.828"
+                                 fill="transparent" stroke="black" strokeWidth="2" />
                     </Group>
                 </graphic>
             </Button>
@@ -58,9 +62,12 @@
             <Button prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 5;">
                 <graphic>
                     <Group>
-                        <SVGPath content="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20" fill="transparent" stroke="black" strokeWidth="2" />
-                        <SVGPath content="M8 14s1.5 2 4 2 4-2 4-2" fill="transparent" stroke="black" strokeWidth="2" />
-                        <SVGPath content="M9 9h.01M15 9h.01" fill="transparent" stroke="black" strokeWidth="2" />
+                        <SVGPath content="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20"
+                                 fill="transparent" stroke="black" strokeWidth="2" />
+                        <SVGPath content="M8 14s1.5 2 4 2 4-2 4-2"
+                                 fill="transparent" stroke="black" strokeWidth="2" />
+                        <SVGPath content="M9 9h.01M15 9h.01"
+                                 fill="transparent" stroke="black" strokeWidth="2" />
                     </Group>
                 </graphic>
             </Button>
@@ -68,31 +75,35 @@
     </left>
 
     <bottom>
-        <HBox alignment="CENTER" prefHeight="50.0" spacing="10.0" style="-fx-background-color: #f0f0f0;" BorderPane.alignment="CENTER">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
+        <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="8.0"
+              style="-fx-background-color: #f0f0f0;" BorderPane.alignment="CENTER">
+            <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
 
             <!-- Gauche -->
-            <Button text="Réinitialiser" />
+            <Button text="Réinitialiser" onAction="#handleReset" />
+            <Button text="Historique"    onAction="#handleHistory" />
 
             <!-- Séparateur -->
             <Region HBox.hgrow="ALWAYS" />
 
             <!-- Centre -->
-            <Button text="Masquer Image de référence" />
+            <Button fx:id="toggleReferenceButton"
+                    text="Masquer image de référence"
+                    onAction="#handleToggleReference" />
 
             <!-- Séparateur -->
             <Region HBox.hgrow="ALWAYS" />
 
             <!-- Droite -->
-            <Button text="Zoomer" />
-            <Button text="Dézoomer" />
+            <Label fx:id="zoomLabel" text="100%"
+                   style="-fx-font-weight: bold; -fx-min-width: 40px;" />
+            <Button text="Zoomer"   onAction="#handleZoomIn" />
+            <Button text="Dézoomer" onAction="#handleZoomOut" />
         </HBox>
     </bottom>
 
     <right>
-        <VBox prefWidth="250.0" style="-fx-background-color: #f8f8f8;" BorderPane.alignment="CENTER">
+        <VBox prefWidth="260.0" style="-fx-background-color: #f8f8f8;" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets left="10.0" />
             </BorderPane.margin>
@@ -113,14 +124,10 @@
                         <padding>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </padding>
-
-                        <!-- Les calques seront chargé dynamiquement ici -->
-
                     </VBox>
                 </content>
             </ScrollPane>
 
-            <!-- Séparateur -->
             <Separator />
 
             <!-- Bas -->
@@ -128,29 +135,31 @@
                 <padding>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
-
                 <Button maxWidth="Infinity" text="Ajouter un calque transparent" onAction="#handleAddTransparentLayer"/>
-                <Button maxWidth="Infinity" text="Ajouter un calque image" onAction="#handleAddImageLayer"  />
+                <Button maxWidth="Infinity" text="Ajouter un calque image"       onAction="#handleAddImageLayer"/>
                 <Button maxWidth="Infinity" text="Fusionner les calques visibles" onAction="#handleMergeVisibleLayers"/>
             </VBox>
-
         </VBox>
     </right>
 
     <center>
-        <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <SplitPane fx:id="centerSplitPane" dividerPositions="0.5"
+                   prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <items>
-                <!--Image de référence -->
+                <!-- Image de référence -->
                 <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <top>
-                        <Label style="-fx-font-weight: bold; -fx-background-color: #e8e8e8;" text="Image de référence">
+                        <Label style="-fx-font-weight: bold; -fx-background-color: #e8e8e8;"
+                               text="Image de référence">
                             <padding>
                                 <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                             </padding>
                         </Label>
                     </top>
                     <center>
-                        <ScrollPane fx:id="leftScrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #e0e0e0;">
+                        <ScrollPane fx:id="leftScrollPane"
+                                    fitToHeight="false" fitToWidth="false"
+                                    style="-fx-background-color: #e0e0e0;">
                             <content>
                                 <StackPane alignment="CENTER" style="-fx-background-color: #e0e0e0;">
                                     <ImageView fx:id="baseImage" pickOnBounds="true" preserveRatio="true" />
@@ -163,14 +172,17 @@
                 <!-- Image en cours de modification -->
                 <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="198.0" prefWidth="241.0">
                     <top>
-                        <Label style="-fx-font-weight: bold; -fx-background-color: #e8e8e8;" text="Modification en cours">
+                        <Label style="-fx-font-weight: bold; -fx-background-color: #e8e8e8;"
+                               text="Modification en cours">
                             <padding>
                                 <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                             </padding>
                         </Label>
                     </top>
                     <center>
-                        <ScrollPane fx:id="rightScrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #e0e0e0;">
+                        <ScrollPane fx:id="rightScrollPane"
+                                    fitToHeight="false" fitToWidth="false"
+                                    style="-fx-background-color: #e0e0e0;">
                             <content>
                                 <StackPane alignment="CENTER" style="-fx-background-color: #e0e0e0;">
                                     <ImageView fx:id="editedImage" pickOnBounds="true" preserveRatio="true" />
@@ -179,7 +191,6 @@
                         </ScrollPane>
                     </center>
                 </BorderPane>
-
             </items>
         </SplitPane>
     </center>

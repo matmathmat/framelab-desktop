@@ -6,9 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 
 public class LayerRowController {
+
     @FXML
     private HBox root;
 
@@ -17,6 +19,12 @@ public class LayerRowController {
 
     @FXML
     private Label layerNameLabel;
+
+    @FXML
+    private Slider opacitySlider;
+
+    @FXML
+    private Label opacityLabel;
 
     @FXML
     private Button upButton;
@@ -31,7 +39,8 @@ public class LayerRowController {
     private int index;
     private EditorController editorController;
 
-    public void setup(ImageLayer layer, int index, int totalLayers, boolean isActive, EditorController editorController) {
+    public void setup(ImageLayer layer, int index, int totalLayers,
+                      boolean isActive, EditorController editorController) {
         this.layer = layer;
         this.index = index;
         this.editorController = editorController;
@@ -45,12 +54,22 @@ public class LayerRowController {
             editorController.refreshEditedImage();
         });
 
+        int pct = (int) Math.round(layer.getOpacity() * 100);
+        opacitySlider.setValue(pct);
+        opacityLabel.setText(pct + "%");
+
+        opacitySlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            int v = newVal.intValue();
+            layer.setOpacity(v / 100.0);
+            opacityLabel.setText(v + "%");
+            editorController.refreshEditedImage();
+        });
+
         upButton.setDisable(index == totalLayers - 1);
         downButton.setDisable(index == 0);
         deleteButton.setDisable(totalLayers <= 1);
 
         setActive(isActive);
-
         root.setOnMouseClicked(e -> editorController.selectLayer(index));
     }
 
@@ -60,18 +79,15 @@ public class LayerRowController {
                 : "-fx-background-color: white;");
     }
 
-    @FXML
-    private void handleUp() {
+    @FXML private void handleUp()     {
         editorController.moveLayer(index, index + 1);
     }
 
-    @FXML
-    private void handleDown() {
+    @FXML private void handleDown()   {
         editorController.moveLayer(index, index - 1);
     }
 
-    @FXML
-    private void handleDelete() {
+    @FXML private void handleDelete() {
         editorController.deleteLayer(index);
     }
 }

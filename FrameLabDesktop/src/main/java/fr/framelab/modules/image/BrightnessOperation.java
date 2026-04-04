@@ -25,7 +25,7 @@ public class BrightnessOperation implements ImageOperation {
         PixelWriter writer = image.getPixelWriter();
 
         // On normalise le facteur luminosité de (-100..100) à (-1..1)
-        double delta = brightnessFactor / 100.0;
+        double delta = this.brightnessFactor / 100.0;
 
         // Pour chaque pixel sur l'axe X
         for (int x = 0; x < image.getWidth(); x++) {
@@ -46,5 +46,10 @@ public class BrightnessOperation implements ImageOperation {
                 }
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return "Luminosité (" + (int) this.brightnessFactor + ")";
     }
 }

@@ -32,7 +32,7 @@ public class RotationOperation implements ImageOperation {
 
         // Rotation autour du centre
         gc.translate(width / 2.0, height / 2.0);
-        gc.rotate(rotationAngle);
+        gc.rotate(this.rotationAngle);
         gc.translate(-width / 2.0, -height / 2.0);
 
         // Dessiner l'image
@@ -43,5 +43,10 @@ public class RotationOperation implements ImageOperation {
 
         // Copier le résultat dans l'image
         canvas.snapshot(null, image);
+    }
+
+    @Override
+    public String getName() {
+        return "Rotation (" + (int) this.rotationAngle + ")";
     }
 }

@@ -32,4 +32,9 @@ public class BlacknWhiteOperation implements ImageOperation {
             }
         }
     }
+
+    @Override
+    public String getName() {
+        return "Noir & Blanc";
+    }
 }

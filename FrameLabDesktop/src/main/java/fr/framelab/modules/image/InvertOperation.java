@@ -34,4 +34,9 @@ public class InvertOperation implements ImageOperation {
             }
         }
     }
+
+    @Override
+    public String getName() {
+        return "Inversion de couleur";
+    }
 }

@@ -3,5 +3,9 @@ package fr.framelab.modules.image;
 import javafx.scene.image.WritableImage;
 
 public interface ImageOperation {
-    public void handle(WritableImage image);
+    void handle(WritableImage image);
+
+    default String getName() {
+        return this.getClass().getSimpleName();
+    }
 }

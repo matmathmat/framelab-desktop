@@ -44,7 +44,7 @@ public class ProjectPanelController {
             if (projects == null || projects.isEmpty()) continue;
 
             projects.sort(Comparator.comparing(Project::getEditedAt).reversed());
-            
+
             hasAnyProject = true;
 
             try {

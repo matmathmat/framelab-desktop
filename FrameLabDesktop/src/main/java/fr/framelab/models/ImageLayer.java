@@ -14,6 +14,7 @@ public class ImageLayer {
     protected int zIndex;
     protected boolean isDrawable;
     protected boolean isVisible;
+    private double opacity = 1.0;
     protected List<ImageOperation> operations;
     protected int operationIndex;
     protected WritableImage baseImage;
@@ -153,6 +154,27 @@ public class ImageLayer {
         this.operationIndex = 0;
     }
 
+    public void reset() {
+        if (isDrawable) {
+            //Si c'est un calque transparent, on repart de zéro
+            int w = (int) baseImage.getWidth();
+            int h = (int) baseImage.getHeight();
+
+            this.baseImage = new WritableImage(w, h);
+            PixelWriter pw = this.baseImage.getPixelWriter();
+
+            for (int x = 0; x < w; x++) {
+                for (int y = 0; y < h; y++) pw.setColor(x, y, Color.TRANSPARENT);
+            }
+        }
+
+        // Si c'est un calque image, baseImage est déjà l'originale
+        this.editedImage = ImageUtil.copyImage(this.baseImage);
+        this.operations.clear();
+        this.snapshots.clear();
+        this.operationIndex = 0;
+    }
+
     public int getZIndex() {
 
         return zIndex;
@@ -201,5 +223,13 @@ public class ImageLayer {
     public int getOperationIndex() {
 
         return operationIndex;
+    }
+
+    public double getOpacity() {
+        return opacity;
+    }
+
+    public void setOpacity(double opacity) {
+        this.opacity = opacity;
     }
 }

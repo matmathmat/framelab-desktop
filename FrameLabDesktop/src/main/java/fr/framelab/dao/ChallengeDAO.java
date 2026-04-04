@@ -2,6 +2,7 @@ package fr.framelab.dao;
 
 import fr.framelab.models.Challenge;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ChallengeDAO {
@@ -125,5 +126,27 @@ public class ChallengeDAO {
                 rs.getString("end_date"),
                 rs.getInt("is_archived")
         );
+    }
+
+    public Challenge findActive() {
+        String today = LocalDate.now().toString(); // format "yyyy-MM-dd"
+        String sql = """
+        SELECT * FROM challenges
+        WHERE start_date <= ? AND end_date >= ? AND is_archived = 0
+        ORDER BY start_date DESC
+        LIMIT 1
+    """;
+
+        try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
+            pstmt.setString(1, today);
+            pstmt.setString(2, today);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return mapRowToChallenge(rs);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to retrieve active challenge: " + e.getMessage(), e);
+        }
+        return null;
     }
 }

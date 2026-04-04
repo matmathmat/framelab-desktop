@@ -38,6 +38,11 @@ public class ImageLayer {
         this.editedImage = ImageUtil.copyImage(baseImage);
     }
 
+    public ImageLayer(WritableImage savedImage, boolean isDrawable) {
+        this(savedImage);
+        this.isDrawable = isDrawable;
+    }
+
     public ImageLayer(int width, int height) {
         this();
         this.isDrawable = true;

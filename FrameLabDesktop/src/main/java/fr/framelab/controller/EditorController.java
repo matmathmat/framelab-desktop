@@ -2,9 +2,7 @@ package fr.framelab.controller;
 
 import fr.framelab.controller.editor.HistoryController;
 import fr.framelab.controller.editor.LayerRowController;
-import fr.framelab.models.ImageLayer;
-import fr.framelab.models.Layer;
-import fr.framelab.models.Project;
+import fr.framelab.models.*;
 import fr.framelab.modules.EditorModule;
 import fr.framelab.modules.EnhancementModules;
 import fr.framelab.modules.FilterModules;
@@ -32,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +53,8 @@ public class EditorController {
     @FXML private Button eraserButton;
     @FXML private Button toggleReferenceButton;
     @FXML private Label zoomLabel;
+    @FXML private Button validateTrainingButton;
+    @FXML private Button trainingObjectivesButton;
 
     private MainController mainController;
     private Project project;
@@ -79,6 +80,10 @@ public class EditorController {
     private static final double ZOOM_MAX  = 10.0;   // 1 000
 
     private Node referencePane = null;
+
+    private boolean trainingMode = false;
+    private Training currentTraining;
+    private List<TrainingOperation> trainingOperations;
 
     // Initialisation
 
@@ -130,6 +135,18 @@ public class EditorController {
 
     public void setExistingProject(Project project) {
         this.project = project;
+
+        if (project.isTraining()) {
+            this.trainingMode = true;
+            this.currentTraining = mainController.databaseManager.trainingService.getTrainingByDate(
+                    LocalDate.now().toString(),
+                    project.getUserId()
+            );
+            if (currentTraining != null) {
+                this.trainingOperations = mainController.databaseManager.trainingService.generateOperations(currentTraining.getDate());
+                initTrainingMode();
+            }
+        }
 
         List<ImageLayer> loadedLayers = editorService.loadProjectLayers(project, mainController.databaseManager);
 
@@ -465,6 +482,99 @@ public class EditorController {
 
     public ImageView getEditedImageView() {
         return editedImage;
+    }
+
+    // Entraînement
+
+    public void setNewTrainingProject(Project project, Image img, Training training) {
+        this.trainingMode = true;
+        this.currentTraining = training;
+        this.trainingOperations = mainController.databaseManager.trainingService.generateOperations(training.getDate());
+
+        initTrainingMode();
+        setNewProject(project, img);
+    }
+
+    private void initTrainingMode() {
+        boolean isCurrent = currentTraining.getDate().equals(LocalDate.now().toString());
+        validateTrainingButton.setVisible(true);
+        validateTrainingButton.setManaged(true);
+        trainingObjectivesButton.setVisible(true);
+        trainingObjectivesButton.setManaged(true);
+
+        // Il faudra masquer le bouton envoyer ici
+    }
+
+    @FXML
+    private void handleValidateTraining() {
+        String today = LocalDate.now().toString();
+
+        // On récupère les opérations uniquement sur le calque 1
+        List<fr.framelab.modules.image.ImageOperation> appliedOps = new ArrayList<>();
+        if (!layers.isEmpty()) {
+            appliedOps.addAll(layers.get(0).getOperations());
+        }
+
+        // on compte comme une tentative
+        mainController.databaseManager.trainingService.incrementAttempt(currentTraining);
+
+        // Valider la correspondance avec la liste générée pour aujourd'hui
+        boolean success = mainController.databaseManager.trainingService.validateOperations(appliedOps, trainingOperations);
+
+        if (success) {
+            int scoreGained = 0;
+
+            // On ne donne des points que si la date correspond à aujourd'hui
+            if (currentTraining.getDate().equals(today)) {
+                scoreGained = mainController.databaseManager.trainingService.computeScore(currentTraining.getAttemptCount());
+
+                // Mise à jour du score de l'utilisateur
+                User user = mainController.frameLabService.currentUser;
+                if (user != null && user.getId() > 0) {
+                    user.setScore(user.getScore() + scoreGained);
+                    mainController.databaseManager.userService.saveUser(user);
+                }
+
+                // Marquer comme complété pour afficher le badge sur l'accueil
+                mainController.databaseManager.trainingService.markCompleted(currentTraining);
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Entraînement réussi, mais aucun point n'est attribué car la date est dépassée.").showAndWait();
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Félicitations !");
+            alert.setHeaderText("Entraînement réussi !");
+            alert.setContentText("Tentatives effectuées : " + currentTraining.getAttemptCount() + "\nPoints gagnés : " + scoreGained);
+            alert.showAndWait();
+
+            // Retour au menu principal
+            mainController.showHome();
+        } else {
+            // Message d'erreur si l'entraînement n'a pas été valider
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Échec de l'entraînement");
+            alert.setHeaderText("Les opérations ne correspondent pas.");
+            alert.setContentText("Assurez-vous d'avoir effectué les opérations dans le bon ordre sur le calque principal.\n" +
+                    "Cliquez sur 'Réinitialiser' pour recommencer ce calque.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleShowObjectives() {
+        StringBuilder sb = new StringBuilder("Opérations attendues (dans l'ordre) :\n\n");
+        for (int i = 0; i < trainingOperations.size(); i++) {
+            TrainingOperation op = trainingOperations.get(i);
+            sb.append(i + 1).append(". ").append(op.getDisplayName());
+            if (op.getParam() != null) sb.append(" (Valeur: ").append(op.getParam()).append(")");
+            sb.append("\n");
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Objectifs de l'entraînement");
+        alert.setHeaderText(null);
+        alert.setContentText(sb.toString());
+        alert.showAndWait();
     }
 
     // Gestion module

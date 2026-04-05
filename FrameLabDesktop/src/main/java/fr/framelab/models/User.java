@@ -7,6 +7,7 @@ public class User {
     protected int isAdmin;
     protected String email;
     protected String token;
+    protected int score;
 
     ///<summary>
     /// Basic User
@@ -34,6 +35,7 @@ public class User {
         this.firstname = firstname;
         this.lastname = lastname;
         this.isAdmin = isAdmin;
+        this.score = 0;
     }
 
     ///<summary>
@@ -104,6 +106,10 @@ public class User {
         return token;
     }
 
+    public int getScore() {
+        return this.score;
+    }
+
     public void setFirstName(String firstName) {
 
         this.firstname = firstName;
@@ -122,5 +128,9 @@ public class User {
     public void setToken(String token) {
 
         this.token = token;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

@@ -20,13 +20,14 @@ public class UserDAO {
                 last_name TEXT NOT NULL,
                 is_admin INTEGER NOT NULL DEFAULT 0,
                 email TEXT UNIQUE NOT NULL,
-                token TEXT NOT NULL
+                token TEXT NOT NULL,
+                score INTEGER NOT NULL DEFAULT 0
             )
         """;
 
         String guestSql = """
-            INSERT OR IGNORE INTO users (id, first_name, last_name, is_admin, email, token)
-            VALUES (0, 'Guest', 'Guest', 0, 'guest@guest.com', 'guestToken')
+            INSERT OR IGNORE INTO users (id, first_name, last_name, is_admin, email, token, score)
+            VALUES (0, 'Guest', 'Guest', 0, 'guest@guest.com', 'guestToken', 0)
         """;
 
         try (Statement stmt = this.connection.createStatement()) {
@@ -38,7 +39,7 @@ public class UserDAO {
     }
 
     public void save(User user) {
-        String sql = "INSERT INTO users (id, first_name, last_name, is_admin, email, token) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (id, first_name, last_name, is_admin, email, token, score) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, user.getId());
@@ -47,6 +48,7 @@ public class UserDAO {
             pstmt.setInt(4, user.getIsAdmin() ? 1 : 0);
             pstmt.setString(5, user.getEmail());
             pstmt.setString(6, user.getToken());
+            pstmt.setInt(7, user.getScore());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Failed to save user: " + e.getMessage(), e);
@@ -54,14 +56,15 @@ public class UserDAO {
     }
 
     public void update(User user) {
-        String sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, token = ? WHERE id = ?";
+        String sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, token = ?, score = ? WHERE id = ?";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setString(1, user.getFirstName());
             pstmt.setString(2, user.getLastName());
             pstmt.setString(3, user.getEmail());
             pstmt.setString(4, user.getToken());
-            pstmt.setInt(5, user.getId());
+            pstmt.setInt(5, user.getScore());
+            pstmt.setInt(6, user.getId());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -70,7 +73,7 @@ public class UserDAO {
     }
 
     public User findById(int id) {
-        String sql = "SELECT id, first_name, last_name, is_admin, email, token FROM users WHERE id = ?";
+        String sql = "SELECT id, first_name, last_name, is_admin, email, token, score FROM users WHERE id = ?";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -88,7 +91,7 @@ public class UserDAO {
     }
 
     public User findByEmail(String email) {
-        String sql = "SELECT id, first_name, last_name, is_admin, email, token FROM users WHERE email = ?";
+        String sql = "SELECT id, first_name, last_name, is_admin, email, token, score FROM users WHERE email = ?";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setString(1, email);
@@ -106,7 +109,12 @@ public class UserDAO {
     }
 
     public User findLoggedInUser() {
-        String sql = "SELECT id, first_name, last_name, is_admin, email, token FROM users WHERE id != 0 AND token != 'guest' LIMIT 1";
+        String sql = """
+            SELECT id, first_name, last_name, is_admin, email, token, score
+            FROM users
+            WHERE id != 0 AND token != 'guest'
+            LIMIT 1
+        """;
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
@@ -122,7 +130,8 @@ public class UserDAO {
 
     public ArrayList<User> findAll() {
         ArrayList<User> users = new ArrayList<>();
-        String sql = "SELECT id, first_name, last_name, is_admin, email, token FROM users";
+
+        String sql = "SELECT id, first_name, last_name, is_admin, email, token, score FROM users";
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             ResultSet rs = pstmt.executeQuery();
@@ -149,7 +158,7 @@ public class UserDAO {
     }
 
     private User mapRowToUser(ResultSet rs) throws SQLException {
-        return new User(
+        User user = new User(
                 rs.getInt("id"),
                 rs.getString("first_name"),
                 rs.getString("last_name"),
@@ -157,5 +166,9 @@ public class UserDAO {
                 rs.getString("email"),
                 rs.getString("token")
         );
+
+        user.setScore(rs.getInt("score"));
+
+        return user;
     }
 }

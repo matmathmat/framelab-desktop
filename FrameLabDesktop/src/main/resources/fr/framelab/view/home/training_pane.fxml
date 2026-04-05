@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fr.framelab.controller.home.TrainingPaneController"
+      spacing="10" alignment="TOP_CENTER">
+
+    <Label text="Entraînement du jour" />
+
+    <Separator />
+
+    <ImageView fx:id="trainingImage"
+               fitWidth="220" fitHeight="140"
+               preserveRatio="true" pickOnBounds="true" />
+
+    <Label fx:id="countdownLabel"
+           text="Réinitialisation dans : --:--:--" />
+
+    <Label fx:id="completedBadge"
+           text="✅  Déjà complété aujourd'hui !"
+           visible="false" managed="false" />
+
+    <Label text="Opérations à effectuer :" />
+
+    <ListView fx:id="operationsList"
+              prefHeight="150"
+              maxWidth="Infinity" />
+
+    <Region VBox.vgrow="ALWAYS" />
+
+    <Button fx:id="startButton"
+            text="Commencer l'entraînement"
+            maxWidth="Infinity"
+            onAction="#handleStart" />
+</VBox>

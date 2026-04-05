@@ -19,12 +19,11 @@ import java.net.http.HttpResponse;
 
 public class FrameLabService {
     protected String domaineName;
-    protected boolean useHTTPS;
     protected String token;
     protected HttpClient client;
     public User currentUser;
 
-    public FrameLabService(String domaineName, boolean useHTTPS) {
+    public FrameLabService(String domaineName) {
         if (domaineName == null) {
             throw new IllegalArgumentException("Null domaineName is not allowed");
         }
@@ -33,7 +32,6 @@ public class FrameLabService {
         }
 
         this.domaineName = domaineName;
-        this.useHTTPS = useHTTPS;
         this.client = HttpClient.newHttpClient();
     }
 
@@ -41,16 +39,8 @@ public class FrameLabService {
         this.token = token;
     }
 
-    private String CreateURL() {
-        if (useHTTPS) {
-            return "https://" + domaineName;
-        } else {
-            return "http://" + domaineName;
-        }
-    }
-
     private String CreateURL(String endpoint) {
-        return this.CreateURL() + "/" + endpoint;
+        return this.domaineName + "/" + endpoint;
     }
 
     private void ManageFailedResponse(HttpResponse<String> response) {

@@ -12,6 +12,7 @@ public class DatabaseManager {
     public final ChallengeService challengeService;
     public final ProjectService projectService;
     public final LayerService layerService;
+    public final TrainingService trainingService;
 
     public DatabaseManager() throws SQLException {
         this.connection = DriverManager.getConnection("jdbc:sqlite:framelab.db");
@@ -24,11 +25,13 @@ public class DatabaseManager {
         ChallengeDAO challengeDAO = new ChallengeDAO(this.connection);
         ProjectDAO projectDAO = new ProjectDAO(this.connection);
         LayerDAO layerDAO = new LayerDAO(this.connection);
+        TrainingDAO trainingDAO = new TrainingDAO(this.connection);
 
         this.userService = new UserService(userDAO);
         this.challengeService = new ChallengeService(challengeDAO);
         this.projectService = new ProjectService(projectDAO);
         this.layerService = new LayerService(layerDAO);
+        this.trainingService = new TrainingService(trainingDAO);
     }
 
     public void close() throws SQLException {

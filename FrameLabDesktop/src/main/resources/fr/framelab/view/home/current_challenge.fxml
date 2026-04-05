@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/17.0.12"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="fr.framelab.controller.home.CurrentChallengeController"
+      spacing="10" alignment="TOP_CENTER">
+
+    <Label text="Challenge en cours" />
+
+    <Separator />
+
+    <ImageView fx:id="challengeImage"
+               fitWidth="220" fitHeight="140"
+               preserveRatio="true" pickOnBounds="true" />
+
+    <Label fx:id="titleLabel" text=""
+           wrapText="true" maxWidth="240" />
+
+    <Label fx:id="descriptionLabel" text=""
+           wrapText="true" maxWidth="240" />
+
+    <Label fx:id="datesLabel" text="" />
+
+    <Label fx:id="errorLabel"
+           text="Impossible de récupérer le challenge en cours."
+           wrapText="true" maxWidth="240"
+           visible="false" managed="false" />
+
+    <Region VBox.vgrow="ALWAYS" />
+
+    <Button fx:id="participateButton"
+            text="Participer"
+            maxWidth="Infinity"
+            onAction="#handleParticipate" />
+</VBox>

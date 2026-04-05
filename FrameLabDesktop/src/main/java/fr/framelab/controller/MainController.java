@@ -9,6 +9,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -16,6 +18,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class MainController {
     @FXML
@@ -137,6 +140,40 @@ public class MainController {
             this.contentPane.getChildren().setAll(view);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void logoutHandle() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de déconnexion");
+        alert.setHeaderText("Voulez-vous vraiment vous déconnecter ?");
+        alert.setContentText("Cette action supprimera votre session locale.");
+
+        // On attend la réponse de l'utilisateur
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                // Récupérer l'utilisateur actuel
+                User currentUser = this.frameLabService.currentUser;
+
+                if (currentUser != null) {
+                    this.databaseManager.userService.deleteUser(currentUser.getId());
+                }
+
+                // Réinitialiser l'état de l'application
+                this.frameLabService.currentUser = null;
+                this.frameLabService.setToken(null);
+
+                // Cacher les barres de navigation
+                this.homeVisible.set(false);
+
+                // Rediriger vers l'écran de connexion
+                showLogin();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

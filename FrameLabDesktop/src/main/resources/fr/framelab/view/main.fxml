@@ -24,6 +24,7 @@
                         </Group>
                     </graphic>
             </Button>
+
             <Button onAction="#challengeHandle" style="fx-font-size: 18px;">
                 <graphic>
                     <Group>
@@ -37,7 +38,8 @@
                     </Group>
                 </graphic>
             </Button>
-            <Button style="fx-font-size: 18px;">
+
+            <Button onAction="#logoutHandle" style="fx-font-size: 18px;">
                 <graphic>
                     <Group>
                         <SVGPath content="m16 17 5-5-5-5" fill="transparent" stroke="white" strokeWidth="2" />

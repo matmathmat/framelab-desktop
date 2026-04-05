@@ -9,6 +9,7 @@ public class Project {
     protected int challengeId;
     protected LocalDateTime createdAt;
     protected LocalDateTime editedAt;
+    protected int isTraining;
 
     // Constructors
 
@@ -38,6 +39,7 @@ public class Project {
         this.userId = userId;
         this.challengeId = challengeId;
         this.id = -1;
+        this.isTraining = 0;
     }
 
     public Project(String title, int userId, int challengeId, LocalDateTime createdAt, LocalDateTime editedAt) {
@@ -55,10 +57,15 @@ public class Project {
         this.editedAt = editedAt;
     }
 
+    public Project(String title, int userId, int challengeId,
+                   LocalDateTime createdAt, LocalDateTime editedAt, int isTraining) {
+        this(title, userId, challengeId, createdAt, editedAt);
+        this.isTraining = isTraining;
+    }
+
     // Getters
 
     public int getId() {
-
         return this.id;
     }
 
@@ -67,23 +74,23 @@ public class Project {
     }
 
     public int getUserId() {
-
         return this.userId;
     }
 
     public int getChallengeId() {
-
         return this.challengeId;
     }
 
     public LocalDateTime getCreatedAt() {
-
         return this.createdAt;
     }
 
     public LocalDateTime getEditedAt() {
-
         return this.editedAt;
+    }
+
+    public boolean isTraining() {
+        return this.isTraining != 0;
     }
 
     // Setters
@@ -97,7 +104,6 @@ public class Project {
     }
 
     public void setTitle(String title) {
-
         this.title = title;
     }
 
@@ -107,5 +113,9 @@ public class Project {
 
     public void setEditedAt(LocalDateTime editedAt) {
         this.editedAt = editedAt;
+    }
+
+    public void setIsTraining(int isTraining) {
+        this.isTraining = isTraining;
     }
 }

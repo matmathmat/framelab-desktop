@@ -26,6 +26,7 @@ public class ProjectDAO {
                 challenge_id INTEGER NOT NULL,
                 created_at TEXT NOT NULL,
                 edited_at TEXT NOT NULL,
+                is_training  INTEGER NOT NULL DEFAULT 0,
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
                 FOREIGN KEY (challenge_id) REFERENCES challenges(id) ON DELETE CASCADE
             )
@@ -39,7 +40,7 @@ public class ProjectDAO {
     }
 
     public void save(Project project) {
-        String sql = "INSERT INTO projects (title, user_id, challenge_id, created_at, edited_at) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO projects (title, user_id, challenge_id, created_at, edited_at, is_training) VALUES (?, ?, ?, ?, ?, ?)";
 
         LocalDateTime now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
 
@@ -49,6 +50,7 @@ public class ProjectDAO {
             pstmt.setInt(3, project.getChallengeId());
             pstmt.setString(4, now.format(DateValidator.DATETIME_FORMATTER));
             pstmt.setString(5, now.format(DateValidator.DATETIME_FORMATTER));
+            pstmt.setInt(6, project.isTraining() ? 1 : 0);
             pstmt.executeUpdate();
 
             try (ResultSet keys = pstmt.getGeneratedKeys()) {
@@ -81,7 +83,10 @@ public class ProjectDAO {
     }
 
     public Project findById(int id) {
-        String sql = "SELECT id, title, user_id, challenge_id, created_at, edited_at FROM projects WHERE id = ?";
+        String sql = """
+            SELECT id, title, user_id, challenge_id, created_at, edited_at, is_training
+            FROM projects WHERE id = ?
+        """;
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -101,7 +106,10 @@ public class ProjectDAO {
     public ArrayList<Project> findByUserId(int userId) {
         ArrayList<Project> projects = new ArrayList<>();
 
-        String sql = "SELECT id, title, user_id, challenge_id, created_at, edited_at FROM projects WHERE user_id = ?";
+        String sql = """
+            SELECT id, title, user_id, challenge_id, created_at, edited_at, is_training
+            FROM projects WHERE user_id = ?
+        """;
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
@@ -121,7 +129,10 @@ public class ProjectDAO {
     public ArrayList<Project> findByChallengeIdAndUserId(int challengeId, int userId) {
         ArrayList<Project> projects = new ArrayList<>();
 
-        String sql = "SELECT id, title, user_id, challenge_id, created_at, edited_at FROM projects WHERE challenge_id = ? and user_id = ?";
+        String sql = """
+            SELECT id, title, user_id, challenge_id, created_at, edited_at, is_training
+            FROM projects WHERE challenge_id = ? AND user_id = ?
+        """;
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, challengeId);
@@ -154,7 +165,8 @@ public class ProjectDAO {
                 rs.getInt("user_id"),
                 rs.getInt("challenge_id"),
                 LocalDateTime.parse(rs.getString("created_at"), DateValidator.DATETIME_FORMATTER),
-                LocalDateTime.parse(rs.getString("edited_at"), DateValidator.DATETIME_FORMATTER)
+                LocalDateTime.parse(rs.getString("edited_at"), DateValidator.DATETIME_FORMATTER),
+                rs.getInt("is_training")
         );
 
         project.setId(rs.getInt("id"));

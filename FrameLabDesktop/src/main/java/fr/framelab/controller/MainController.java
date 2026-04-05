@@ -2,6 +2,7 @@ package fr.framelab.controller;
 
 import fr.framelab.DatabaseManager;
 import fr.framelab.models.Project;
+import fr.framelab.models.Training;
 import fr.framelab.models.User;
 import fr.framelab.services.FrameLabService;
 import javafx.beans.property.BooleanProperty;
@@ -136,6 +137,22 @@ public class MainController {
             EditorController controller = loader.getController();
             controller.setMainController(this);
             controller.setExistingProject(project);
+
+            this.contentPane.getChildren().setAll(view);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showTrainingEditor(Project project, Image image, Training training) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor.fxml"));
+            Parent view = loader.load();
+
+            EditorController controller = loader.getController();
+            controller.setMainController(this);
+
+            controller.setNewTrainingProject(project, image, training);
 
             this.contentPane.getChildren().setAll(view);
         } catch (IOException e) {

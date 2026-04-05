@@ -56,7 +56,7 @@ public class LayerDAO {
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setInt(1, layer.getIndex());
-            pstmt.setInt(2, layer.getId());
+            pstmt.setInt(2, layer.getLayerType());
             pstmt.setInt(3, layer.getId());
             pstmt.executeUpdate();
 

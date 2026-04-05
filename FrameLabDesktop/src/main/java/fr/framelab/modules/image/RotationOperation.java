@@ -49,4 +49,9 @@ public class RotationOperation implements ImageOperation {
     public String getName() {
         return "Rotation (" + (int) this.rotationAngle + ")";
     }
+
+    @Override
+    public Integer getParameterValue() {
+        return (int) this.rotationAngle;
+    }
 }

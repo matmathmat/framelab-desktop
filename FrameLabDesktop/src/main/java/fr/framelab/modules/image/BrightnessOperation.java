@@ -52,4 +52,9 @@ public class BrightnessOperation implements ImageOperation {
     public String getName() {
         return "Luminosité (" + (int) this.brightnessFactor + ")";
     }
+
+    @Override
+    public Integer getParameterValue() {
+        return (int) this.brightnessFactor;
+    }
 }

@@ -157,7 +157,7 @@ public class MainController {
                 // Récupérer l'utilisateur actuel
                 User currentUser = this.frameLabService.currentUser;
 
-                if (currentUser != null) {
+                if (currentUser != null && currentUser.getId() != 0) {
                     this.databaseManager.userService.deleteUser(currentUser.getId());
                 }
 

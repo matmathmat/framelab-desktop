@@ -47,8 +47,8 @@ public class ProjectDAO {
             pstmt.setString(1, project.getTitle());
             pstmt.setInt(2, project.getUserId());
             pstmt.setInt(3, project.getChallengeId());
-            pstmt.setString(4, now.format(DateValidator.FORMATTER));
-            pstmt.setString(5, now.format(DateValidator.FORMATTER));
+            pstmt.setString(4, now.format(DateValidator.DATETIME_FORMATTER));
+            pstmt.setString(5, now.format(DateValidator.DATETIME_FORMATTER));
             pstmt.executeUpdate();
 
             try (ResultSet keys = pstmt.getGeneratedKeys()) {
@@ -71,7 +71,7 @@ public class ProjectDAO {
 
         try (PreparedStatement pstmt = this.connection.prepareStatement(sql)) {
             pstmt.setString(1, project.getTitle());
-            pstmt.setString(2, now.format(DateValidator.FORMATTER));
+            pstmt.setString(2, now.format(DateValidator.DATETIME_FORMATTER));
             pstmt.setInt(3, project.getId());
             pstmt.executeUpdate();
 
@@ -153,8 +153,8 @@ public class ProjectDAO {
                 rs.getString("title"),
                 rs.getInt("user_id"),
                 rs.getInt("challenge_id"),
-                LocalDateTime.parse(rs.getString("created_at"), DateValidator.FORMATTER),
-                LocalDateTime.parse(rs.getString("edited_at"), DateValidator.FORMATTER)
+                LocalDateTime.parse(rs.getString("created_at"), DateValidator.DATETIME_FORMATTER),
+                LocalDateTime.parse(rs.getString("edited_at"), DateValidator.DATETIME_FORMATTER)
         );
 
         project.setId(rs.getInt("id"));

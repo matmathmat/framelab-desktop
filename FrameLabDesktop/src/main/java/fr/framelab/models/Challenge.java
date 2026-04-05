@@ -40,8 +40,8 @@ public class Challenge {
         startDate = DateValidator.normalize(startDate);
         endDate   = DateValidator.normalize(endDate);
 
-        DateValidator.validate(startDate);
-        DateValidator.validate(endDate);
+        DateValidator.validateDateTime(startDate);
+        DateValidator.validateDateTime(endDate);
 
         this.id = id;
         this.titleTheme = titleTheme;

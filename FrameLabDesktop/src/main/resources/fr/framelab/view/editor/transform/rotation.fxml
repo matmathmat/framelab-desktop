@@ -13,7 +13,12 @@
     <!-- Centre -->
     <center>
         <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 12;">
-            <Slider fx:id="slider" max="180" min="-180" value="0" />
+            <Slider fx:id="slider" max="180" min="-180"/>
+            <Spinner fx:id="spinner" editable="true" >
+                <valueFactory>
+                    <SpinnerValueFactory.DoubleSpinnerValueFactory min="-180.0" max="180.0" initialValue="0.0" amountToStepBy="0.1"/>
+                </valueFactory>
+            </Spinner>
             <Label fx:id="valueLabel" text="${slider.value}" />
         </VBox>
     </center>

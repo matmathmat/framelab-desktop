@@ -21,10 +21,10 @@ public class EnhancementModules {
                 ),
                 new EditorModule(
                         "Contraste",
-                        "Modifier le contraste",
+                        "Modifier le contraste de l'image",
                         () -> {
                             ContrastController controller = new ContrastController();
-                            controller.show();
+                            controller.show(editorController);
                         }
                 )
         );

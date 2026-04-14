@@ -14,6 +14,7 @@ public class ImageOperationFactory {
             "BlacknWhiteOperation", p -> new BlacknWhiteOperation(),
             "InvertOperation", p -> new InvertOperation(),
             "BrightnessOperation", p -> new BrightnessOperation(p != null ? p : 0),
+            "ContrastOperation", p -> new ContrastOperation(p != null ? p : 0),
             "RotationOperation", p -> new RotationOperation(p != null ? p : 0)
     );
 

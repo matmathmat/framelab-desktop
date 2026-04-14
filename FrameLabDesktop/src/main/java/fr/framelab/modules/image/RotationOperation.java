@@ -1,8 +1,10 @@
 package fr.framelab.modules.image;
 
+import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class RotationOperation implements ImageOperation {
     protected double rotationAngle;
@@ -41,8 +43,12 @@ public class RotationOperation implements ImageOperation {
         // Restaurer l'état
         gc.restore();
 
+        // Ajout du transparent pour les zones en dehors de la zone de dessin
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+
         // Copier le résultat dans l'image
-        canvas.snapshot(null, image);
+        canvas.snapshot(params, image);
     }
 
     @Override

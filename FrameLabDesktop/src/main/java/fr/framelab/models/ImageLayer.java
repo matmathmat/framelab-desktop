@@ -201,6 +201,10 @@ public class ImageLayer {
         isVisible = visible;
     }
 
+    public void setPreviewImage(WritableImage image) {
+        this.editedImage = image;
+    }
+
     public WritableImage getBaseImage() {
 
         return baseImage;

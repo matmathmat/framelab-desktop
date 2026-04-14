@@ -100,24 +100,22 @@ public class RotationController {
     }
 
     private void updatePreview(double rotationValue) {
-        if (editorController == null) {
-            return;
-        }
+        if (editorController == null) return;
 
         ImageLayer activeLayer = editorController.getActiveLayer();
-        if (activeLayer == null) {
-            return;
-        }
+        if (activeLayer == null) return;
 
-        // Réinitialiser l'image d'aperçu avec l'image originale du calque
-        this.previewImage = ImageUtil.copyImage(activeLayer.getEditedImage());
+        // Copie de l'image originale avec la rotation appliquée
+        WritableImage rotated = ImageUtil.copyImage(activeLayer.getEditedImage());
+        new RotationOperation(rotationValue).handle(rotated);
 
-        // Appliquer temporairement l'opération de rotation
-        RotationOperation tempOperation = new RotationOperation(rotationValue);
-        tempOperation.handle(this.previewImage);
+        // On remplace temporairement l'image tournée dans le calque
+        WritableImage backup = activeLayer.getEditedImage();
+        activeLayer.setPreviewImage(rotated);
 
-        // Mettre à jour l'affichage
-        editorController.getEditedImageView().setImage(this.previewImage);
+        editorController.refreshEditedImage();
+
+        activeLayer.setPreviewImage(backup);
     }
 
     private void resetImage() {

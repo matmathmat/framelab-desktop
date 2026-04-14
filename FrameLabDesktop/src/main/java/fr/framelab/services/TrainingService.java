@@ -99,6 +99,9 @@ public class TrainingService {
             if (type.equals("BrightnessOperation"))  {
                 param = -100 + rng.nextInt(201);
             }
+            else if (type.equals("ContrastOperation"))  {
+                param = -100 + rng.nextInt(201);
+            }
             else if (type.equals("RotationOperation")) {
                 param = -180 + rng.nextInt(361);
             }

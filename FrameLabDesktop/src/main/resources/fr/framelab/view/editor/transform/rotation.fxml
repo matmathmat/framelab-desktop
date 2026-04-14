@@ -19,7 +19,6 @@
                     <SpinnerValueFactory.DoubleSpinnerValueFactory min="-180.0" max="180.0" initialValue="0.0" amountToStepBy="0.1"/>
                 </valueFactory>
             </Spinner>
-            <Label fx:id="valueLabel" text="${slider.value}" />
         </VBox>
     </center>
 

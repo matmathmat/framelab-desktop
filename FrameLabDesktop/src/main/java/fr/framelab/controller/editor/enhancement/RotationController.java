@@ -26,10 +26,7 @@ public class RotationController {
     private Slider slider;
 
     @FXML
-    private Spinner spinner;
-
-    @FXML
-    private Label valueLabel;
+    private Spinner<Double> spinner;
 
     @FXML
     private Button applyButton;
@@ -76,10 +73,15 @@ public class RotationController {
 
     @FXML
     public void initialize() {
-        // Lier le label à la valeur du slider
-        this.valueLabel.textProperty().bind(
-                Bindings.format("%.2f", slider.valueProperty())
-        );
+        // Lier le slider à la valeur du spinner
+        slider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            spinner.getValueFactory().setValue(newVal.doubleValue());
+        });
+
+        // Lier le spinner à la valeur du slider
+        spinner.getValueFactory().valueProperty().addListener((obs, oldVal, newVal) -> {
+            slider.setValue(newVal);
+        });
 
         // Ajouter un écouteur sur le slider pour l'aperçu en temps réel
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {

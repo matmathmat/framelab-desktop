@@ -12,12 +12,14 @@ public class EmojiOperation implements ImageOperation {
     private final int x;
     private final int y;
     private final double size;
+    private final javafx.scene.paint.Color color;
 
-    public EmojiOperation(String emoji, int x, int y, double size) {
+    public EmojiOperation(String emoji, int x, int y, double size, javafx.scene.paint.Color color) {
         this.emoji = emoji;
         this.x = x;
         this.y = y;
         this.size = size;
+        this.color = color;
     }
 
     @Override
@@ -30,6 +32,9 @@ public class EmojiOperation implements ImageOperation {
 
         // On configure et on pose l'emoji
         gc.setFont(Font.font("Arial", size));
+
+        // On configure la couleur de l'emoji
+        gc.setFill(color);
 
         // On centre le texte sur les coordonnées cliquées
         gc.fillText(emoji, x - (size / 3.0), y + (size / 3.0));

@@ -29,7 +29,7 @@
 
             <!-- Droite -->
             <Button text="Sauvegarder" onAction="#handleSave" styleClass="btn-primary" />
-            <Button text="Envoyer" onAction="#handleSend" styleClass="btn-accent" />
+            <Button fx:id="sendButton" text="Envoyer" onAction="#handleSend" styleClass="btn-accent" />
             <Button fx:id="validateTrainingButton"
                     text="Valider entraînement"
                     onAction="#handleValidateTraining"

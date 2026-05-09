@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import fr.framelab.dto.APIResponseDTO;
 import fr.framelab.dto.AuthRequestDTO;
 import fr.framelab.dto.ErrorResponseDTO;
+import fr.framelab.dto.ParticipationDTO;
 import fr.framelab.exceptions.http.*;
 import fr.framelab.models.Challenge;
 import fr.framelab.models.User;
@@ -19,11 +20,12 @@ import java.net.http.HttpResponse;
 
 public class FrameLabService {
     protected String domaineName;
+    protected String frontDomaineName;
     protected String token;
     protected HttpClient client;
     public User currentUser;
 
-    public FrameLabService(String domaineName) {
+    public FrameLabService(String domaineName, String frontDomaineName) {
         if (domaineName == null) {
             throw new IllegalArgumentException("Null domaineName is not allowed");
         }
@@ -31,8 +33,20 @@ public class FrameLabService {
             throw new IllegalArgumentException("Empty domaineName is not allowed");
         }
 
+        if (frontDomaineName == null) {
+            throw new IllegalArgumentException("Null frontDomaineName is not allowed");
+        }
+        if (frontDomaineName.isBlank()) {
+            throw new IllegalArgumentException("Empty frontDomaineName is not allowed");
+        }
+
         this.domaineName = domaineName;
+        this.frontDomaineName = frontDomaineName;
         this.client = HttpClient.newHttpClient();
+    }
+
+    public String getFrontDomaineName() {
+        return frontDomaineName;
     }
 
     public void setToken(String token) {
@@ -145,6 +159,69 @@ public class FrameLabService {
             this.currentUser = apiResponseDTO.getResult();
             this.currentUser.setToken(this.token);
             return this.currentUser;
+        } else {
+            ManageFailedResponse(response);
+            return null;
+        }
+    }
+
+    public ParticipationDTO checkMyParticipation(int challengeId) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(CreateURL("api/participations/my?challengeId=" + challengeId)))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + this.token)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = this.client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            Type type = new TypeToken<APIResponseDTO<ParticipationDTO>>(){}.getType();
+            APIResponseDTO<ParticipationDTO> dto = new Gson().fromJson(response.body(), type);
+            return dto.getResult(); // null si pas de participation
+        } else {
+            ManageFailedResponse(response);
+            return null;
+        }
+    }
+
+    public ParticipationDTO submitParticipation(int challengeId, java.io.File imageFile) throws IOException, InterruptedException {
+        // WTF HTTPClient qui n'a pas de méthode pour faire automatiquement les boundary
+        String boundary = "----FrameLabBoundary" + System.currentTimeMillis();
+        String CRLF = "\r\n";
+
+        byte[] fileBytes = java.nio.file.Files.readAllBytes(imageFile.toPath());
+
+        byte[] body = (
+                "--" + boundary + CRLF +
+                        "Content-Disposition: form-data; name=\"challengeId\"" + CRLF + CRLF +
+                        challengeId + CRLF +
+                        "--" + boundary + CRLF +
+                        "Content-Disposition: form-data; name=\"file\"; filename=\"participation.png\"" + CRLF +
+                        "Content-Type: image/png" + CRLF + CRLF
+        ).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+
+        byte[] closing = (CRLF + "--" + boundary + "--" + CRLF)
+                .getBytes(java.nio.charset.StandardCharsets.UTF_8);
+
+        byte[] fullBody = new byte[body.length + fileBytes.length + closing.length];
+        System.arraycopy(body,      0, fullBody, 0,                           body.length);
+        System.arraycopy(fileBytes, 0, fullBody, body.length,                 fileBytes.length);
+        System.arraycopy(closing,   0, fullBody, body.length + fileBytes.length, closing.length);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(CreateURL("api/participations")))
+                .header("Content-Type", "multipart/form-data; boundary=" + boundary)
+                .header("Authorization", "Bearer " + this.token)
+                .POST(HttpRequest.BodyPublishers.ofByteArray(fullBody))
+                .build();
+
+        HttpResponse<String> response = this.client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            Type type = new TypeToken<APIResponseDTO<ParticipationDTO>>(){}.getType();
+            APIResponseDTO<ParticipationDTO> dto = new Gson().fromJson(response.body(), type);
+            return dto.getResult();
         } else {
             ManageFailedResponse(response);
             return null;

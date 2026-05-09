@@ -1,5 +1,7 @@
 package fr.framelab.modules.image;
 
+import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,7 @@ public class ImageOperationFactory {
             "BrightnessOperation",  p -> new BrightnessOperation(p != null ? p : 0),
             "ContrastOperation",    p -> new ContrastOperation(p != null ? p : 0),
             "RotationOperation",    p -> new RotationOperation(p != null ? p : 0),
-            "EmojiOperation",       p -> new EmojiOperation(new String(Character.toChars(p != null ? p : 0x1F600)), 400, 400, 48)
+            "EmojiOperation",       p -> new EmojiOperation(new String(Character.toChars(p != null ? p : 0x1F600)), 400, 400, 48, Color.WHITE)
     );
 
     public static ImageOperation create(String type, Integer param) {

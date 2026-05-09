@@ -3,12 +3,10 @@ package fr.framelab.controller.editor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -24,6 +22,7 @@ public class EmojiController {
     @FXML private TextField charInput;
     @FXML private FlowPane paletteContainer;
     @FXML private Label pageLabel;
+    @FXML private ColorPicker colorPicker;
 
     private static final int PAGE_SIZE = 25;
 
@@ -31,6 +30,8 @@ public class EmojiController {
     private String selectedEmoji = null;
     private List<String> emojis;
     private int currentPage = 0;
+
+    private Color selectedColor = Color.WHITE;
 
     @FXML
     public void initialize() {
@@ -44,6 +45,10 @@ public class EmojiController {
                 charInput.setText(oldV);
             }
         });
+    }
+
+    public Color getSelectedColor() {
+        return selectedColor;
     }
 
     private int getTotalPages() {
@@ -127,6 +132,8 @@ public class EmojiController {
 
             controller.stage = stage;
             stage.showAndWait();
+
+            this.selectedColor = controller.selectedColor;
 
             return controller.selectedEmoji;
         } catch (IOException e) {

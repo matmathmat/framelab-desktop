@@ -3,6 +3,7 @@ package fr.framelab.controller;
 import fr.framelab.controller.editor.EmojiController;
 import fr.framelab.controller.editor.HistoryController;
 import fr.framelab.controller.editor.LayerRowController;
+import fr.framelab.dto.ParticipationDTO;
 import fr.framelab.models.*;
 import fr.framelab.modules.EditorModule;
 import fr.framelab.modules.EnhancementModules;
@@ -34,6 +35,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -56,6 +58,7 @@ public class EditorController {
     @FXML private Button validateTrainingButton;
     @FXML private Button trainingObjectivesButton;
     @FXML private Button emojiButton;
+    @FXML private Button sendButton;
 
     private MainController mainController;
     private Project project;
@@ -64,10 +67,6 @@ public class EditorController {
     private int activeLayerIndex = -1;
 
     private final EditorService editorService = new EditorService();
-
-    public void handleSend(ActionEvent actionEvent) {
-
-    }
 
     private enum Tool { NONE, PENCIL, ERASER, EMOJI }
     private Tool activeTool = Tool.NONE;
@@ -93,6 +92,7 @@ public class EditorController {
     private String currentEmoji = "😀";
     private double emojiSize = 50.0;
     private Text emojiPreviewText = new Text();
+    private Color emojiColor = Color.WHITE;
 
     // Initialisation
 
@@ -153,6 +153,8 @@ public class EditorController {
         this.baseImage.setImage(challengeImg);
         refreshLayersUI();
         refreshEditedImage();
+
+        configureSendButton();
     }
 
     public void setExistingProject(Project project) {
@@ -193,6 +195,8 @@ public class EditorController {
 
         refreshLayersUI();
         refreshEditedImage();
+
+        configureSendButton();
     }
 
     // Sauvegarde
@@ -334,9 +338,11 @@ public class EditorController {
                 int[] pt = toImageCoords(e.getX(), e.getY());
 
                 if (pt != null) {
+                    // Convertir la taille écran en taille image
+                    double imageEmojiSize = (emojiSize * zoomFactor) / getImageScale();
 
                     layer.addImageOperation(
-                            new EmojiOperation(currentEmoji, pt[0], pt[1], emojiSize)
+                            new EmojiOperation(currentEmoji, pt[0], pt[1], imageEmojiSize, emojiColor)
                     );
 
                     refreshEditedImage();
@@ -415,6 +421,7 @@ public class EditorController {
             emojiPreviewText.setVisible(true);
             emojiPreviewText.setText(currentEmoji);
             emojiPreviewText.setFont(Font.font("Arial", emojiSize * zoomFactor));
+            emojiPreviewText.setFill(emojiColor);
 
             // Convertir les coordonnées de l'ImageView pour placer le texte au bon endroit sur le parent
             Point2D p = editedImage.localToParent(e.getX(), e.getY());
@@ -501,11 +508,118 @@ public class EditorController {
 
         if (result != null) {
             currentEmoji = result;
+            emojiColor = popup.getSelectedColor();
             activeTool = Tool.EMOJI;
             updateToolUI();
         }
     }
 
+    // Gestion de l'envoi
+    @FXML
+    public void handleSend(ActionEvent actionEvent) {
+        User user = mainController.frameLabService.currentUser;
+        if (user == null || user.getId() == 0) return; // sécurité
+
+        int challengeId = project.getChallengeId();
+
+        try {
+            ParticipationDTO existing = mainController.frameLabService.checkMyParticipation(challengeId);
+
+            if (existing != null) {
+                // L'utilisateur a déjà participé
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Participation existante");
+                alert.setHeaderText("Vous avez déjà soumis une participation pour ce challenge.");
+                alert.setContentText("Souhaitez-vous consulter votre participation ?");
+                alert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.YES) {
+                    openInBrowser(mainController.frameLabService.getFrontDomaineName()
+                            + "/challenges/" + challengeId + "/participations#participation-" + existing.getId());
+                }
+
+            } else {
+                // L'utilisateur n'a pas participé donc il peut contribuer
+                Alert rulesAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                rulesAlert.setTitle("Soumettre une participation");
+                rulesAlert.setHeaderText("Règles de soumission — veuillez lire avant de continuer");
+                rulesAlert.setContentText(
+                        "• Le contenu de l'image modifiée ne doit pas heurter la sensibilité des autres membres. " +
+                                "La modération se réserve le droit de retirer toute participation jugée offensante ou inappropriée.\n\n" +
+                                "• Les concours organisés sur FrameLab sont avant tout un espace de créativité et de bonne humeur, " +
+                                "ne prenez pas les résultats trop à cœur !\n\n" +
+                                "• En soumettant votre image, vous accordez à FrameLab le droit de l'utiliser " +
+                                "à des fins promotionnelles pour la plateforme.\n\n" +
+                                "Confirmez-vous l'envoi de votre participation ?"
+                );
+                rulesAlert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+                Optional<ButtonType> rulesResult = rulesAlert.showAndWait();
+                if (rulesResult.isPresent() && rulesResult.get() == ButtonType.YES) {
+                    doSubmitParticipation(challengeId);
+                }
+            }
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur réseau");
+            alert.setHeaderText("Impossible de vérifier votre participation.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void doSubmitParticipation(int challengeId) {
+        try {
+            // On Sauvegarde le projet avant sa soumission
+            editorService.saveProjectFull(project, layers, mainController.databaseManager);
+
+            // On fusione les calques et on sauvegarde le rendu dans un dossier temporaire
+            Image rendered = ImageUtil.render(layers);
+            java.io.File tempFile = java.io.File.createTempFile("framelab_participation_", ".png");
+            ImageUtil.saveToDisk(rendered, tempFile.getAbsolutePath());
+
+            // 3. On envoi la participation
+            ParticipationDTO participation = mainController.frameLabService.submitParticipation(challengeId, tempFile);
+            tempFile.delete();
+
+            // La participation a bien été prise en compte
+            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+            successAlert.setTitle("Participation envoyée !");
+            successAlert.setHeaderText("Votre participation a bien été enregistrée.");
+            successAlert.setContentText("Voulez-vous la consulter dans votre navigateur ?");
+            successAlert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+
+            Optional<ButtonType> res = successAlert.showAndWait();
+            if (res.isPresent() && res.get() == ButtonType.YES) {
+                openInBrowser(mainController.frameLabService.getFrontDomaineName()
+                        + "/challenges/" + challengeId + "/participations#participation-" + participation.getId());
+            }
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("La participation n'a pas pu être soumise.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+    private void openInBrowser(String url) {
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void configureSendButton() {
+        User user = mainController.frameLabService.currentUser;
+        boolean isGuest = (user == null || user.getId() == 0);
+        sendButton.setVisible(!isGuest);
+        sendButton.setManaged(!isGuest);
+    }
 
     // Gestion image de référence
 
@@ -557,6 +671,15 @@ public class EditorController {
         int pct = (int) Math.round(zoomFactor * 100);
 
         if (zoomLabel != null) zoomLabel.setText(pct + "%");
+    }
+
+    private double getImageScale() {
+        Image img = editedImage.getImage();
+        if (img == null) return 1.0;
+        double viewW = editedImage.getBoundsInLocal().getWidth();
+        double viewH = editedImage.getBoundsInLocal().getHeight();
+        if (viewW <= 0 || viewH <= 0) return 1.0;
+        return Math.min(viewW / img.getWidth(), viewH / img.getHeight());
     }
 
     // UI
@@ -614,7 +737,9 @@ public class EditorController {
         trainingObjectivesButton.setVisible(true);
         trainingObjectivesButton.setManaged(true);
 
-        // Il faudra masquer le bouton envoyer ici
+        // On masque le bouton envoyer en mode entraînement
+        sendButton.setVisible(false);
+        sendButton.setManaged(false);
     }
 
     @FXML

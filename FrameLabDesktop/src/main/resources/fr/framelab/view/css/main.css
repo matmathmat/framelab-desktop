@@ -1,0 +1,70 @@
+.root {
+    nb-black:  #1A1A1A;
+    nb-cream:  #F5F0E8;
+    nb-white:  #FFFFFF;
+    nb-pink:   #E91E8C;
+    nb-pink-light: #FF90E8;
+    nb-green:  #39FF6A;
+    nb-yellow: #FFE566;
+    -fx-background-color: nb-cream;
+    -fx-font-family: "Arial";
+}
+
+.top-bar {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 0 3 0;
+    -fx-padding: 0 16 0 16;
+}
+
+.app-title {
+    -fx-text-fill: nb-white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial Black";
+    -fx-background-color: nb-black;
+    -fx-padding: 6 16 6 16;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.app-title::after {
+    -fx-text-fill: nb-pink;
+}
+
+.left-bar {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 3 0 0;
+}
+
+.nav-button {
+    -fx-background-color: nb-black;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-cursor: hand;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.nav-button:hover {
+    -fx-background-color: #2A2A2A;
+    -fx-border-color: nb-pink;
+    -fx-translate-x: -2;
+    -fx-translate-y: -2;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 6, 6);
+}
+
+.nav-button:pressed {
+    -fx-background-color: nb-pink;
+    -fx-translate-x: 2;
+    -fx-translate-y: 2;
+    -fx-effect: none;
+}
+
+.content-pane {
+    -fx-background-color: nb-cream;
+}

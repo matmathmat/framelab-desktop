@@ -1,0 +1,96 @@
+.root {
+    nb-black:  #1A1A1A;
+    nb-cream:  #F5F0E8;
+    nb-white:  #FFFFFF;
+    nb-pink:   #E91E8C;
+    nb-pink-light: #FF90E8;
+    nb-green:  #39FF6A;
+    nb-yellow: #FFE566;
+    -fx-background-color: nb-cream;
+    -fx-font-family: "Arial";
+}
+
+.current-challenge {
+    -fx-background-color: nb-cream;
+    -fx-padding: 14;
+}
+
+.pane-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: nb-black;
+    -fx-text-transform: uppercase;
+}
+
+.nb-separator {
+    -fx-background-color: nb-black;
+    -fx-border-color: nb-black;
+    -fx-pref-height: 2;
+}
+
+.challenge-image {
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.challenge-title-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: nb-black;
+    -fx-font-family: "Arial Black";
+    -fx-text-alignment: center;
+}
+
+.challenge-desc-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: nb-black;
+    -fx-text-alignment: center;
+}
+
+.dates-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: nb-black;
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-padding: 6 10 6 10;
+}
+
+.error-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: nb-black;
+    -fx-background-color: nb-pink;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-padding: 6 10 6 10;
+    -fx-text-alignment: center;
+}
+
+.btn-accent {
+    -fx-background-color: nb-black;
+    -fx-text-fill: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 12 0 12 0;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.btn-accent:hover {
+    -fx-background-color: #2A2A2A;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 6, 6);
+}
+
+.btn-accent:pressed {
+    -fx-effect: none;
+    -fx-translate-x: 4;
+    -fx-translate-y: 4;
+}

@@ -1,0 +1,65 @@
+.root {
+    nb-black:  #1A1A1A;
+    nb-cream:  #F5F0E8;
+    nb-white:  #FFFFFF;
+    nb-pink:   #E91E8C;
+    nb-pink-light: #FF90E8;
+    nb-green:  #39FF6A;
+    nb-yellow: #FFE566;
+    -fx-background-color: nb-cream;
+    -fx-font-family: "Arial";
+}
+
+.home-root {
+    -fx-background-color: nb-cream;
+}
+
+.greeting-bar {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 0 3 0;
+    -fx-padding: 10 14 10 14;
+}
+
+.greeting-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: nb-black;
+}
+
+.score-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: nb-black;
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-padding: 4 10 4 10;
+}
+
+.nb-separator {
+    -fx-background-color: nb-black;
+    -fx-border-color: nb-black;
+    -fx-pref-height: 2;
+}
+
+.home-content {
+    -fx-background-color: nb-cream;
+    -fx-padding: 12;
+}
+
+.challenge-container {
+    -fx-background-color: nb-cream;
+}
+
+.training-container {
+    -fx-background-color: nb-cream;
+}
+
+.right-bar {
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 0 0 3;
+    -fx-padding: 12;
+}

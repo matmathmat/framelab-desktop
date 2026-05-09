@@ -4,23 +4,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12"
+<BorderPane styleClass="history-root"
+            xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="fr.framelab.controller.editor.HistoryController">
+            fx:controller="fr.framelab.controller.editor.HistoryController"
+            stylesheets="@/fr/framelab/view/css/editor/history.css">
 
     <!-- Top -->
     <top>
         <VBox>
-            <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Historique des actions">
+            <Label styleClass="history-title" text="Historique des actions">
                 <padding><Insets bottom="8" left="12" right="12" top="12"/></padding>
             </Label>
-            <Separator/>
+            <Separator styleClass="nb-separator"/>
         </VBox>
     </top>
 
     <!-- Liste des actions -->
     <center>
-        <ListView fx:id="historyList" style="-fx-border-color: transparent;">
+        <ListView fx:id="historyList" styleClass="history-list">
             <padding><Insets bottom="4" left="8" right="8" top="4"/></padding>
         </ListView>
     </center>
@@ -28,15 +30,14 @@
     <!-- Bas -->
     <bottom>
         <VBox>
-            <Separator/>
-            <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Separator styleClass="nb-separator"/>
+            <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="history-actions">
                 <padding><Insets bottom="12" left="12" right="12" top="10"/></padding>
                 <Label text="Cliquez sur une action pour prévisualiser"
-                       style="-fx-text-fill: #777; -fx-font-size: 11px;"
+                       styleClass="history-info"
                        HBox.hgrow="ALWAYS"/>
-                <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"/>
-                <Button fx:id="okButton"     text="OK"      onAction="#handleOk"
-                        style="-fx-background-color: #0078d4; -fx-text-fill: white;"/>
+                <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel" styleClass="btn-secondary"/>
+                <Button fx:id="okButton"     text="OK"      onAction="#handleOk"     styleClass="btn-primary"/>
             </HBox>
         </VBox>
     </bottom>

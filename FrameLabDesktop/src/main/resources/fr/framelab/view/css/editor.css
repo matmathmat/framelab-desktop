@@ -1,0 +1,205 @@
+.root {
+    nb-black:  #1A1A1A;
+    nb-cream:  #F5F0E8;
+    nb-white:  #FFFFFF;
+    nb-pink:   #E91E8C;
+    nb-pink-light: #FF90E8;
+    nb-green:  #39FF6A;
+    nb-yellow: #FFE566;
+    -fx-background-color: nb-cream;
+    -fx-font-family: "Arial";
+}
+
+.editor-root {
+    -fx-background-color: nb-cream;
+}
+
+.editor-toolbar {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 0 3 0;
+}
+
+.toolbar-combo {
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 3, 3);
+}
+
+.toolbar-combo .list-cell {
+    -fx-background-color: nb-white;
+    -fx-text-fill: nb-black;
+}
+
+.toolbar-combo .list-cell:hover {
+    -fx-background-color: nb-pink-light;
+}
+
+.tool-panel {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 3 0 0;
+}
+
+.tool-button {
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.tool-button:hover {
+    -fx-background-color: nb-pink-light;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 6, 6);
+}
+
+.tool-button:pressed {
+    -fx-effect: none;
+    -fx-translate-x: 4;
+    -fx-translate-y: 4;
+}
+
+.editor-bottom-bar {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 3 0 0 0;
+}
+
+.zoom-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: nb-black;
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-padding: 6 10 6 10;
+}
+
+.layer-panel {
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 0 0 3;
+}
+
+.panel-heading {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: nb-black;
+    -fx-text-transform: uppercase;
+}
+
+.nb-separator {
+    -fx-background-color: nb-black;
+    -fx-border-color: nb-black;
+    -fx-pref-height: 2;
+}
+
+.layers-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.layers-scroll .viewport {
+    -fx-background-color: transparent;
+}
+
+.layers-container {
+    -fx-background-color: transparent;
+}
+
+.layer-actions {
+    -fx-background-color: nb-white;
+}
+
+.editor-split {
+    -fx-background-color: nb-cream;
+    -fx-padding: 10;
+}
+
+.editor-split .split-pane-divider {
+    -fx-background-color: nb-black;
+    -fx-padding: 0 1 0 1;
+}
+
+.image-pane {
+    -fx-background-color: nb-cream;
+}
+
+.image-panel-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: nb-black;
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-alignment: center;
+}
+
+.image-scroll {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.image-canvas {
+    -fx-background-color: nb-white;
+}
+
+.btn-primary, .btn-accent, .btn-success {
+    -fx-background-color: nb-black;
+    -fx-text-fill: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 10 18 10 18;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.btn-primary:hover, .btn-accent:hover, .btn-success:hover {
+    -fx-background-color: #2A2A2A;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 6, 6);
+}
+
+.btn-primary:pressed, .btn-accent:pressed, .btn-success:pressed {
+    -fx-effect: none;
+    -fx-translate-x: 4;
+    -fx-translate-y: 4;
+}
+
+.btn-secondary {
+    -fx-background-color: nb-white;
+    -fx-text-fill: nb-black;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 10 18 10 18;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.btn-secondary:hover {
+    -fx-background-color: nb-pink-light;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 6, 6);
+}
+
+.btn-secondary:pressed {
+    -fx-effect: none;
+    -fx-translate-x: 4;
+    -fx-translate-y: 4;
+}

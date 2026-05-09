@@ -1,0 +1,127 @@
+.root {
+    nb-black:  #1A1A1A;
+    nb-cream:  #F5F0E8;
+    nb-white:  #FFFFFF;
+    nb-pink:   #E91E8C;
+    nb-pink-light: #FF90E8;
+    nb-green:  #39FF6A;
+    nb-yellow: #FFE566;
+    -fx-background-color: nb-cream;
+    -fx-font-family: "Arial";
+}
+
+.popup-root {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 3;
+}
+
+.popup-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: nb-white;
+    -fx-background-color: nb-black;
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-max-width: infinity;
+}
+
+.popup-content {
+    -fx-padding: 20;
+}
+
+.popup-actions {
+    -fx-padding: 15;
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2 0 0 0;
+}
+
+.nb-slider .track {
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.nb-slider .thumb {
+    -fx-background-color: nb-black;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.nb-spinner {
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.nb-spinner .increment-arrow-button,
+.nb-spinner .decrement-arrow-button {
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 0 0 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+.nb-spinner .increment-arrow-button:hover,
+.nb-spinner .decrement-arrow-button:hover {
+    -fx-background-color: nb-pink-light;
+}
+
+.btn-primary {
+    -fx-background-color: nb-black;
+    -fx-text-fill: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.btn-primary:hover {
+    -fx-background-color: #2A2A2A;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 6, 6);
+}
+
+.btn-primary:pressed {
+    -fx-effect: none;
+    -fx-translate-x: 4;
+    -fx-translate-y: 4;
+}
+
+.btn-secondary {
+    -fx-background-color: nb-white;
+    -fx-text-fill: nb-black;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}
+
+.btn-secondary:hover {
+    -fx-background-color: nb-pink-light;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 6, 6);
+}
+
+.btn-secondary:pressed {
+    -fx-effect: none;
+    -fx-translate-x: 4;
+    -fx-translate-y: 4;
+}

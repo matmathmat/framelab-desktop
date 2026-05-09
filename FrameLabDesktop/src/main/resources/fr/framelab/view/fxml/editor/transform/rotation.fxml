@@ -3,18 +3,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.framelab.controller.editor.enhancement.RotationController">
+<BorderPane styleClass="popup-root"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fr.framelab.controller.editor.enhancement.RotationController"
+            stylesheets="@/fr/framelab/view/css/editor/transform/rotation.css">
 
     <!-- Top -->
     <top>
-        <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Rotation libre" BorderPane.alignment="CENTER" />
+        <Label styleClass="popup-title" text="Rotation libre" BorderPane.alignment="CENTER" />
     </top>
 
     <!-- Centre -->
     <center>
-        <VBox alignment="CENTER" spacing="10.0" style="-fx-padding: 12;">
-            <Slider fx:id="slider" max="180" min="-180"/>
-            <Spinner fx:id="spinner" editable="true" >
+        <VBox alignment="CENTER" spacing="10.0" styleClass="popup-content">
+            <Slider fx:id="slider" max="180" min="-180" styleClass="nb-slider"/>
+            <Spinner fx:id="spinner" editable="true" styleClass="nb-spinner">
                 <valueFactory>
                     <SpinnerValueFactory.DoubleSpinnerValueFactory min="-180.0" max="180.0" initialValue="0.0" amountToStepBy="0.1"/>
                 </valueFactory>
@@ -24,9 +28,9 @@
 
     <!-- Bas -->
     <bottom>
-        <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
-            <Button onAction="#handleApply" text="Appliquer" />
-            <Button onAction="#handleCancel" text="Annuler" />
+        <HBox alignment="CENTER" spacing="10" styleClass="popup-actions">
+            <Button onAction="#handleApply" text="Appliquer" styleClass="btn-primary" />
+            <Button onAction="#handleCancel" text="Annuler" styleClass="btn-secondary" />
         </HBox>
     </bottom>
 </BorderPane>

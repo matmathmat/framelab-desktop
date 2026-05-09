@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -8,41 +9,44 @@
 <?import javafx.scene.shape.*?>
 
 <BorderPane prefHeight="400.0" prefWidth="600.0"
+            styleClass="editor-root"
             xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="fr.framelab.controller.EditorController">
+            fx:controller="fr.framelab.controller.EditorController"
+            stylesheets="@/fr/framelab/view/css/editor.css">
 
     <top>
-        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="editor-toolbar" BorderPane.alignment="CENTER">
             <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
 
             <!-- Gauche -->
-            <ComboBox fx:id="enhancementComboBox" onAction="#handleEnhancement" promptText="Amélioration" />
-            <ComboBox fx:id="filterComboBox"      onAction="#handleFilter"      promptText="Filtre" />
-            <ComboBox fx:id="transformComboBox"   onAction="#handleTransformation" promptText="Transformation" />
+            <ComboBox fx:id="enhancementComboBox" onAction="#handleEnhancement" promptText="Amélioration" styleClass="toolbar-combo" />
+            <ComboBox fx:id="filterComboBox"      onAction="#handleFilter"      promptText="Filtre" styleClass="toolbar-combo" />
+            <ComboBox fx:id="transformComboBox"   onAction="#handleTransformation" promptText="Transformation" styleClass="toolbar-combo" />
 
             <!-- Separateur -->
             <Region HBox.hgrow="ALWAYS" />
 
             <!-- Droite -->
-            <Button text="Sauvegarder" onAction="#handleSave" />
-            <Button text="Envoyer" onAction="#handleSend"/>
+            <Button text="Sauvegarder" onAction="#handleSave" styleClass="btn-primary" />
+            <Button text="Envoyer" onAction="#handleSend" styleClass="btn-accent" />
             <Button fx:id="validateTrainingButton"
                     text="Valider entraînement"
                     onAction="#handleValidateTraining"
+                    styleClass="btn-success"
                     visible="false" managed="false"/>
         </HBox>
     </top>
 
     <left>
         <VBox alignment="CENTER" prefWidth="60.0" spacing="15.0"
-              style="-fx-background-color: #f8f8f8;" BorderPane.alignment="CENTER">
+              styleClass="tool-panel" BorderPane.alignment="CENTER">
             <padding><Insets bottom="20.0" left="10.0" right="10.0" top="20.0" /></padding>
             <BorderPane.margin><Insets right="10.0" /></BorderPane.margin>
 
             <!-- Crayon -->
             <Button fx:id="pencilButton" prefHeight="60.0" prefWidth="60.0"
-                    style="-fx-background-radius: 5;" onAction="#handlePencil">
+                    styleClass="tool-button" onAction="#handlePencil">
                 <graphic>
                     <SVGPath content="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
                              fill="transparent" stroke="black" strokeWidth="2" />
@@ -51,7 +55,7 @@
 
             <!-- Gomme -->
             <Button fx:id="eraserButton" prefHeight="60.0" prefWidth="60.0"
-                    style="-fx-background-radius: 5;" onAction="#handleEraser">
+                    styleClass="tool-button" onAction="#handleEraser">
                 <graphic>
                     <Group>
                         <SVGPath content="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"
@@ -63,7 +67,7 @@
             </Button>
 
             <!-- Emoji -->
-            <Button prefHeight="60.0" prefWidth="60.0" style="-fx-background-radius: 5;">
+            <Button prefHeight="60.0" prefWidth="60.0" styleClass="tool-button">
                 <graphic>
                     <Group>
                         <SVGPath content="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20"
@@ -80,15 +84,16 @@
 
     <bottom>
         <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="8.0"
-              style="-fx-background-color: #f0f0f0;" BorderPane.alignment="CENTER">
+              styleClass="editor-bottom-bar" BorderPane.alignment="CENTER">
             <padding><Insets bottom="10.0" left="10.0" right="10.0" top="10.0" /></padding>
 
             <!-- Gauche -->
-            <Button text="Réinitialiser" onAction="#handleReset" />
-            <Button text="Historique"    onAction="#handleHistory" />
+            <Button text="Réinitialiser" onAction="#handleReset" styleClass="btn-secondary" />
+            <Button text="Historique"    onAction="#handleHistory" styleClass="btn-secondary" />
             <Button fx:id="trainingObjectivesButton"
                     text="Objectifs"
                     onAction="#handleShowObjectives"
+                    styleClass="btn-secondary"
                     visible="false" managed="false"/>
 
             <!-- Séparateur -->
@@ -97,38 +102,38 @@
             <!-- Centre -->
             <Button fx:id="toggleReferenceButton"
                     text="Masquer image de référence"
-                    onAction="#handleToggleReference" />
+                    onAction="#handleToggleReference"
+                    styleClass="btn-secondary" />
 
             <!-- Séparateur -->
             <Region HBox.hgrow="ALWAYS" />
 
             <!-- Droite -->
-            <Label fx:id="zoomLabel" text="100%"
-                   style="-fx-font-weight: bold; -fx-min-width: 40px;" />
-            <Button text="Zoomer"   onAction="#handleZoomIn" />
-            <Button text="Dézoomer" onAction="#handleZoomOut" />
+            <Label fx:id="zoomLabel" text="100%" styleClass="zoom-label" />
+            <Button text="Zoomer"   onAction="#handleZoomIn"  styleClass="btn-secondary" />
+            <Button text="Dézoomer" onAction="#handleZoomOut" styleClass="btn-secondary" />
         </HBox>
     </bottom>
 
     <right>
-        <VBox prefWidth="260.0" style="-fx-background-color: #f8f8f8;" BorderPane.alignment="CENTER">
+        <VBox prefWidth="260.0" styleClass="layer-panel" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets left="10.0" />
             </BorderPane.margin>
 
             <!-- En tête -->
-            <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Calques">
+            <Label styleClass="panel-heading" text="Calques">
                 <padding>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
             </Label>
 
-            <Separator />
+            <Separator styleClass="nb-separator" />
 
             <!-- Zone des calques -->
-            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+            <ScrollPane fitToWidth="true" styleClass="layers-scroll" VBox.vgrow="ALWAYS">
                 <content>
-                    <VBox fx:id="layersContainer" spacing="5.0" style="-fx-background-color: white;">
+                    <VBox fx:id="layersContainer" spacing="5.0" styleClass="layers-container">
                         <padding>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </padding>
@@ -136,29 +141,31 @@
                 </content>
             </ScrollPane>
 
-            <Separator />
+            <Separator styleClass="nb-separator" />
 
             <!-- Bas -->
-            <VBox spacing="8.0" style="-fx-background-color: #f8f8f8;">
+            <VBox spacing="8.0" styleClass="layer-actions">
                 <padding>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </padding>
-                <Button maxWidth="Infinity" text="Ajouter un calque transparent" onAction="#handleAddTransparentLayer"/>
-                <Button maxWidth="Infinity" text="Ajouter un calque image"       onAction="#handleAddImageLayer"/>
-                <Button maxWidth="Infinity" text="Fusionner les calques visibles" onAction="#handleMergeVisibleLayers"/>
+                <Button maxWidth="Infinity" text="Ajouter un calque transparent" onAction="#handleAddTransparentLayer" styleClass="btn-secondary" />
+                <Button maxWidth="Infinity" text="Ajouter un calque image"       onAction="#handleAddImageLayer"       styleClass="btn-secondary" />
+                <Button maxWidth="Infinity" text="Fusionner les calques visibles" onAction="#handleMergeVisibleLayers" styleClass="btn-primary" />
             </VBox>
         </VBox>
     </right>
 
     <center>
         <SplitPane fx:id="centerSplitPane" dividerPositions="0.5"
-                   prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                   prefHeight="160.0" prefWidth="200.0"
+                   styleClass="editor-split"
+                   BorderPane.alignment="CENTER">
             <items>
                 <!-- Image de référence -->
-                <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0"
+                            styleClass="image-pane">
                     <top>
-                        <Label style="-fx-font-weight: bold; -fx-background-color: #e8e8e8;"
-                               text="Image de référence">
+                        <Label styleClass="image-panel-label" text="Image de référence">
                             <padding>
                                 <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                             </padding>
@@ -167,9 +174,9 @@
                     <center>
                         <ScrollPane fx:id="leftScrollPane"
                                     fitToHeight="false" fitToWidth="false"
-                                    style="-fx-background-color: #e0e0e0;">
+                                    styleClass="image-scroll">
                             <content>
-                                <StackPane alignment="CENTER" style="-fx-background-color: #e0e0e0;">
+                                <StackPane alignment="CENTER" styleClass="image-canvas">
                                     <ImageView fx:id="baseImage" pickOnBounds="true" preserveRatio="true" />
                                 </StackPane>
                             </content>
@@ -178,10 +185,10 @@
                 </BorderPane>
 
                 <!-- Image en cours de modification -->
-                <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="198.0" prefWidth="241.0">
+                <BorderPane minHeight="0.0" minWidth="0.0" prefHeight="198.0" prefWidth="241.0"
+                            styleClass="image-pane">
                     <top>
-                        <Label style="-fx-font-weight: bold; -fx-background-color: #e8e8e8;"
-                               text="Modification en cours">
+                        <Label styleClass="image-panel-label" text="Modification en cours">
                             <padding>
                                 <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
                             </padding>
@@ -190,9 +197,9 @@
                     <center>
                         <ScrollPane fx:id="rightScrollPane"
                                     fitToHeight="false" fitToWidth="false"
-                                    style="-fx-background-color: #e0e0e0;">
+                                    styleClass="image-scroll">
                             <content>
-                                <StackPane alignment="CENTER" style="-fx-background-color: #e0e0e0;">
+                                <StackPane alignment="CENTER" styleClass="image-canvas">
                                     <ImageView fx:id="editedImage" pickOnBounds="true" preserveRatio="true" />
                                 </StackPane>
                             </content>

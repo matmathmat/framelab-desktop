@@ -1,0 +1,54 @@
+.root {
+    nb-black:  #1A1A1A;
+    nb-cream:  #F5F0E8;
+    nb-white:  #FFFFFF;
+    nb-pink:   #E91E8C;
+    nb-pink-light: #FF90E8;
+    nb-green:  #39FF6A;
+    nb-yellow: #FFE566;
+    -fx-background-color: nb-cream;
+    -fx-font-family: "Arial";
+}
+
+.challenge-pane {
+    -fx-background-color: transparent;
+}
+
+.challenge-pane > .title {
+    -fx-background-color: nb-white;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+.challenge-pane:expanded > .title {
+    -fx-background-color: nb-pink-light;
+}
+
+.challenge-pane > .title > .text {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: nb-black;
+    -fx-font-family: "Arial Black";
+    -fx-text-transform: uppercase;
+}
+
+.challenge-pane > .content {
+    -fx-background-color: nb-cream;
+    -fx-border-color: nb-black;
+    -fx-border-width: 0 2 2 2;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0;
+}
+
+.challenge-pane > .title > .arrow-button .arrow {
+    -fx-background-color: nb-black;
+}
+
+.project-list {
+    -fx-background-color: transparent;
+}

@@ -1,0 +1,45 @@
+.root {
+    nb-black:  #1A1A1A;
+    nb-cream:  #F5F0E8;
+    nb-white:  #FFFFFF;
+    nb-pink:   #E91E8C;
+    nb-pink-light: #FF90E8;
+    nb-green:  #39FF6A;
+    nb-yellow: #FFE566;
+    -fx-background-color: nb-cream;
+    -fx-font-family: "Arial";
+}
+
+.project-panel {
+    -fx-background-color: nb-cream;
+}
+
+.panel-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: nb-black;
+    -fx-text-transform: uppercase;
+}
+
+.nb-separator {
+    -fx-background-color: nb-black;
+    -fx-border-color: nb-black;
+    -fx-pref-height: 2;
+}
+
+.panel-accordion {
+    -fx-background-color: nb-cream;
+}
+
+.empty-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: nb-black;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-background-color: nb-yellow;
+    -fx-border-color: nb-black;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(three-pass-box, #1A1A1A, 1, 1, 4, 4);
+}

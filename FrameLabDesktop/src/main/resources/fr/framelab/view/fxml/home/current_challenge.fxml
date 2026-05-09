@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,26 +9,32 @@
 <VBox xmlns="http://javafx.com/javafx/17.0.12"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="fr.framelab.controller.home.CurrentChallengeController"
-      spacing="10" alignment="TOP_CENTER">
+      styleClass="current-challenge"
+      spacing="10" alignment="TOP_CENTER"
+      stylesheets="@/fr/framelab/view/css/home/current_challenge.css">
 
-    <Label text="Challenge en cours" />
+    <Label text="Challenge en cours" styleClass="pane-title" />
 
-    <Separator />
+    <Separator styleClass="nb-separator" />
 
     <ImageView fx:id="challengeImage"
                fitWidth="220" fitHeight="140"
-               preserveRatio="true" pickOnBounds="true" />
+               preserveRatio="true" pickOnBounds="true"
+               styleClass="challenge-image" />
 
     <Label fx:id="titleLabel" text=""
+           styleClass="challenge-title-label"
            wrapText="true" maxWidth="240" />
 
     <Label fx:id="descriptionLabel" text=""
+           styleClass="challenge-desc-label"
            wrapText="true" maxWidth="240" />
 
-    <Label fx:id="datesLabel" text="" />
+    <Label fx:id="datesLabel" text="" styleClass="dates-label" />
 
     <Label fx:id="errorLabel"
            text="Impossible de récupérer le challenge en cours."
+           styleClass="error-label"
            wrapText="true" maxWidth="240"
            visible="false" managed="false" />
 
@@ -35,6 +42,7 @@
 
     <Button fx:id="participateButton"
             text="Participer"
+            styleClass="btn-accent"
             maxWidth="Infinity"
             onAction="#handleParticipate" />
 </VBox>

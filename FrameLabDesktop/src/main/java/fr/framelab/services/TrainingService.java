@@ -5,6 +5,7 @@ import fr.framelab.models.Training;
 import fr.framelab.models.TrainingOperation;
 import fr.framelab.modules.image.ImageOperation;
 import fr.framelab.modules.image.ImageOperationFactory;
+import fr.framelab.utils.emoji.EmojiList;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -104,6 +105,10 @@ public class TrainingService {
             }
             else if (type.equals("RotationOperation")) {
                 param = -180 + rng.nextInt(361);
+            } else if (type.equals("EmojiOperation")) {
+                List<String> emojiPool = new ArrayList<>(EmojiList.EMOJIS);
+                String emoji = emojiPool.get(rng.nextInt(emojiPool.size()));
+                param = emoji.codePointAt(0);
             }
 
             ops.add(new TrainingOperation(type, param));

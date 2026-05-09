@@ -12,10 +12,11 @@ public class ImageOperationFactory {
 
     private static final Map<String, OperationCreator> REGISTRY = Map.of(
             "BlacknWhiteOperation", p -> new BlacknWhiteOperation(),
-            "InvertOperation", p -> new InvertOperation(),
-            "BrightnessOperation", p -> new BrightnessOperation(p != null ? p : 0),
-            "ContrastOperation", p -> new ContrastOperation(p != null ? p : 0),
-            "RotationOperation", p -> new RotationOperation(p != null ? p : 0)
+            "InvertOperation",      p -> new InvertOperation(),
+            "BrightnessOperation",  p -> new BrightnessOperation(p != null ? p : 0),
+            "ContrastOperation",    p -> new ContrastOperation(p != null ? p : 0),
+            "RotationOperation",    p -> new RotationOperation(p != null ? p : 0),
+            "EmojiOperation",       p -> new EmojiOperation(new String(Character.toChars(p != null ? p : 0x1F600)), 400, 400, 48)
     );
 
     public static ImageOperation create(String type, Integer param) {

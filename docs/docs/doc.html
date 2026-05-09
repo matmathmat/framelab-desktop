@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation - DocProject</title>
+  
+  <link rel="stylesheet" href="../shared.css">
+  <link rel="stylesheet" href="doc.css">
+  
+  <!-- Librairie pour parser le Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <!-- Librairie pour parser Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  
+  <!-- Fichier de configuration -->
+  <script src="../config.js"></script>
+
+  <script src="doc.js" defer></script>
+</head>
+<body>
+
+  <!-- Header identique à l'accueil -->
+  <header class="header">
+    <a href="../index.html" class="header-logo">
+      <div class="logo-badge" id="logo-badge">◼︎</div>
+      <div class="logo-name" id="logo-name">Doc<span>Project</span></div>
+    </a>
+    <div class="header-search">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" placeholder="Rechercher...">
+    </div>
+    <div class="header-actions">
+      <button class="sidebar-toggle" id="mobile-menu-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <a href="../index.html" class="btn btn-ghost">Retour à l'accueil</a>
+    </div>
+  </header>
+
+  <div class="doc-layout">
+    <!-- Sidebar gauche générée dynamiquement -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Le contenu JS s'injectera ici -->
+    </aside>
+
+    <!-- Contenu principal -->
+    <main class="doc-main">
+      <div class="doc-meta">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span>Mise à jour automatique</span>
+      </div>
+      
+      <div class="doc-content doc-body" id="doc-content">
+        <div class="doc-loading">
+          <div class="spinner"></div>
+          <p>Chargement de la documentation...</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

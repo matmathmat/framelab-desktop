@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation du Projet</title>
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="index.css">
+  <script src="config.js"></script>
+  <script src="index.js" defer></script>
+</head>
+<body>
 
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="header-logo">
+      <div class="logo-badge" id="logo-badge">◼︎</div>
+      <div class="logo-name" id="logo-name">Doc<span>Project</span></div>
+    </a>
+
+    <div class="header-search">
+      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" placeholder="Rechercher dans la doc..." id="global-search">
+    </div>
+
+    <div class="header-actions">
+      <a href="#" class="icon-btn" title="GitHub" id="github-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+      </a>
+      <a href="#" id="get-link" class="btn btn-primary">Accéder au site web</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 id="hero-title">Documentation</h1>
+      <p id="hero-tagline">Tout ce qu'il faut savoir sur l'architecture, l'installation et l'utilisation du projet.</p>
+      
+      <div class="hero-search">
+        <input type="text" placeholder="Ex: Backend, MCD, Authentification..." id="hero-search-input">
+        <button type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Grille des Sections -->
+  <main class="sections-wrapper">
+    <div class="sections-grid" id="sections-grid">
+      <!-- Les cartes sont injectées dynamiquement via le JS -->
+    </div>
+    <div class="no-results" id="no-results">Aucune section trouvée.</div>
+  </main>
+</body>
+</html>

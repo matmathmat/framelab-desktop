@@ -67,7 +67,7 @@
             </Button>
 
             <!-- Emoji -->
-            <Button prefHeight="60.0" prefWidth="60.0" styleClass="tool-button">
+            <Button fx:id="emojiButton" onAction="#handleEmojiTool" prefHeight="60.0" prefWidth="60.0" styleClass="tool-button">
                 <graphic>
                     <Group>
                         <SVGPath content="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20"

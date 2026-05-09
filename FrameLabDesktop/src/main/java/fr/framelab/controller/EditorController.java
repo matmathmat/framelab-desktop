@@ -1,5 +1,6 @@
 package fr.framelab.controller;
 
+import fr.framelab.controller.editor.EmojiController;
 import fr.framelab.controller.editor.HistoryController;
 import fr.framelab.controller.editor.LayerRowController;
 import fr.framelab.models.*;
@@ -8,17 +9,22 @@ import fr.framelab.modules.EnhancementModules;
 import fr.framelab.modules.FilterModules;
 import fr.framelab.modules.TransformationModules;
 import fr.framelab.modules.image.DrawOperation;
+import fr.framelab.modules.image.EmojiOperation;
 import fr.framelab.modules.image.EraseOperation;
 import fr.framelab.services.EditorService;
 import fr.framelab.utils.image.ImageUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import javafx.scene.input.MouseEvent;
@@ -30,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class EditorController {
     @FXML private ImageView baseImage;
@@ -47,6 +55,7 @@ public class EditorController {
     @FXML private Label zoomLabel;
     @FXML private Button validateTrainingButton;
     @FXML private Button trainingObjectivesButton;
+    @FXML private Button emojiButton;
 
     private MainController mainController;
     private Project project;
@@ -60,7 +69,7 @@ public class EditorController {
 
     }
 
-    private enum Tool { NONE, PENCIL, ERASER }
+    private enum Tool { NONE, PENCIL, ERASER, EMOJI }
     private Tool activeTool = Tool.NONE;
 
     private final List<int[]> currentStrokePoints = new ArrayList<>();
@@ -81,6 +90,10 @@ public class EditorController {
     private Training currentTraining;
     private List<TrainingOperation> trainingOperations;
 
+    private String currentEmoji = "😀";
+    private double emojiSize = 50.0;
+    private Text emojiPreviewText = new Text();
+
     // Initialisation
 
     @FXML
@@ -89,6 +102,16 @@ public class EditorController {
         enhancementComboBox.setItems(EnhancementModules.getModules(this));
         filterComboBox.setItems(FilterModules.getModules(this));
         transformComboBox.setItems(TransformationModules.getModules(this));
+
+        // Configuration du curseur Emoji
+        emojiPreviewText.setManaged(false);
+        emojiPreviewText.setVisible(false);
+        emojiPreviewText.setMouseTransparent(true);
+
+        // On attache la prévisualisation au parent de editedImage
+        javafx.application.Platform.runLater(() -> {
+            ((StackPane) editedImage.getParent()).getChildren().add(emojiPreviewText);
+        });
 
         // Appliquer le zoom au redimensionnement de la fenêtre
         leftScrollPane.widthProperty().addListener((o, prev, next)  -> applyZoom());
@@ -100,6 +123,9 @@ public class EditorController {
         editedImage.setOnMousePressed(this::onMousePressed);
         editedImage.setOnMouseDragged(this::onMouseDragged);
         editedImage.setOnMouseReleased(this::onMouseReleased);
+        editedImage.setOnMouseMoved(this::onMouseMoved);
+        editedImage.setOnScroll(this::onScroll);
+        editedImage.setOnMouseExited(e -> emojiPreviewText.setVisible(false));
 
         // On récupère le panneau de référence après l'injection FXML
         javafx.application.Platform.runLater(() ->
@@ -278,25 +304,68 @@ public class EditorController {
 
         pencilButton.setStyle(activeTool == Tool.PENCIL ? activeStyle : inactiveStyle);
         eraserButton.setStyle(activeTool == Tool.ERASER ? activeStyle : inactiveStyle);
+        emojiButton.setStyle(activeTool == Tool.EMOJI ? activeStyle : inactiveStyle);
     }
 
     // Événements souris
 
     private void onMousePressed(MouseEvent e) {
-        if (activeTool == Tool.NONE) return;
+        if (activeTool == Tool.NONE) { return; }
 
-        ImageLayer layer = getActiveLayer();
-        if (layer == null) return;
+        if (activeTool == Tool.EMOJI) {
+            if (e.getButton() == MouseButton.SECONDARY) {
+                // Clic droit = annuler l'outil
+                activeTool = Tool.NONE;
+                emojiPreviewText.setVisible(false);
+                updateToolUI();
+            } else if (e.getButton() == MouseButton.PRIMARY) {
+                // Clic gauche = poser l'emoji
+                ImageLayer layer = getActiveLayer();
 
-        // Le crayon ne peut fonctionner que sur un calque de dessin
-        if (activeTool == Tool.PENCIL && !layer.isDrawable()) return;
+                // On peut poser des emojis uniquement sur un calque de dessin
+                if (layer == null || !layer.isDrawable()) {
+                    new Alert(
+                            Alert.AlertType.WARNING,
+                            "Les emojis ne peuvent être posés que sur un calque transparent (dessin) !"
+                    ).show();
+                    return;
+                }
 
-        // On sauvegarde l'état du calque avant le tracé
-        preStrokeSnapshot = ImageUtil.copyImage(layer.getEditedImage());
-        currentStrokePoints.clear();
+                int[] pt = toImageCoords(e.getX(), e.getY());
 
-        int[] pt = toImageCoords(e.getX(), e.getY());
-        if (pt != null) currentStrokePoints.add(pt);
+                if (pt != null) {
+
+                    layer.addImageOperation(
+                            new EmojiOperation(currentEmoji, pt[0], pt[1], emojiSize)
+                    );
+
+                    refreshEditedImage();
+                }
+            }
+        } else if (activeTool == Tool.PENCIL)
+        {
+            ImageLayer layer = getActiveLayer();
+
+            if (layer == null) {
+                return;
+            }
+
+            // Le crayon ne peut fonctionner que sur un calque de dessin
+            if (!layer.isDrawable()) {
+                return;
+            }
+
+            // On sauvegarde l'état du calque avant le tracé
+            preStrokeSnapshot = ImageUtil.copyImage(layer.getEditedImage());
+
+            currentStrokePoints.clear();
+
+            int[] pt = toImageCoords(e.getX(), e.getY());
+
+            if (pt != null) {
+                currentStrokePoints.add(pt);
+            }
+        }
     }
 
     private void onMouseDragged(MouseEvent e) {
@@ -339,6 +408,39 @@ public class EditorController {
 
         preStrokeSnapshot = null;
         currentStrokePoints.clear();
+    }
+
+    private void onMouseMoved(MouseEvent e) {
+        if (activeTool == Tool.EMOJI) {
+            emojiPreviewText.setVisible(true);
+            emojiPreviewText.setText(currentEmoji);
+            emojiPreviewText.setFont(Font.font("Arial", emojiSize * zoomFactor));
+
+            // Convertir les coordonnées de l'ImageView pour placer le texte au bon endroit sur le parent
+            Point2D p = editedImage.localToParent(e.getX(), e.getY());
+
+            // Centrer le texte sur le curseur
+            double textWidth = emojiPreviewText.getLayoutBounds().getWidth();
+            double textHeight = emojiPreviewText.getLayoutBounds().getHeight();
+
+            emojiPreviewText.setLayoutX(p.getX() - (textWidth / 2));
+            emojiPreviewText.setLayoutY(p.getY() + (textHeight / 4));
+        }
+    }
+
+    private void onScroll(ScrollEvent e) {
+        if (activeTool == Tool.EMOJI) {
+            // Incrémenter ou décrémenter la taille
+            if (e.getDeltaY() > 0) {
+                emojiSize += 5;
+            } else {
+                emojiSize = Math.max(10, emojiSize - 5);
+            }
+
+            // Mettre à jour la taille immédiatement
+            emojiPreviewText.setFont(Font.font("Arial", emojiSize * zoomFactor));
+            e.consume();
+        }
     }
 
     private void applyCurrentStrokePreview(ImageLayer layer) {
@@ -390,6 +492,20 @@ public class EditorController {
         if (getActiveLayer() == null) return;
         HistoryController.show(this);
     }
+
+    // Gestion des emojis
+    @FXML
+    private void handleEmojiTool() {
+        EmojiController popup = new EmojiController();
+        String result = popup.showAndWait();
+
+        if (result != null) {
+            currentEmoji = result;
+            activeTool = Tool.EMOJI;
+            updateToolUI();
+        }
+    }
+
 
     // Gestion image de référence
 

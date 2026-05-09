@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane styleClass="popup-root"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="fr.framelab.controller.editor.EmojiController"
+            stylesheets="@/fr/framelab/view/css/editor/emoji.css">
+
+    <top>
+        <Label styleClass="popup-title" text="Insérer un caractère" BorderPane.alignment="CENTER" />
+    </top>
+
+    <center>
+        <VBox alignment="CENTER" spacing="15.0" styleClass="popup-content">
+            <Label styleClass="popup-label" text="Saisissez un caractère dessinable :" />
+
+            <HBox alignment="CENTER" spacing="10.0">
+                <TextField fx:id="charInput" promptText="Ex: 🌟" styleClass="nb-textfield" prefWidth="80" />
+                <Button onAction="#handleConfirm" text="Confirmer" styleClass="btn-primary" />
+            </HBox>
+
+            <Separator styleClass="nb-separator"/>
+
+            <Label styleClass="popup-label" text="Ou choisissez dans la palette :" />
+
+            <FlowPane fx:id="paletteContainer"
+                      alignment="CENTER"
+                      hgap="8" vgap="8"
+                      prefWrapLength="300"
+                      prefWidth="300"
+                      maxWidth="300" />
+
+            <HBox alignment="CENTER" spacing="20" styleClass="pagination-nav">
+                <Button onAction="#handlePrev" text="◀" styleClass="nav-btn" />
+                <Label fx:id="pageLabel" text="1 / 1" styleClass="page-label" />
+                <Button onAction="#handleNext" text="▶" styleClass="nav-btn" />
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="10" styleClass="popup-actions">
+            <Button onAction="#handleCancel" text="Annuler" styleClass="btn-secondary" />
+        </HBox>
+    </bottom>
+</BorderPane>

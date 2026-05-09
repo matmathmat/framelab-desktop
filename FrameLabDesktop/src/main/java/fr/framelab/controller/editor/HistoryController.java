@@ -30,7 +30,7 @@ public class HistoryController {
     public static void show(EditorController editorController) {
         try {
             FXMLLoader loader = new FXMLLoader(
-                    HistoryController.class.getResource("/fr/framelab/view/editor/history.fxml"));
+                    HistoryController.class.getResource("/fr/framelab/view/fxml/editor/history.fxml"));
             BorderPane root = loader.load();
 
             HistoryController controller = loader.getController();

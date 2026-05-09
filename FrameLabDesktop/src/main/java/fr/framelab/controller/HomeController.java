@@ -64,7 +64,7 @@ public class HomeController {
 
     private void loadChallengePanel() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/home/current_challenge.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/home/current_challenge.fxml"));
             Node node = loader.load();
             CurrentChallengeController ctrl = loader.getController();
             ctrl.setMainController(mainController);
@@ -76,7 +76,7 @@ public class HomeController {
 
     private void loadTrainingPanel() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/home/training_pane.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/home/training_pane.fxml"));
             Node node = loader.load();
             TrainingPaneController ctrl = loader.getController();
             ctrl.setMainController(mainController);
@@ -88,7 +88,7 @@ public class HomeController {
 
     private void loadProjectPanel() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/home/project_panel.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/home/project_panel.fxml"));
             Node node = loader.load();
             ProjectPanelController ctrl = loader.getController();
             ctrl.setMainController(mainController);

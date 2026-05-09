@@ -11,33 +11,25 @@ import fr.framelab.modules.image.DrawOperation;
 import fr.framelab.modules.image.EraseOperation;
 import fr.framelab.services.EditorService;
 import fr.framelab.utils.image.ImageUtil;
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.ComboBoxListViewSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 
 import javafx.scene.input.MouseEvent;
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.paint.Color;
-
-import javax.imageio.ImageIO;
 
 public class EditorController {
     @FXML private ImageView baseImage;
@@ -63,6 +55,10 @@ public class EditorController {
     private int activeLayerIndex = -1;
 
     private final EditorService editorService = new EditorService();
+
+    public void handleSend(ActionEvent actionEvent) {
+
+    }
 
     private enum Tool { NONE, PENCIL, ERASER }
     private Tool activeTool = Tool.NONE;
@@ -454,7 +450,7 @@ public class EditorController {
 
         for (int i = layers.size() - 1; i >= 0; i--) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor/layer_row.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/editor/layer_row.fxml"));
                 loader.load();
                 LayerRowController rowController = loader.getController();
                 rowController.setup(layers.get(i), i, layers.size(), i == activeLayerIndex, this);

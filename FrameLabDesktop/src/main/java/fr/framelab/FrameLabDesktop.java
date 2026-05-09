@@ -17,7 +17,7 @@ public class FrameLabDesktop extends Application {
         this.frameLabService = new FrameLabService("http://localhost:3000");
         this.databaseManager = new DatabaseManager();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/main.fxml"));
         BorderPane root = loader.load();
 
         MainController mainController = loader.getController();

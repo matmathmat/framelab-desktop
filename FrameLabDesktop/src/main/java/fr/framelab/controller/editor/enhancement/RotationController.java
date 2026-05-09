@@ -2,15 +2,12 @@ package fr.framelab.controller.editor.enhancement;
 
 import fr.framelab.controller.EditorController;
 import fr.framelab.models.ImageLayer;
-import fr.framelab.modules.image.BrightnessOperation;
 import fr.framelab.modules.image.RotationOperation;
 import fr.framelab.utils.image.ImageUtil;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.image.WritableImage;
@@ -42,7 +39,7 @@ public class RotationController {
 
     public void show(EditorController editorController) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor/transform/rotation.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/editor/transform/rotation.fxml"));
             BorderPane root = loader.load();
 
             // lier le stage et le controller

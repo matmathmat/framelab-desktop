@@ -48,7 +48,7 @@ public class ProjectPanelController {
             hasAnyProject = true;
 
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/home/challenge_pane.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/home/challenge_pane.fxml"));
                 TitledPane pane = loader.load();
 
                 ChallengePaneController paneController = loader.getController();

@@ -18,7 +18,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Optional;
 
 public class MainController {
@@ -65,7 +64,7 @@ public class MainController {
 
     public void showLogin() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/login.fxml"));
             Parent view = loader.load();
 
             LoginController controller = loader.getController();
@@ -81,7 +80,7 @@ public class MainController {
         try {
             this.homeVisible.set(true);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/home.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/home.fxml"));
             Parent view = loader.load();
 
             HomeController controller = loader.getController();
@@ -102,7 +101,7 @@ public class MainController {
 
     public void challengeHandle() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/challenge.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/challenge.fxml"));
             Parent view = loader.load();
 
             ChallengeController controller = loader.getController();
@@ -116,7 +115,7 @@ public class MainController {
 
     public void showEditor(Project project, Image challengeImage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/editor.fxml"));
             Parent view = loader.load();
 
             EditorController controller = loader.getController();
@@ -131,7 +130,7 @@ public class MainController {
 
     public void openExistingProject(Project project) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/editor.fxml"));
             Parent view = loader.load();
 
             EditorController controller = loader.getController();
@@ -146,7 +145,7 @@ public class MainController {
 
     public void showTrainingEditor(Project project, Image image, Training training) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/editor.fxml"));
             Parent view = loader.load();
 
             EditorController controller = loader.getController();

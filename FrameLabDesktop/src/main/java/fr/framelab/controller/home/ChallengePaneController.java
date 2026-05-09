@@ -30,7 +30,7 @@ public class ChallengePaneController {
 
         for (Project project : projects) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/home/project_item.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/home/project_item.fxml"));
                 loader.load();
 
                 ProjectItemController itemController = loader.getController();

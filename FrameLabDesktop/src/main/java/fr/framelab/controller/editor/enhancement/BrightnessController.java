@@ -40,7 +40,7 @@ public class BrightnessController {
 
     public void show(EditorController editorController) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/editor/enhancement/brightness.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/editor/enhancement/brightness.fxml"));
             BorderPane root = loader.load();
 
             // lier le stage et le controller

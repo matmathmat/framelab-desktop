@@ -10,6 +10,7 @@ import fr.framelab.dto.ParticipationDTO;
 import fr.framelab.exceptions.http.*;
 import fr.framelab.models.Challenge;
 import fr.framelab.models.User;
+import fr.framelab.utils.ConfigUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -17,6 +18,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Properties;
+
+import fr.framelab.utils.ConfigUtil;
 
 public class FrameLabService {
     protected String domaineName;
@@ -25,7 +29,12 @@ public class FrameLabService {
     protected HttpClient client;
     public User currentUser;
 
-    public FrameLabService(String domaineName, String frontDomaineName) {
+    public FrameLabService() {
+        Properties config = ConfigUtil.loadServiceConfig();
+
+        String domaineName  = config.getProperty("apiUrl");
+        String frontDomaineName = config.getProperty("frontUrl");
+
         if (domaineName == null) {
             throw new IllegalArgumentException("Null domaineName is not allowed");
         }

@@ -12,9 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FrameLabServiceTest {
     private FrameLabService frameLabService;
-    private final String DOMAINE_NAME = "http://localhost:3000";
-    private final String FRONT_DOMAINE_NAME = "http://localhost:5173";
-    private final boolean IS_HTTPS = false;
 
     private final String VALID_EMAIL = "hawana@gmail.com";
     private final String VALID_PASSWORD = "password123";
@@ -24,7 +21,7 @@ class FrameLabServiceTest {
      */
     @BeforeEach
     void setUp() {
-        this.frameLabService = new FrameLabService(DOMAINE_NAME, FRONT_DOMAINE_NAME);
+        this.frameLabService = new FrameLabService();
     }
 
     @Test

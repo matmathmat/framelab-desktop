@@ -14,7 +14,7 @@ public class FrameLabDesktop extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.frameLabService = new FrameLabService("http://localhost:3000", "http://localhost:5173");
+        this.frameLabService = new FrameLabService();
         this.databaseManager = new DatabaseManager();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fr/framelab/view/fxml/main.fxml"));

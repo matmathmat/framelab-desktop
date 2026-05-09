@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<HBox fx:id="root" alignment="CENTER_LEFT" spacing="6"
+<VBox fx:id="root" spacing="4"
       styleClass="layer-row-root"
       xmlns="http://javafx.com/javafx/17.0.12"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -15,17 +15,21 @@
         <Insets bottom="6.0" left="8.0" right="8.0" top="6.0" />
     </padding>
 
-    <CheckBox fx:id="visibleCheckBox" styleClass="nb-checkbox" />
-    <Label fx:id="layerNameLabel" minWidth="60" HBox.hgrow="NEVER" styleClass="layer-name" />
-    <Label text="Opacité:" styleClass="layer-small-text" />
-    <Slider fx:id="opacitySlider" min="0" max="100" value="100"
-            prefWidth="75" blockIncrement="5" styleClass="nb-slider" />
-    <Label fx:id="opacityLabel" text="100%" minWidth="32"
-           styleClass="layer-small-text" />
+    <HBox alignment="CENTER_LEFT" spacing="6">
+        <CheckBox fx:id="visibleCheckBox" styleClass="nb-checkbox" />
+        <Label fx:id="layerNameLabel" minWidth="60" HBox.hgrow="ALWAYS" styleClass="layer-name" />
+        <Button fx:id="upButton"     text="↑" onAction="#handleUp"     styleClass="btn-icon" />
+        <Button fx:id="downButton"   text="↓" onAction="#handleDown"   styleClass="btn-icon" />
+        <Button fx:id="deleteButton" text="✕" onAction="#handleDelete" styleClass="btn-icon" />
+    </HBox>
 
-    <Region HBox.hgrow="ALWAYS" />
+    <HBox alignment="CENTER_LEFT" spacing="6">
+        <Label text="Opacité:" styleClass="layer-small-text" />
+        <Slider fx:id="opacitySlider" min="0" max="100" value="100"
+                prefWidth="100" blockIncrement="5" styleClass="nb-slider"
+                HBox.hgrow="ALWAYS" />
+        <Label fx:id="opacityLabel" text="100%" minWidth="32"
+               styleClass="layer-small-text" />
+    </HBox>
 
-    <Button fx:id="upButton"     text="↑" onAction="#handleUp" styleClass="btn-icon" />
-    <Button fx:id="downButton"   text="↓" onAction="#handleDown" styleClass="btn-icon" />
-    <Button fx:id="deleteButton" text="✕" onAction="#handleDelete" styleClass="btn-icon" />
-</HBox>
+</VBox>

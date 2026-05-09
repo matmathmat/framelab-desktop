@@ -8,11 +8,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class LayerRowController {
 
     @FXML
-    private HBox root;
+    private VBox root;
 
     @FXML
     private CheckBox visibleCheckBox;

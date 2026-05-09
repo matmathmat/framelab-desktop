@@ -37,7 +37,8 @@ public class HistoryController {
 
             Stage stage = new Stage();
             stage.setTitle("Historique des actions");
-            stage.setScene(new Scene(root, 420, 320));
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setResizable(false);
 

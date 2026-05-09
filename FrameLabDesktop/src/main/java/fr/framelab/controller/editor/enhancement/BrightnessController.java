@@ -49,7 +49,8 @@ public class BrightnessController {
             // Créer la fenêtre
             Stage stage = new Stage();
             stage.setTitle("Contraste");
-            stage.setScene(new Scene(root, 300, 150));
+            stage.setScene(new Scene(root));
+            stage.sizeToScene();
 
             // Paramétrer le mode modal pour la fenêtre
             stage.initModality(Modality.APPLICATION_MODAL);

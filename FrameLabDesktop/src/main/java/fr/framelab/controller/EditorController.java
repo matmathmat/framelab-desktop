@@ -220,7 +220,7 @@ public class EditorController {
                 // L'utilisateur a déjà participé donc on remplace le bouton Envoyer
                 sendButton.setText("Voir ma participation");
                 sendButton.setOnAction(ev ->
-                        openInBrowser(
+                        openInBrowserAuthenticated(
                                 mainController.frameLabService.getFrontDomaineName()
                                         + "/challenges/" + challengeId
                                         + "/participations#participation-" + existing.getId()
@@ -233,7 +233,7 @@ public class EditorController {
 
         // Si échec silencieux, on n'affiche rien, le bouton reste Envoyer
         task.setOnFailed(event -> {
-            System.err.println("[checkParticipationSilently] " + task.getException().getMessage());
+            System.err.println("Impossible de récupérer la participation au challenge : " + task.getException().getMessage());
         });
 
         new Thread(task, "check-participation").start();
@@ -574,7 +574,7 @@ public class EditorController {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.YES) {
-                    openInBrowser(mainController.frameLabService.getFrontDomaineName()
+                    openInBrowserAuthenticated(mainController.frameLabService.getFrontDomaineName()
                             + "/challenges/" + challengeId + "/participations#participation-" + existing.getId());
                 }
 
@@ -632,7 +632,7 @@ public class EditorController {
 
             Optional<ButtonType> res = successAlert.showAndWait();
             if (res.isPresent() && res.get() == ButtonType.YES) {
-                openInBrowser(mainController.frameLabService.getFrontDomaineName()
+                openInBrowserAuthenticated(mainController.frameLabService.getFrontDomaineName()
                         + "/challenges/" + challengeId + "/participations#participation-" + participation.getId());
             }
 
@@ -650,6 +650,22 @@ public class EditorController {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void openInBrowserAuthenticated(String targetUrl) {
+        try {
+            String shortToken = mainController.frameLabService.getShortToken();
+
+            String encodedTarget = java.net.URLEncoder.encode(targetUrl, java.nio.charset.StandardCharsets.UTF_8);
+            String callbackUrl = mainController.frameLabService.getFrontDomaineName()
+                    + "/auth/callback?shortToken=" + shortToken
+                    + "&redirect=" + encodedTarget;
+
+            openInBrowser(callbackUrl);
+        } catch (Exception e) {
+            System.err.println("Impossible de récupérer le short token : " + e.getMessage());
+            openInBrowser(targetUrl);
         }
     }
 

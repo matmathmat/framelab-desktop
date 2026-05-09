@@ -113,6 +113,26 @@ public class FrameLabService {
         }
     }
 
+    public String getShortToken() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(CreateURL("api/auth/short-token")))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + this.token)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = this.client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            Type type = new TypeToken<APIResponseDTO<java.util.Map<String, String>>>(){}.getType();
+            APIResponseDTO<java.util.Map<String, String>> dto = new Gson().fromJson(response.body(), type);
+            return dto.getResult().get("shortToken");
+        } else {
+            ManageFailedResponse(response);
+            return null;
+        }
+    }
+
     public Challenge getActiveChallenge() throws IOException, InterruptedException {
         // Initialiser gson
         Gson gson = new Gson();

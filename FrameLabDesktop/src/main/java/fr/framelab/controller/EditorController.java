@@ -47,9 +47,9 @@ public class EditorController {
     @FXML private ScrollPane leftScrollPane;
     @FXML private ScrollPane rightScrollPane;
     @FXML private SplitPane centerSplitPane;
-    @FXML private ComboBox<EditorModule> enhancementComboBox;
-    @FXML private ComboBox<EditorModule> filterComboBox;
-    @FXML private ComboBox<EditorModule> transformComboBox;
+    @FXML private MenuButton enhancementMenuButton;
+    @FXML private MenuButton filterMenuButton;
+    @FXML private MenuButton transformMenuButton;
     @FXML private VBox layersContainer;
     @FXML private Button pencilButton;
     @FXML private Button eraserButton;
@@ -98,10 +98,10 @@ public class EditorController {
 
     @FXML
     public void initialize() {
-        // Charger les modules dans les combo boxes
-        enhancementComboBox.setItems(EnhancementModules.getModules(this));
-        filterComboBox.setItems(FilterModules.getModules(this));
-        transformComboBox.setItems(TransformationModules.getModules(this));
+        // Charger les modules dans les menu button
+        populateMenuButton(enhancementMenuButton, EnhancementModules.getModules(this));
+        populateMenuButton(filterMenuButton,      FilterModules.getModules(this));
+        populateMenuButton(transformMenuButton,   TransformationModules.getModules(this));
 
         // Configuration du curseur Emoji
         emojiPreviewText.setManaged(false);
@@ -137,6 +137,15 @@ public class EditorController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
+    }
+
+    private void populateMenuButton(MenuButton menuButton, javafx.collections.ObservableList<EditorModule> modules) {
+        menuButton.getItems().clear();
+        for (EditorModule module : modules) {
+            MenuItem item = new MenuItem(module.toString());
+            item.setOnAction(e -> module.getOnTrigger().run());
+            menuButton.getItems().add(item);
+        }
     }
 
     // Ouverture projet
@@ -871,41 +880,4 @@ public class EditorController {
 
     // Gestion module
 
-    private void comboboxSelectedIndexChange(ComboBox<EditorModule> comboBox) {
-        if (comboBox == null) return;
-
-        // on obtient la valeur sélectionnée par la combobox
-        EditorModule module = comboBox.getValue();
-
-        // Si le module n'est pas nul on lance l'action
-        if (module != null)  {
-            module.getOnTrigger().run();
-        }
-
-        // Quand javafx voudra bien traiter notre demande
-//        Platform.runLater(() -> {
-//            // On désélectionne l'item sélectionné
-//            comboBox.getSelectionModel().clearSelection();
-//            // On force l'affichage de la combobox par défaut pour réafficher le text prompt
-//            comboBox.setSkin(new ComboBoxListViewSkin<>(comboBox));
-//        });
-    }
-
-    @FXML
-    private void handleEnhancement() {
-
-        comboboxSelectedIndexChange(this.enhancementComboBox);
-    }
-
-    @FXML
-    private void handleFilter() {
-
-        comboboxSelectedIndexChange(this.filterComboBox);
-    }
-
-    @FXML
-    private void handleTransformation() {
-
-        comboboxSelectedIndexChange(this.transformComboBox);
-    }
 }

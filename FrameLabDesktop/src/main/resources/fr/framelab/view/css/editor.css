@@ -38,6 +38,15 @@
     -fx-background-color: nb-pink-light;
 }
 
+.toolbar-combo .arrow-button {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+.toolbar-combo .arrow-button .arrow {
+    -fx-background-color: nb-black;
+}
+
 .tool-panel {
     -fx-background-color: nb-cream;
     -fx-border-color: nb-black;

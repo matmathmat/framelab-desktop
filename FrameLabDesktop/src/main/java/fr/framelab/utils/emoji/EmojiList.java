@@ -37,7 +37,7 @@ public final class EmojiList {
             reader.close();
 
         } catch (Exception e) {
-            System.out.println("Erreur chargement emojis: " + e.getMessage());
+            System.err.println("Erreur chargement emojis : " + e.getMessage());
         }
 
         return List.copyOf(emojis);

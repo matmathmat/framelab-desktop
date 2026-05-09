@@ -197,6 +197,46 @@ public class EditorController {
         refreshEditedImage();
 
         configureSendButton();
+
+        // Vérification silencieuse uniquement si l'utilisateur est connecté
+        User user = mainController.frameLabService.currentUser;
+        if (user != null && user.getId() != 0) {
+            checkParticipationSilently(project.getChallengeId());
+        }
+    }
+
+    private void checkParticipationSilently(int challengeId) {
+        javafx.concurrent.Task<ParticipationDTO> task = new javafx.concurrent.Task<>() {
+            @Override
+            protected ParticipationDTO call() throws Exception {
+                return mainController.frameLabService.checkMyParticipation(challengeId);
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            ParticipationDTO existing = task.getValue();
+
+            if (existing != null) {
+                // L'utilisateur a déjà participé donc on remplace le bouton Envoyer
+                sendButton.setText("Voir ma participation");
+                sendButton.setOnAction(ev ->
+                        openInBrowser(
+                                mainController.frameLabService.getFrontDomaineName()
+                                        + "/challenges/" + challengeId
+                                        + "/participations#participation-" + existing.getId()
+                        )
+                );
+
+            }
+            // Si null = rien à faire, le bouton "Envoyer" reste tel quel
+        });
+
+        // Si échec silencieux, on n'affiche rien, le bouton reste Envoyer
+        task.setOnFailed(event -> {
+            System.err.println("[checkParticipationSilently] " + task.getException().getMessage());
+        });
+
+        new Thread(task, "check-participation").start();
     }
 
     // Sauvegarde

@@ -348,8 +348,7 @@ public class EditorController {
                     refreshEditedImage();
                 }
             }
-        } else if (activeTool == Tool.PENCIL)
-        {
+        } else if (activeTool == Tool.PENCIL || activeTool == Tool.ERASER) {
             ImageLayer layer = getActiveLayer();
 
             if (layer == null) {
